@@ -11,5 +11,8 @@
     <string name="last_name">Last name</string>
     <string name="first_name">First name</string>
     <string name="date_of_Birth">Date of Birth</string>
+    <string name="email">Email</string>
+    <string name="login_title">Login</string>
+    <string name="create_account">Create Account</string>
 
 </resources>

@@ -5,78 +5,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.natia.flock1.MainActivity"
-    android:background="@drawable/background">
+    tools:context="com.example.natia.flock1.MainActivity">
 
-    <TextView
-        android:id="@+id/textView0"
+
+    <EditText
+        android:id="@+id/loginEmailEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="196dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/loginPasswordEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/loginButtonEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="151dp"
-        android:text="Natela khomasuridze"
-        android:textSize="15sp"
-        android:fontFamily="serif"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/loginPasswordEt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:background="@color/colorAccent"
+        android:text="@string/login_title"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/loginCreateAccount"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="Omari Mckie"
-        android:textSize="15sp"
-        android:layout_alignTop="@+id/textView0"
-        android:layout_alignStart="@+id/textView0"
-        android:fontFamily="serif"/>
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView12"
-        android:layout_below="@+id/textView12"
-        android:text="Jace"
-        android:textSize="15sp"
-        android:fontFamily="serif"/>
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Wuraola"
-        android:textSize="15sp"
-        android:layout_below="@+id/textView13"
-        android:layout_alignStart="@+id/textView15"
-        android:fontFamily="serif"/>
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Preston Perck"
-        android:textSize="15sp"
-        android:layout_below="@+id/textView14"
-        android:layout_alignStart="@+id/textView0"
-        android:fontFamily="serif"/>
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView15"
-        android:layout_below="@+id/textView15"
-        android:text="Alexandro Morales"
-        android:textSize="15sp"
-        android:fontFamily="serif"/>
-
-    <ProgressBar
-        android:id="@+id/activity_splash_progress_bar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
-
+        android:layout_below="@+id/loginButtonEt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="47dp"
+        android:background="@color/colorAccent"
+        android:text="@string/create_account"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "21014979629",
+    "firebase_url": "https://flock-a5c97.firebaseio.com",
+    "project_id": "flock-a5c97",
+    "storage_bucket": "flock-a5c97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21014979629:android:4c94d78283004bc3",
+        "android_client_info": {
+          "package_name": "com.example.natia.flock1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21014979629-ihjf9opfk1arvcr22dkflhslt9a6hqrn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.natia.flock1",
+            "certificate_hash": "8d41b2b4e6be700135b18f4f5e27e85a2bca7fcd"
+          }
+        },
+        {
+          "client_id": "21014979629-9s20nk1mufjgomohjn6s9m9nfl56k2fi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Bd2vgN7dIXbOUAmUL-PFHHnMZpBr_2g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21014979629-9s20nk1mufjgomohjn6s9m9nfl56k2fi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

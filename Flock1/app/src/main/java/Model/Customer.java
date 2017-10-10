@@ -5,6 +5,7 @@ package Model;
  */
 
 public class Customer {
+    private int id;
     private String email_address;
     private String first_name;
     private String last_name;
@@ -16,8 +17,9 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String email_address, String first_name, String last_name, String password,
-                    String gender, int age) {
+    public Customer(int id, String email_address, String first_name, String last_name,
+                    String password, String gender, int age) {
+        this.id = id;
         this.email_address = email_address;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -26,8 +28,20 @@ public class Customer {
         this.age = age;
     }
 
-    public Customer(String email_address, String first_name, String last_name, String password,
-                    String gender) {
+    public Customer(String email_address, String first_name, String last_name,
+                    String password, String gender, int age) {
+
+        this.email_address = email_address;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.password = password;
+        this.gender = gender;
+        this.age = age;
+    }
+
+    public Customer(String email_address, String first_name, String last_name,
+                    String password, String gender) {
+
         this.email_address = email_address;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -35,7 +49,9 @@ public class Customer {
         this.gender = gender;
     }
 
-    public Customer(String email_address, String first_name, String last_name, String password) {
+    public Customer(String email_address, String first_name, String last_name,
+                    String password) {
+
         this.email_address = email_address;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -44,6 +60,14 @@ public class Customer {
 
     public String getEmail_address() {
         return email_address;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setEmail_address(String email_address) {
