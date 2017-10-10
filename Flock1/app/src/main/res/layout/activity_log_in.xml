@@ -6,77 +6,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.natia.flock1.LogIn"
-    android:background="@drawable/background">
+    android:background="@color/Green">
 
 
-        <EditText
-            android:id="@+id/emailText"
-            android:layout_width="305dp"
-            android:layout_height="45dp"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:textColor="#8B0000"
-            tools:text="flock321@gmail.com"
-            android:layout_above="@+id/passwordText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="13sp" />
+    <EditText
+        android:id="@+id/emailText"
+        android:layout_width="305dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/Text_1"
+        tools:hint="Username"
+        android:layout_above="@+id/passwordText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13sp"
+        android:textColorHint="@color/Text_1"/>
 
-        <EditText
-            android:id="@+id/passwordText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/LoginButton"
-            android:layout_alignEnd="@+id/emailText"
-            android:layout_alignStart="@+id/emailText"
-            android:layout_marginBottom="11sp"
-            android:ems="10"
-            android:textColor="#8B0000"
-            android:inputType="textPassword"
-            android:text="@string/password"
-            tools:text="Password" />
+    <EditText
+        android:id="@+id/passwordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/LoginButton"
+        android:layout_alignEnd="@+id/emailText"
+        android:layout_alignStart="@+id/emailText"
+        android:layout_marginBottom="11sp"
+        android:ems="10"
+        android:textColor="@color/Text_1"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:textColorHint="@color/Text_1"/>
 
+    <Button
+        android:id="@+id/LoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/log_in"
+        android:textSize="20sp"
+        android:background="@drawable/button_style"
+        android:layout_marginBottom="52sp"
+        android:layout_alignBottom="@+id/passwordRecover"
+        android:layout_alignStart="@+id/passwordText"
+        android:layout_alignEnd="@+id/passwordText"
+        android:textColor="@color/Text_2"/>
 
-        <Button
-            android:id="@+id/LoginButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:background="#87CEEB"
-            android:layout_marginBottom="52sp"
-            android:layout_alignBottom="@+id/passwordRecover"
-            android:layout_alignStart="@+id/passwordText"
-            android:layout_alignEnd="@+id/passwordText" />
+    <TextView
+        android:id="@+id/passwordRecover"
+        android:layout_width="140dp"
+        android:layout_height="45dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:text="@string/forget_password"
+        android:textColor="@color/Text_1"
+        android:layout_marginEnd="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
-
-        <EditText
-            android:id="@+id/passwordRecover"
-            android:layout_width="140dp"
-            android:layout_height="45dp"
-            android:textSize="15sp"
-            android:ems="10"
-            android:inputType="phone"
-            android:text="@string/forget_password"
-            android:layout_marginBottom="12dp"
-            android:layout_marginEnd="11dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
-
-
-        <EditText
-            android:id="@+id/signUp"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:textSize="15sp"
-            android:ems="10"
-            android:inputType="phone"
-            android:text="@string/sign_up"
-            android:layout_alignBaseline="@+id/passwordRecover"
-            android:layout_alignBottom="@+id/passwordRecover"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="12dp" />
-    </RelativeLayout>
-
-
-
-
-
+    <TextView
+        android:id="@+id/signUp"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:text="@string/sign_up"
+        android:textColor="@color/Text_1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/LoginButton" />
+</RelativeLayout>
