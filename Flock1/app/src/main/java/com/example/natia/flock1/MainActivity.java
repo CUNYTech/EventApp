@@ -18,13 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser mUser;
@@ -45,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
         createActButton = (Button) findViewById(R.id.loginCreateAccount);
         emailField = (EditText) findViewById(R.id.loginEmailEt);
         passwordField = (EditText) findViewById(R.id.loginPasswordEt);
+
+        createActButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CreateAccountActivity.class));
+                finish();
+            }
+        });
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -127,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop(){
         super.onStop();
         if(mAuthListener != null) {
-            mAuth.addAuthStateListener(mAuthListener);
+            mAuth.removeAuthStateListener(mAuthListener);
         }
 
     }

@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.natia.flock1.MainActivity">
+    tools:context="com.example.natia.flock1.MainActivity"
+    android:background="@color/Green">
 
 
     <EditText
@@ -17,6 +18,8 @@
         android:layout_marginTop="196dp"
         android:ems="10"
         android:hint="@string/email"
+        android:textColorHint="@color/Text_1"
+        android:textColor="@color/Text_1"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -27,6 +30,8 @@
         android:layout_centerVertical="true"
         android:ems="10"
         android:hint="@string/password"
+        android:textColorHint="@color/Text_1"
+        android:textColor="@color/Text_1"
         android:inputType="textPassword" />
 
     <Button
@@ -38,6 +43,7 @@
         android:layout_marginTop="33dp"
         android:background="@color/colorAccent"
         android:text="@string/login_title"
+        android:textColorHint="@color/Text_1"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
 
@@ -45,12 +51,12 @@
         android:id="@+id/loginCreateAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginButtonEt"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="46dp"
         android:background="@color/colorAccent"
         android:text="@string/create_account"
         android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/loginButtonEt"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

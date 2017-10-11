@@ -20,10 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LogIn" />
         <activity android:name=".Register" />
-        >
-        <activity android:name=".PostListActivity"></activity>
+        <activity android:name=".PostListActivity" />
+        <activity android:name=".CreateAccountActivity" />
+        <activity
+            android:name=".MainHub"
+            android:label="@string/title_activity_main_hub"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
