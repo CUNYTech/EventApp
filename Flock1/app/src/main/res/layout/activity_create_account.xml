@@ -9,6 +9,7 @@
 
     <EditText
         android:id="@+id/emailAct"
+        android:labelFor="@+id/emailAct"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -18,8 +19,8 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="Email"
         android:textColor="@color/ButtonGreen"
+        android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,8 +37,8 @@
         android:layout_marginTop="47dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="First Name"
         android:textColor="@color/ButtonGreen"
+        android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailAct"
@@ -55,14 +56,13 @@
         android:ems="10"
         android:hint="@string/last_name"
         android:inputType="textPersonName"
-        android:text="Last Name"
         android:textAlignment="viewStart"
         android:textColor="@color/ButtonGreen"
+        android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstNameAct"
         tools:text="@string/last_name" />
-
 
 
     <EditText
@@ -76,7 +76,6 @@
         android:layout_marginTop="48dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="Password"
         android:textColor="@color/ButtonGreen"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -116,8 +115,8 @@
         android:layout_marginTop="48dp"
         android:ems="10"
         android:inputType="date"
-        android:text="Age"
         android:textColor="@color/ButtonGreen"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/createAccountAct"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -129,16 +128,16 @@
         android:id="@+id/genderAct"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="47dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Gender"
         android:textColor="@color/ButtonGreen"
-        app:layout_constraintTop_toBottomOf="@+id/passwordAct"
-        tools:text="@string/gender"
-        android:layout_marginRight="8dp"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordAct"
+        tools:text="@string/gender" />
 
 </android.support.constraint.ConstraintLayout>

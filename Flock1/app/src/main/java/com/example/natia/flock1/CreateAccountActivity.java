@@ -83,7 +83,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 currenUserDb.child("image").setValue("none");
 
                                 mProgressDialog.dismiss();
-                                Intent intent = new Intent(CreateAccountActivity.this, Register.class);
+                                Intent intent = new Intent(CreateAccountActivity.this, MainHub.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                                 startActivity(intent);

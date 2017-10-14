@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_add"
+    <item
+        android:id="@+id/action_add"
         android:icon="@mipmap/ic_launcher"
-        android:title="Add Post"
-        app:showAsAction="always" />
+        android:title="@string/action_add"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/action_signout"
-        android:title="Signout"
+    <item
+        android:id="@+id/action_signout"
+        android:title="@string/action_signout"
         app:showAsAction="never" />
 </menu>
