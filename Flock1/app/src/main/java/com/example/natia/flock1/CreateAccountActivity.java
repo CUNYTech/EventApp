@@ -56,12 +56,12 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private void createNewAccount() {
-        String em = email.getText().toString().trim();
-        String name = firstName.getText().toString().trim();
-        String lname = lastName.getText().toString().trim();
-        String pwd = password.getText().toString().trim();
-        String gen = gender.getText().toString().trim();
-        String ag = age.getText().toString().trim();
+        final String em = email.getText().toString().trim();
+        final String name = firstName.getText().toString().trim();
+        final String lname = lastName.getText().toString().trim();
+        final String pwd = password.getText().toString().trim();
+        final String gen = gender.getText().toString().trim();
+        final String ag = age.getText().toString().trim();
 
         if(!TextUtils.isEmpty(em) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(lname)
                 && !TextUtils.isEmpty(pwd) && !TextUtils.isEmpty(gen) && !TextUtils.isEmpty(ag)) {
@@ -75,17 +75,22 @@ public class CreateAccountActivity extends AppCompatActivity {
                         public void onSuccess(AuthResult authResult) {
                 if(authResult != null) {
                     String userid = mAuth.getCurrentUser().getUid();
+
+                    //this creates the user and then adds properties to that user as its children
+                    //will be shown in the database as a json object
                     DatabaseReference currenUserDb = mDatabaseReference.child(userid);
-                    currenUserDb.child("email").setValue(email);
-                    currenUserDb.child("firstname").setValue(firstName);
-                    currenUserDb.child("lastname").setValue(lastName);
-                    currenUserDb.child("password").setValue(password);
-                    currenUserDb.child("gender").setValue(gender);
-                    currenUserDb.child("age").setValue(age);
+                    currenUserDb.child("email").setValue(em);
+                    currenUserDb.child("First Name").setValue(name);
+                    currenUserDb.child("Last Name").setValue(lname);
+                    currenUserDb.child("Password").setValue(pwd);
+                    currenUserDb.child("Gender").setValue(gen);
+                    currenUserDb.child("Age").setValue(ag);
 
                     mProgressDialog.dismiss();
+
+                    //Send users to MainHub
                     Intent intent = new Intent(CreateAccountActivity.this, MainHub.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //brings this activity to the top
 
                     startActivity(intent);
                 }
