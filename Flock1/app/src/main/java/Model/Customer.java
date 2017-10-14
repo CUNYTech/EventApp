@@ -58,16 +58,16 @@ public class Customer {
         this.password = password;
     }
 
-    public String getEmail_address() {
-        return email_address;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getEmail_address() {
+        return email_address;
     }
 
     public void setEmail_address(String email_address) {

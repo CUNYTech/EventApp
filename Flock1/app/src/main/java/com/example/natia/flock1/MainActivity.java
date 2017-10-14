@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private Button createActButton;
     private EditText emailField;
     private EditText passwordField;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
     //private static int SPLASH_TIME_OUT=3000;
 
@@ -37,11 +41,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
         loginButton = (Button) findViewById(R.id.loginButtonEt);
         createActButton = (Button) findViewById(R.id.loginCreateAccount);
         emailField = (EditText) findViewById(R.id.loginEmailEt);
         passwordField = (EditText) findViewById(R.id.loginPasswordEt);
-
+        databaseReference = database.getReference("message");
         createActButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,23 +90,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login(String email, String pwd) {
-        mAuth.signInWithEmailAndPassword(email, pwd).
-                addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+        if(!email.equals("") && !pwd.equals("")) {
+            mAuth.signInWithEmailAndPassword(email, pwd).
+                    addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if (task.isSuccessful()) {
-                            //Yay!! We're in!
-                            Toast.makeText(MainActivity.this, "Signed in", Toast.LENGTH_LONG).
-                                    show();
+                            if (task.isSuccessful()) {
+                                //Yay!! We're in!
+                                Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).
+                                        show();
+                                databaseReference.setValue("Hey im in!");
 
-                            startActivity(new Intent(MainActivity.this, MainHub.class));
+                                startActivity(new Intent(MainActivity.this, MainHub.class));
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to Signed In",
+                                        Toast.LENGTH_LONG).show();
+                            }
+
                         }
+                    });
 
-                    }
-                });
-
-
+        }
     }
 
     @Override

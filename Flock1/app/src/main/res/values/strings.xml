@@ -24,5 +24,6 @@
     <string name="gender">Gender</string>
     <string name="action_signout">Signout</string>
     <string name="action_add">Add Post</string>
+    <string name="forgot_password">Forgot Password</string>
 
 </resources>

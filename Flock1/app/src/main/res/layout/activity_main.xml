@@ -17,9 +17,9 @@
         android:layout_marginTop="196dp"
         android:ems="10"
         android:hint="@string/email"
-        android:textColorHint="@color/Text_1"
+        android:inputType="textEmailAddress"
         android:textColor="@color/Text_1"
-        android:inputType="textEmailAddress" />
+        android:textColorHint="@color/Text_1" />
 
     <EditText
         android:id="@+id/loginPasswordEt"
@@ -40,22 +40,33 @@
         android:layout_below="@+id/loginPasswordEt"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp"
-        android:background="@color/Green"
+        android:background="@color/ButtonGreen"
         android:text="@string/login_title"
-        android:textColorHint="@color/Text_1"
         android:textColor="@android:color/white"
+        android:textColorHint="@color/Text_1"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/loginCreateAccount"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:background="@color/Green"
+        android:layout_marginTop="49dp"
+        android:background="@color/ButtonGreen"
         android:text="@string/create_account"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:layout_below="@+id/loginButtonEt"
-        android:layout_alignParentStart="true" />
+        android:layout_toStartOf="@+id/loginButtonEt" />
+
+    <Button
+        android:id="@+id/loginForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/loginCreateAccount"
+        android:layout_toEndOf="@+id/loginButtonEt"
+        android:background="@color/ButtonGreen"
+        android:text="@string/forgot_password"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
 </RelativeLayout>

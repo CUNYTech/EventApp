@@ -35,7 +35,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mDatabase.getReference().child("MUsers");
-
         mAuth = FirebaseAuth.getInstance();
 
         mProgressDialog = new ProgressDialog(this);
@@ -74,22 +73,24 @@ public class CreateAccountActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            if(authResult != null) {
-                                String userid = mAuth.getCurrentUser().getUid();
-                                DatabaseReference currenUserDb = mDatabaseReference.child(userid);
-                                currenUserDb.child("email").setValue(email);
-                                currenUserDb.child("firstname").setValue(firstName);
-                                currenUserDb.child("lastname").setValue(lastName);
-                                currenUserDb.child("image").setValue("none");
+                if(authResult != null) {
+                    String userid = mAuth.getCurrentUser().getUid();
+                    DatabaseReference currenUserDb = mDatabaseReference.child(userid);
+                    currenUserDb.child("email").setValue(email);
+                    currenUserDb.child("firstname").setValue(firstName);
+                    currenUserDb.child("lastname").setValue(lastName);
+                    currenUserDb.child("password").setValue(password);
+                    currenUserDb.child("gender").setValue(gender);
+                    currenUserDb.child("age").setValue(age);
 
-                                mProgressDialog.dismiss();
-                                Intent intent = new Intent(CreateAccountActivity.this, MainHub.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    mProgressDialog.dismiss();
+                    Intent intent = new Intent(CreateAccountActivity.this, MainHub.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                                startActivity(intent);
-                            }
-                        }
-                    });
+                    startActivity(intent);
+                }
+                }
+            });
         }
     }
 }
