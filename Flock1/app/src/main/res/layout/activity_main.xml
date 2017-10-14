@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -41,7 +40,7 @@
         android:layout_below="@+id/loginPasswordEt"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp"
-        android:background="@color/colorAccent"
+        android:background="@color/Green"
         android:text="@string/login_title"
         android:textColorHint="@color/Text_1"
         android:textColor="@android:color/white"
@@ -52,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="46dp"
-        android:background="@color/colorAccent"
+        android:background="@color/Green"
         android:text="@string/create_account"
         android:textColor="@android:color/white"
         android:textStyle="bold"
