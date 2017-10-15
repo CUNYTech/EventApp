@@ -18,8 +18,8 @@
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:textColor="@color/Text_1"
-        android:textColorHint="@color/Text_1" />
+        android:textColor="@color/ButtonGreen"
+        android:textColorHint="@color/ButtonGreen" />
 
     <EditText
         android:id="@+id/loginPasswordEt"
@@ -29,8 +29,8 @@
         android:layout_centerVertical="true"
         android:ems="10"
         android:hint="@string/password"
-        android:textColorHint="@color/Text_1"
-        android:textColor="@color/Text_1"
+        android:textColorHint="@color/ButtonGreen"
+        android:textColor="@color/ButtonGreen"
         android:inputType="textPassword" />
 
     <Button

@@ -148,22 +148,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //database = FirebaseDatabase.getInstance();
-        //databaseReference = database.getReference("message");
-
-        //databaseReference.setValue("Hello Firebase");
-
-        /*getSupportActionBar().hide();
-
-        new Handler().postDelayed (new Runnable(){
-            @Override
-            public void run(){
-                Intent HomeIntent=new Intent(MainActivity.this, LogIn.class);
-                startActivity(HomeIntent);
-                finish();
-            }
-
-        },SPLASH_TIME_OUT);*/
 
 }
 

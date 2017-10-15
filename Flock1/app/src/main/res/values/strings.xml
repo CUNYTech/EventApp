@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Flock1</string>
+    <string name="app_name">Flock</string>
     <string name="log_in">Log in</string>
     <string name="password">Password</string>
     <string name="forget_password">Forget Password</string>
@@ -25,5 +25,7 @@
     <string name="action_signout">Signout</string>
     <string name="action_add">Add Post</string>
     <string name="forgot_password">Forgot Password</string>
+    <string name="profile_pic">Profile Pic</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
