@@ -27,5 +27,7 @@
     <string name="forgot_password">Forgot Password</string>
     <string name="profile_pic">Profile Pic</string>
     <string name="title_activity_maps">Map</string>
+    <string name="button">Button</string>
+    <string name="buttonb">Button</string>
 
 </resources>
