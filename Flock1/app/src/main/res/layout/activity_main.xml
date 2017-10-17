@@ -21,6 +21,7 @@
         android:textColor="@color/ButtonGreen"
         android:textColorHint="@color/ButtonGreen" />
 
+
     <EditText
         android:id="@+id/loginPasswordEt"
         android:layout_width="match_parent"
@@ -68,5 +69,16 @@
         android:text="@string/forgot_password"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="14dp"
+        android:layout_toEndOf="@+id/loginCreateAccount"
+        android:text="Button" />
+
 
 </RelativeLayout>
