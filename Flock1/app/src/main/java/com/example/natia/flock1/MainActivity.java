@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                         show();
                                 databaseReference.setValue("Hey im in!");
 
-                                startActivity(new Intent(MainActivity.this, MainHub.class));
+                                startActivity(new Intent(MainActivity.this, MapsActivity.class));
                             } else {
                                 Toast.makeText(MainActivity.this, "Failed to Signed In",
                                         Toast.LENGTH_LONG).show();
