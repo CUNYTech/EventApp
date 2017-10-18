@@ -70,25 +70,5 @@
         android:textColor="@android:color/white"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="14dp"
-        android:layout_toEndOf="@+id/loginCreateAccount"
-        android:text="@string/button" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/loginForgotPassword"
-        android:layout_marginBottom="13dp"
-        android:layout_marginStart="15dp"
-        android:layout_toEndOf="@+id/button3"
-        android:text="@string/buttonb" />
-
 
 </RelativeLayout>
