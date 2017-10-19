@@ -4,10 +4,26 @@ We understand that this comes with its fair share of risks so we intend to mitig
 with is the person that is referenced in their profile. Also, the user will have a chance to accept the person before the 
 connection is established so there are minimal surprises. 
 
-# Cahllenges we ran into:
+# Challenges we ran into:
 *
 *
 *
+
+# Instructions
+```
+
+# Make sure you have your Android Studio and Java installed.
+
+# Clone the app in your computer
+git clone https://github.com/CUNYTech/EventApp.git
+
+# open the Android studio, click "open existing android studio project"
+
+# Find the directory where you cloned your app and click "ok"
+
+# Click on compile and run the project
+
+```
 
 # TechStack: 
 * Java		
