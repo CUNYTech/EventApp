@@ -13,7 +13,7 @@
     <string name="date_of_Birth">Date of Birth</string>
     <string name="email">Email</string>
     <string name="login_title">Login</string>
-    <string name="create_account">Create Account</string>
+    <string name="create_account">Create </string>
     <string name="age">Age</string>
     <string name="createAccountButton">Create Account</string>
     <string name="firstName">First Name</string>
@@ -30,5 +30,6 @@
     <string name="button">Button</string>
     <string name="buttonb">Button</string>
     <string name="forgotPasswordTitle">Enter email:</string>
+    <string name="create__account">Create Account</string>
 
 </resources>
