@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser mUser;
     private Button loginButton;
-    private Button createActButton;
-    private Button forgotPwdButton;
+    private TextView createActButton;
+    private TextView forgotPwdButton;
     private EditText emailField;
     private EditText passwordField;
     private FirebaseDatabase database;
@@ -44,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         loginButton = (Button) findViewById(R.id.loginButtonEt);
-        forgotPwdButton = (Button) findViewById(R.id.loginForgotPassword);
-        createActButton = (Button) findViewById(R.id.loginCreateAccount);
+        forgotPwdButton = (TextView) findViewById(R.id.passwordRecover);
+        createActButton = (TextView) findViewById(R.id.signUp);
         emailField = (EditText) findViewById(R.id.loginEmailEt);
         passwordField = (EditText) findViewById(R.id.loginPasswordEt);
         databaseReference = database.getReference("message");
@@ -157,8 +158,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
 
 
 }
