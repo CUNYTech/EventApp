@@ -118,6 +118,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                             currenUserDb.child("Age").setValue(ag);
                             currenUserDb.child("Image").setValue(resultUri.toString());
 
+
                             mProgressDialog.dismiss();
 
                             //Send users to MainHub

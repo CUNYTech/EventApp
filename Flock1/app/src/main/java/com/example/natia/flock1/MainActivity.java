@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser mUser;
     private Button loginButton;
     private Button createActButton;
+    private Button forgotPwdButton;
     private EditText emailField;
     private EditText passwordField;
     private FirebaseDatabase database;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         loginButton = (Button) findViewById(R.id.loginButtonEt);
+        forgotPwdButton = (Button) findViewById(R.id.loginForgotPassword);
         createActButton = (Button) findViewById(R.id.loginCreateAccount);
         emailField = (EditText) findViewById(R.id.loginEmailEt);
         passwordField = (EditText) findViewById(R.id.loginPasswordEt);
@@ -87,6 +89,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        forgotPwdButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ForgotPasswordActivity.class));
+                finish();
+            }
+        });
+
+
     }
 
     private void login(String email, String pwd) {
