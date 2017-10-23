@@ -59,12 +59,20 @@ public class CreateAccountActivity extends AppCompatActivity {
         createAccountBtn = (Button) findViewById(R.id.createAccountAct);
         profilePic = (ImageButton)  findViewById(R.id.profilePicAct);
 
+
+
+
+        //button create account
+
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createNewAccount();
             }
         });
+
+
+
 
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
