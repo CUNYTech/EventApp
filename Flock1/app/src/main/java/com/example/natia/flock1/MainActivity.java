@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
-    //private static int SPLASH_TIME_OUT=3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
