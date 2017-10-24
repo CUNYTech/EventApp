@@ -118,10 +118,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                             currenUserDb.child("Age").setValue(ag);
                             currenUserDb.child("Image").setValue(resultUri.toString());
 
+
                             mProgressDialog.dismiss();
 
                             //Send users to MainHub
-                            Intent intent = new Intent(CreateAccountActivity.this, MainHub.class);
+                            Intent intent = new Intent(CreateAccountActivity.this, MapsActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //brings this activity to the top
 
                             startActivity(intent);

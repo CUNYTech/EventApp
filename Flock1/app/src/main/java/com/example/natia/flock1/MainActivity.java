@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser mUser;
     private Button loginButton;
-    private Button createActButton;
+    private TextView createActButton;
+    private TextView forgotPwdButton;
     private EditText emailField;
     private EditText passwordField;
     private FirebaseDatabase database;
@@ -43,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         loginButton = (Button) findViewById(R.id.loginButtonEt);
-        createActButton = (Button) findViewById(R.id.loginCreateAccount);
+        forgotPwdButton = (TextView) findViewById(R.id.passwordRecover);
+        createActButton = (TextView) findViewById(R.id.signUp);
         emailField = (EditText) findViewById(R.id.loginEmailEt);
         passwordField = (EditText) findViewById(R.id.loginPasswordEt);
         databaseReference = database.getReference("message");
@@ -87,6 +90,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        forgotPwdButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ForgotPasswordActivity.class));
+                finish();
+            }
+        });
+
+
     }
 
     private void login(String email, String pwd) {
@@ -102,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                                         show();
                                 databaseReference.setValue("Hey im in!");
 
-                                startActivity(new Intent(MainActivity.this, MainHub.class));
+                                startActivity(new Intent(MainActivity.this, MapsActivity.class));
                             } else {
                                 Toast.makeText(MainActivity.this, "Failed to Signed In",
                                         Toast.LENGTH_LONG).show();
@@ -145,8 +158,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
 
 
 }
