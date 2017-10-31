@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "21014979629-go12i5h8uef4m3qhm2ovq29rgubtqiqp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.natia.flock1",
+            "certificate_hash": "da064c5b81de845291b2f5f903ebe2aeee220009"
+          }
+        },
+        {
           "client_id": "21014979629-ihjf9opfk1arvcr22dkflhslt9a6hqrn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
