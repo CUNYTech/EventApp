@@ -21,11 +21,11 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".CreateAccountActivity" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
@@ -43,12 +43,24 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyBvavxFOdqgMzka9vf4vRo_I5KljdvTbTg" />
 
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".ForgotPasswordActivity"></activity>
+
+        <activity
+            android:name=".PlaceActivity"
+            android:label="@string/title_activity_maps" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
