@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.natia.flock1.ForgotPasswordActivity"
+    android:background="@color/Green">
+
+
+    <EditText
+        android:layout_width="351dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="189dp"
+        android:ems="10"
+        android:hint="From"
+        android:inputType="textEmailAddress"
+        android:labelFor="@+id/titleForgotPwd"
+        android:textColor="@color/Text_1"
+        android:textColorHint="@color/Text_1"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/emailForgotPwd"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.925" />
+
+    <EditText
+        android:id="@+id/titleForgotPwd"
+        android:layout_width="351dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="74dp"
+        android:ems="10"
+        android:hint="From"
+        android:inputType="textEmailAddress"
+        android:labelFor="@+id/titleForgotPwd"
+        android:textColor="@color/Text_1"
+        android:textColorHint="@color/Text_1"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/emailForgotPwd"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.925" />
+
+</android.support.constraint.ConstraintLayout>
