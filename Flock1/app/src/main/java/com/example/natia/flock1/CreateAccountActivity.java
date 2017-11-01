@@ -119,8 +119,8 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                             DatabaseReference currenUserDb = mDatabaseReference.child(userid);
                             currenUserDb.child("Email").setValue(em);
-                            currenUserDb.child("First Name").setValue(name);
-                            currenUserDb.child("Last Name").setValue(lname);
+                            currenUserDb.child("First_Name").setValue(name);
+                            currenUserDb.child("Last_Name").setValue(lname);
                             currenUserDb.child("Password").setValue(pwd);
                             currenUserDb.child("Gender").setValue(gen);
                             currenUserDb.child("Age").setValue(ag);

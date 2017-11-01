@@ -76,5 +76,18 @@
     android:layout_alignParentBottom="true"
     android:layout_alignStart="@+id/loginButtonEt" />
 
+    <ImageView
+        android:id="@+id/loginImageViewEt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="121dp"
+        android:adjustViewBounds="true"
+        android:background="@color/ButtonGreen"
+        android:contentDescription="@string/loginLogo"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/flocklogo"
+        android:layout_above="@+id/loginEmailEt"
+        android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>
