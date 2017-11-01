@@ -35,21 +35,21 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
-    //private static int SPLASH_TIME_OUT=3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         loginButton = (Button) findViewById(R.id.loginButtonEt);
         forgotPwdButton = (TextView) findViewById(R.id.passwordRecover);
         createActButton = (TextView) findViewById(R.id.signUp);
         emailField = (EditText) findViewById(R.id.loginEmailEt);
         passwordField = (EditText) findViewById(R.id.loginPasswordEt);
-        databaseReference = database.getReference("message");
+        //databaseReference = database.getReference("message");
         createActButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                                 //Yay!! We're in!
                                 Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).
                                         show();
-                                databaseReference.setValue("Hey im in!");
+                                //databaseReference.setValue("Hey im in!");
 
                                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
                             } else {
