@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -16,7 +17,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+
 /**
  * Created by junhaochen on 10/16/17.
  */
@@ -29,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
-    private  String userID;
+    private String userID;
 
     private ListView mListView;
 
@@ -42,10 +45,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
-
+        myRef = mFirebaseDatabase.getReference()
+                .child("MUsers").child(userID);
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -62,12 +65,12 @@ public class ProfileActivity extends AppCompatActivity {
             }
         };
 
-
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 showData(dataSnapshot);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -77,32 +80,28 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void showData(DataSnapshot dataSnapshot) {
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            UserInformation uInfo = new UserInformation();
+        UserInformation uInfo = new UserInformation();
 
-            //uInfo.setAge(ds.child(userID).getValue(UserInformation.class).getAge());
-            //uInfo.setEmail(ds.child(userID).getValue(UserInformation.class).getEmail());
-            //uInfo.setFirst_Name(ds.child(userID).getValue(UserInformation.class).getFirst_Name());
-            //uInfo.setGender(ds.child(userID).getValue(UserInformation.class).getGender());
-            //uInfo.setLast_Nmae(ds.child(userID).getValue(UserInformation.class).getLast_Nmae());
+        uInfo.setAge(dataSnapshot.getValue(UserInformation.class).getAge());
+        uInfo.setEmail(dataSnapshot.getValue(UserInformation.class).getEmail());
+        uInfo.setFirstName(dataSnapshot.getValue(UserInformation.class).getFirstName());
+        uInfo.setLastName(dataSnapshot.getValue(UserInformation.class).getLastName());
+        uInfo.setGender(dataSnapshot.getValue(UserInformation.class).getGender());
 
-            //display all the information
-            //Log.d(TAG, "showData: firstname: " + uInfo.getFirst_Name());
-            //Log.d(TAG, "showData: email: " + uInfo.getEmail());
-            //Log.d(TAG, "showData: lastname: " + uInfo.getLast_Nmae());
-            //Log.d(TAG, "showData: age: " + uInfo.getAge());
-            //Log.d(TAG, "showData: gender: " + uInfo.getGender());
+        //display all the information
+        Log.d(TAG, "showData: firstname: " + uInfo.getFirstName());
+        Log.d(TAG, "showData: email: " + uInfo.getEmail());
+        Log.d(TAG, "showData: lastname: " + uInfo.getLastName());
+        Log.d(TAG, "showData: age: " + uInfo.getAge());
+        Log.d(TAG, "showData: gender: " + uInfo.getGender());
+        ArrayList<String> array = new ArrayList<>();
+        array.add(uInfo.getFirstName());
+        array.add(uInfo.getLastName());
+        array.add(uInfo.getAge());
+        array.add(uInfo.getGender());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, array);
+        mListView.setAdapter(adapter);
 
-            ArrayList<String> array  = new ArrayList<>();
-            //array.add(uInfo.getFirst_Name());
-            //array.add(uInfo.getLast_Nmae());
-            array.add("testing");
-            array.add(myRef.child("MUsers").child(userID).child("Email").getKey().toString());
-            //array.add(uInfo.getAge());
-            //array.add(uInfo.getGender());
-            ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,array);
-            mListView.setAdapter(adapter);
-        }
     }
 
     @Override
@@ -122,9 +121,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     /**
      * customizable toast
+     *
      * @param message
      */
-    private void toastMessage(String message){
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    private void toastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

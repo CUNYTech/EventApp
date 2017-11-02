@@ -51,8 +51,8 @@
     android:layout_alignEnd="@+id/loginPasswordEt"
     android:textColor="@color/Text_2"/>
 
-    //place holder to access profile page for now
-    <Button
+    <!--place holder to access profile page for now-->
+    <!--<Button
         android:id="@+id/profileButtonEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         android:textColor="@color/Text_2"
         android:layout_marginTop="47dp"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/loginEmailEt" />
+        android:layout_alignStart="@+id/loginEmailEt" />-->
 
 
     <TextView
