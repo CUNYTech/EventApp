@@ -61,7 +61,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
 
-
         //button create account
 
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
@@ -105,8 +104,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         public void onSuccess(AuthResult authResult) {
                 if(authResult != null) {
 
-                    StorageReference imagePath = mFirebaseStorage.child("MFlock_Profile_Pics")
-                            .child(resultUri.getLastPathSegment());
+                    StorageReference imagePath = mFirebaseStorage.child("MFlock_Profile_Pics");
 
                     imagePath.putFile(resultUri).addOnSuccessListener
                             (new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -117,19 +115,17 @@ public class CreateAccountActivity extends AppCompatActivity {
                             //will be shown in the database as a json object
                             String userid = mAuth.getCurrentUser().getUid();
 
-                            DatabaseReference currenUserDb = mDatabaseReference.child(userid);
-                            currenUserDb.child("Email").setValue(em);
-                            currenUserDb.child("First_Name").setValue(name);
-                            currenUserDb.child("Last_Name").setValue(lname);
-                            currenUserDb.child("Password").setValue(pwd);
-                            currenUserDb.child("Gender").setValue(gen);
-                            currenUserDb.child("Age").setValue(ag);
-                            currenUserDb.child("Image").setValue(resultUri.toString());
+                            DatabaseReference currentUserDb = mDatabaseReference.child(userid);
+                            currentUserDb.child("firstName").setValue(name);
+                            currentUserDb.child("lastName").setValue(lname);
+                            currentUserDb.child("gender").setValue(gen);
+                            currentUserDb.child("age").setValue(ag);
+                            currentUserDb.child("image").setValue(resultUri.toString());
 
 
                             mProgressDialog.dismiss();
 
-                            //Send users to MainHub
+                            //Send users to Map page
                             Intent intent = new Intent(CreateAccountActivity.this, MapsActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //brings this activity to the top
 
