@@ -44,6 +44,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
+
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mDatabase.getReference().child("MUsers");
         mAuth = FirebaseAuth.getInstance();
@@ -63,17 +64,16 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
         //button create account
-
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createNewAccount();
+                createNewAccount();             //call createAccount Method
             }
         });
 
 
 
-
+        //when you click the Profile Pic button
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +93,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         final String gen = gender.getText().toString().trim();
         final String ag = age.getText().toString().trim();
 
+        //will use this if everything is filled out including the pic
         if(!TextUtils.isEmpty(em) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(lname)
                 && !TextUtils.isEmpty(pwd) && !TextUtils.isEmpty(gen) && !TextUtils.isEmpty(ag)) {
 
@@ -100,46 +101,96 @@ public class CreateAccountActivity extends AppCompatActivity {
             mProgressDialog.show();
 
             mAuth.createUserWithEmailAndPassword(em, pwd)
-                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            if(authResult != null) {
+                if(authResult != null) {
 
-                                StorageReference imagePath = mFirebaseStorage.child("MFlock_Profile_Pics")
-                                        .child(resultUri.getLastPathSegment());
+                    StorageReference imagePath = mFirebaseStorage.child("MFlock_Profile_Pics")
+                        .child(resultUri.getLastPathSegment());
 
-                                imagePath.putFile(resultUri).addOnSuccessListener
-                                        (new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                            @Override
-                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imagePath.putFile(resultUri).addOnSuccessListener
+                        (new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                                                //this creates the user and then adds properties to that user as its children
-                                                //will be shown in the database as a json object
-                                                String userid = mAuth.getCurrentUser().getUid();
+                            //this creates the user and then adds properties to that user as its children
+                            //will be shown in the database as a json object
+                            String userid = mAuth.getCurrentUser().getUid();
 
-                                                DatabaseReference currenUserDb = mDatabaseReference.child(userid);
-                                                currenUserDb.child("firstName").setValue(name);
-                                                currenUserDb.child("lastName").setValue(lname);
-                                                currenUserDb.child("gender").setValue(gen);
-                                                currenUserDb.child("age").setValue(ag);
-                                                currenUserDb.child("image").setValue(resultUri.toString());
-
-
-                                                mProgressDialog.dismiss();
+                            DatabaseReference currentUserDb = mDatabaseReference.child(userid);
+                            currentUserDb.child("firstName").setValue(name);
+                            currentUserDb.child("lastName").setValue(lname);
+                            currentUserDb.child("gender").setValue(gen);
+                            currentUserDb.child("age").setValue(ag);
+                            currentUserDb.child("image").setValue(resultUri.toString());
 
 
-                                                //Send users to MainHub
-                                                Intent intent = new Intent(CreateAccountActivity.this, ProfileActivity.class);
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //brings this activity to the top
-
-                                                startActivity(intent);
-                                            }
-                                        });
+                            mProgressDialog.dismiss();
 
 
-                            }
+                            //Send users to Map
+                            Intent intent = new Intent(CreateAccountActivity.this, MapsActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //brings this activity to the top
+
+                            startActivity(intent);
                         }
-                    });
+                        });
+
+
+                    }
+                    }
+                });
+        }
+
+        //will use this if everything is filled out including the pic
+        if(!TextUtils.isEmpty(em) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(lname)
+                && !TextUtils.isEmpty(pwd)) {
+
+            mProgressDialog.setMessage("Creating Account...");
+            mProgressDialog.show();
+
+            mAuth.createUserWithEmailAndPassword(em, pwd)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                @Override
+                public void onSuccess(AuthResult authResult) {
+                    if(authResult != null) {
+
+                        StorageReference imagePath = mFirebaseStorage.child("MFlock_Profile_Pics")
+                                .child(resultUri.getLastPathSegment());
+
+                        imagePath.putFile(resultUri).addOnSuccessListener
+                            (new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                //this creates the user and then adds properties to that user as its children
+                                //will be shown in the database as a json object
+                                String userid = mAuth.getCurrentUser().getUid();
+
+                                DatabaseReference currentUserDb = mDatabaseReference.child(userid);
+                                currentUserDb.child("firstName").setValue(name);
+                                currentUserDb.child("lastName").setValue(lname);
+                                currentUserDb.child("gender").setValue(gen);
+                                currentUserDb.child("age").setValue(ag);
+                                currentUserDb.child("image").setValue(resultUri.toString());
+
+
+                                mProgressDialog.dismiss();
+
+
+                                //Send users to Map
+                                Intent intent = new Intent(CreateAccountActivity.this, MapsActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //brings this activity to the top
+
+                                startActivity(intent);
+                            }
+                        });
+
+
+                    }
+                    }
+                });
         }
     }
 
@@ -149,7 +200,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         //lets us crop the image selected by clicking the icon
         //got from https://github.com/ArthurHub/Android-Image-Cropper
-        if(requestCode ==GALLERY_CODE && resultCode == RESULT_OK){
+        if(requestCode == GALLERY_CODE && resultCode == RESULT_OK){
             Uri mImageUri = data.getData();
 
             CropImage.activity(mImageUri)
