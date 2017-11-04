@@ -13,7 +13,7 @@
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="FOOBSR"
+        android:text="@string/user_profile"
         android:textAlignment="center"
         android:textColor="@color/Text_1"
         android:textSize="30sp">
@@ -55,7 +55,7 @@
         android:textAlignment="center"
         android:textColor="@color/Text_1"
         android:background="@color/Text_1"
-        android:textSize="14sp"
+        android:textSize="50sp"
         android:layout_below="@+id/profilePicAct"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"

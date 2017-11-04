@@ -33,7 +33,6 @@
     <string name="create__account">Create Account</string>
     <string name="enter_your_email">Enter your email</string>
     <string name="repeat_your_email">Repeat your email</string>
-    <string name="google_maps_key">AIzaSyCuBTd3is-YjymiXrZnFFfm-DNsRq7aejo</string>
-    <string name="loginLogo">loginLogo</string>
+    <string name="user_profile">User Profile</string>
 
 </resources>

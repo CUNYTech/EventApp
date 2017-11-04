@@ -61,6 +61,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
 
+
         //button create account
 
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
@@ -102,41 +103,43 @@ public class CreateAccountActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                if(authResult != null) {
+                            if(authResult != null) {
 
-                    StorageReference imagePath = mFirebaseStorage.child("MFlock_Profile_Pics");
+                                StorageReference imagePath = mFirebaseStorage.child("MFlock_Profile_Pics")
+                                        .child(resultUri.getLastPathSegment());
 
-                    imagePath.putFile(resultUri).addOnSuccessListener
-                            (new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                imagePath.putFile(resultUri).addOnSuccessListener
+                                        (new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            //this creates the user and then adds properties to that user as its children
-                            //will be shown in the database as a json object
-                            String userid = mAuth.getCurrentUser().getUid();
+                                                //this creates the user and then adds properties to that user as its children
+                                                //will be shown in the database as a json object
+                                                String userid = mAuth.getCurrentUser().getUid();
 
-                            DatabaseReference currentUserDb = mDatabaseReference.child(userid);
-                            currentUserDb.child("firstName").setValue(name);
-                            currentUserDb.child("lastName").setValue(lname);
-                            currentUserDb.child("gender").setValue(gen);
-                            currentUserDb.child("age").setValue(ag);
-                            currentUserDb.child("image").setValue(resultUri.toString());
+                                                DatabaseReference currenUserDb = mDatabaseReference.child(userid);
+                                                currenUserDb.child("firstName").setValue(name);
+                                                currenUserDb.child("lastName").setValue(lname);
+                                                currenUserDb.child("gender").setValue(gen);
+                                                currenUserDb.child("age").setValue(ag);
+                                                currenUserDb.child("image").setValue(resultUri.toString());
 
 
-                            mProgressDialog.dismiss();
+                                                mProgressDialog.dismiss();
 
-                            //Send users to Map page
-                            Intent intent = new Intent(CreateAccountActivity.this, MapsActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //brings this activity to the top
 
-                            startActivity(intent);
+                                                //Send users to MainHub
+                                                Intent intent = new Intent(CreateAccountActivity.this, ProfileActivity.class);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //brings this activity to the top
+
+                                                startActivity(intent);
+                                            }
+                                        });
+
+
+                            }
                         }
                     });
-
-
-                }
-                }
-            });
         }
     }
 

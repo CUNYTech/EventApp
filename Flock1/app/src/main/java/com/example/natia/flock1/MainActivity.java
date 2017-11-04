@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                                         show();
                                 //databaseReference.setValue("Hey im in!");
 
-                                startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                                startActivity(new Intent(MainActivity.this, ProfileActivity.class)); //link to profile page for test
                             } else {
                                 Toast.makeText(MainActivity.this, "Failed to Signed In",
                                         Toast.LENGTH_LONG).show();
