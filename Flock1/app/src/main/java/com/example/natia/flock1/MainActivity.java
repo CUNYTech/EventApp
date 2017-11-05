@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).
                                 show();
 
-                        startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                        startActivity(new Intent(MainActivity.this, MainHub.class));
                     } else {
                         Toast.makeText(MainActivity.this, "Failed to Signed In",
                                 Toast.LENGTH_LONG).show();

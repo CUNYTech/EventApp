@@ -1,6 +1,7 @@
 package com.example.natia.flock1;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,15 +15,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import Fragments.MapsFragment;
 import Fragments.ProfileFragment;
 
 public class MainHub extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_main_hub);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,6 +84,12 @@ public class MainHub extends AppCompatActivity
             return true;
         }
 
+        if(id== R.id.action_signout) {
+            mAuth.signOut();
+        }
+
+
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -108,6 +120,10 @@ public class MainHub extends AppCompatActivity
         } else if (id == R.id.nav_friends) {
 
         } else if (id == R.id.nav_signout) {
+            mAuth.signOut();
+            Intent intent = new Intent(MainHub.this, MainActivity.class);
+            startActivity(intent);
+            //will sign the user out
 
         } else if (id == R.id.nav_share) {
 
