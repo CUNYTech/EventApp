@@ -29,7 +29,8 @@
         </intent-filter>
         -->
     </activity>
-    <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
+    <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+        android:theme="@style/Base.Theme.AppCompat"/>
         <activity
             android:name=".spalsh_page"
             android:theme="@style/SplashTheme">
@@ -60,7 +61,12 @@
             android:label="@string/title_activity_maps" />
 
         <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".CreateAccountActivity" android:exported="false"></activity>
+        <activity
+            android:name=".CreateAccountActivity"
+            android:exported="false">
+
+
+        </activity>
 
     </application>
 

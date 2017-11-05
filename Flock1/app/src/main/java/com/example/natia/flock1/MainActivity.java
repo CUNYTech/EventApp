@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mUser = firebaseAuth.getCurrentUser();
 
+                //take the current user and let the user know if they are signed in
                 if (mUser != null) {
                     Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).show();
                 } else {
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
+        //happens when you press the login button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     String email = emailField.getText().toString();
                     String pwd = passwordField.getText().toString();
 
+                    //pass the email and password to the login method
                     login(email, pwd);
 
 
@@ -91,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //take the user to Forgot Password page if they press the button
         forgotPwdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,27 +106,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //email and password are passed to the method
     private void login(String email, String pwd) {
         if(!email.equals("") && !pwd.equals("")) {
             mAuth.signInWithEmailAndPassword(email, pwd).
-                    addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+                addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            if (task.isSuccessful()) {
-                                //Yay!! We're in!
-                                Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).
-                                        show();
-                                //databaseReference.setValue("Hey im in!");
+                    if (task.isSuccessful()) {
+                        Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).
+                                show();
 
-                                startActivity(new Intent(MainActivity.this, ProfileActivity.class)); //link to profile page for test
-                            } else {
-                                Toast.makeText(MainActivity.this, "Failed to Signed In",
-                                        Toast.LENGTH_LONG).show();
-                            }
+                        startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                    } else {
+                        Toast.makeText(MainActivity.this, "Failed to Signed In",
+                                Toast.LENGTH_LONG).show();
+                    }
 
-                        }
-                    });
+                }
+                });
 
         }
     }
@@ -134,8 +137,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-
-
     }
 
     @Override

@@ -34,5 +34,14 @@
     <string name="enter_your_email">Enter your email</string>
     <string name="repeat_your_email">Repeat your email</string>
     <string name="user_profile">User Profile</string>
+    <string name="loginLogo">Flock</string>
+    <string name="firstFrag">Main Fragment</string>
+    <string name="profileFrag">Profile Placeholder</string>
+    <string-array name="gender_options">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+        <item>I Care Not to Answer</item>
+    </string-array>
 
 </resources>

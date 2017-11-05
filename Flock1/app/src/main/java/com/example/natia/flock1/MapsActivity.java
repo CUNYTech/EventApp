@@ -2,6 +2,9 @@ package com.example.natia.flock1;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -46,5 +49,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstaceState) {
+        View rootView = inflater.inflate(R.layout.activity_maps, container, false);
 
+        return rootView;
+    }
 }
