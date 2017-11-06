@@ -21,11 +21,18 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".CreateAccountActivity" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
@@ -48,19 +55,13 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".ForgotPasswordActivity"></activity>
-
+        <activity android:name=".ForgotPasswordActivity" />
         <activity
             android:name=".PlaceActivity"
-            android:label="@string/title_activity_maps" >
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/title_activity_maps">
         </activity>
-
+        <activity android:name=".FromTo">
+        </activity>
     </application>
 
 </manifest>

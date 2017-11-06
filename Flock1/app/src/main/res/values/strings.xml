@@ -33,5 +33,6 @@
     <string name="create__account">Create Account</string>
     <string name="enter_your_email">Enter your email</string>
     <string name="repeat_your_email">Repeat your email</string>
+    <string name="title_activity_fromto">Fromto</string>
 
 </resources>

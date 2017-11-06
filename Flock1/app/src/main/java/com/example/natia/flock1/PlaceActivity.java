@@ -45,6 +45,5 @@ public class PlaceActivity extends FragmentActivity {
             e.printStackTrace();
         }
 
-
     }
 }
