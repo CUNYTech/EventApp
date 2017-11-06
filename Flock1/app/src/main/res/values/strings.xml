@@ -37,6 +37,8 @@
     <string name="loginLogo">Flock</string>
     <string name="firstFrag">Main Fragment</string>
     <string name="profileFrag">Profile Placeholder</string>
+    <string name="currentUserMainHub">Current User</string>
+    <string name="currentUserEmailMainHub">john.doe@gmail.com</string>
     <string-array name="gender_options">
         <item>Male</item>
         <item>Female</item>

@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
         //setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        mAuth = FirebaseAuth.getInstance();
+
         loginButton = (Button) findViewById(R.id.loginButtonEt);
         forgotPwdButton = (TextView) findViewById(R.id.passwordRecover);
         createActButton = (TextView) findViewById(R.id.signUp);

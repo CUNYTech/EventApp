@@ -58,6 +58,13 @@ public class Customer {
         this.password = password;
     }
 
+    public Customer(String email_address, String first_name, String last_name) {
+
+        this.email_address = email_address;
+        this.first_name = first_name;
+        this.last_name = last_name;
+    }
+
     public int getId() {
         return id;
     }
