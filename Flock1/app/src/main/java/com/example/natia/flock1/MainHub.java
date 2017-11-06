@@ -115,7 +115,7 @@ public class MainHub extends AppCompatActivity
         Log.d("CurrentUser1",fullName + " " + email);
         nav_user.setText(fullName);
         nav_userEmail.setText(email);
-
+//
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
     }
