@@ -34,14 +34,21 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordField;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    static boolean calledAlready = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+
+        if(!calledAlready) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            calledAlready = true;
+        }
+
         setContentView(R.layout.activity_main);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         mAuth = FirebaseAuth.getInstance();
 
         loginButton = (Button) findViewById(R.id.loginButtonEt);
