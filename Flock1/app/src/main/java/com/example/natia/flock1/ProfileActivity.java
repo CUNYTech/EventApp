@@ -10,7 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.net.Uri;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,7 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 
 import java.util.ArrayList;
 
@@ -36,7 +42,9 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private String userID;
     private ImageView imageView;
-    //private StorageReference storageRef = storage.getReference();
+    private FirebaseStorage fstorage;
+    private StorageReference storageRef;
+    private String emailAdd;
 
     private ListView mListView;
 
@@ -48,14 +56,29 @@ public class ProfileActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.userProfilelistview);
         imageView = (ImageView)findViewById(R.id.profilePicAct);
 
+        fstorage = FirebaseStorage.getInstance();
+        storageRef = fstorage.getReference();
+
+        /*storageRef.child("MFlock_Profile_Pics/MFlock_Profile_Pics/cropped8295209993791726610.jpg").getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>(){
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                    }
+                });
+
         //url holder for testing until database fix so i can get correct download url for the login user
         String url = "https://firebasestorage.googleapis.com/v0/b/flock-a5c97.appspot.com/o/MFlock_Profile_Pics%2FMFlock_Profile_Pics%2Fcropped8295209993791726610.jpg?alt=media&token=0d68fb79-9931-4240-bbb1-4250cec05483";
-       // Glide.with(this )
+
+        Glide.with(getApplicationContext()).load(url).into(imageView);*/
+
+
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
+        emailAdd = user.getEmail();
         myRef = mFirebaseDatabase.getReference()
                 .child("MUsers").child(userID);
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -73,6 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         };
+
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,11 +116,33 @@ public class ProfileActivity extends AppCompatActivity {
         UserInformation uInfo = new UserInformation();
 
         uInfo.setAge(dataSnapshot.getValue(UserInformation.class).getAge());
-        uInfo.setEmail(dataSnapshot.getValue(UserInformation.class).getEmail());
         uInfo.setFirstName(dataSnapshot.getValue(UserInformation.class).getFirstName());
         uInfo.setLastName(dataSnapshot.getValue(UserInformation.class).getLastName());
         uInfo.setGender(dataSnapshot.getValue(UserInformation.class).getGender());
+
         uInfo.setImage(dataSnapshot.getValue(UserInformation.class).getImage());
+
+        //holder until database is fix
+        String picname ="cropped8295209993791726610.jpg";
+        //String picname =uInfo.getImage(); //after change the database to only storage picture's name
+
+        storageRef.child("MFlock_Profile_Pics/MFlock_Profile_Pics/"+picname).getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>(){
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(getApplicationContext()).load(uri).into(imageView);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d(TAG, "fail to retrive imageDL url");
+            }
+        });
+
+        //url holder for testing until database fix so i can get correct download url for the login user
+        //String url = "https://firebasestorage.googleapis.com/v0/b/flock-a5c97.appspot.com/o/MFlock_Profile_Pics%2FMFlock_Profile_Pics%2Fcropped8295209993791726610.jpg?alt=media&token=0d68fb79-9931-4240-bbb1-4250cec05483";
+
+        //Glide.with(getApplicationContext()).load(url).into(imageView);
 
         //display all the information
         Log.d(TAG, "showData: firstname: " + uInfo.getFirstName());
@@ -104,13 +150,14 @@ public class ProfileActivity extends AppCompatActivity {
         Log.d(TAG, "showData: lastname: " + uInfo.getLastName());
         Log.d(TAG, "showData: age: " + uInfo.getAge());
         Log.d(TAG, "showData: gender: " + uInfo.getGender());
-        //Log.d(TAG, "showData: image: " + uInfo.getImage());
+        Log.d(TAG, "showData: email: " + uInfo.getEmail());
         ArrayList<String> array = new ArrayList<>();
         array.add("First Name: "+uInfo.getFirstName());
         array.add("Last Name:"+uInfo.getLastName());
         array.add("Age: "+uInfo.getAge());
         array.add("Gender: "+uInfo.getGender());
-        array.add(uInfo.getImage());
+        array.add("Email: "+emailAdd);
+        //array.add(uInfo.getImage());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, array);
         mListView.setAdapter(adapter);
 
