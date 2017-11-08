@@ -1,10 +1,11 @@
 package com.example.natia.flock1;
 
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,13 +13,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import Fragments.MapsFragment;
+import Fragments.ProfileFragment;
 
 public class MainHub extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstank09ceState);
+        mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_main_hub);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,6 +50,9 @@ public class MainHub extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FragmentManager fm = getFragmentManager();
+        fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
     }
 
     @Override
@@ -71,22 +84,46 @@ public class MainHub extends AppCompatActivity
             return true;
         }
 
+        if(id== R.id.action_signout) {
+            mAuth.signOut();
+        }
+
+
+
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
+
+    //this corresponds to all the things in the sliding menu
     public boolean onNavigationItemSelected(MenuItem item) {
+
+        //need to import the fragment manager to handle our different fragments
+        FragmentManager fm = getFragmentManager();
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_profile) {
+            // Will handle the profile action
+            //need to reference the container for our fragments which is in content_main_hub
+            fm.beginTransaction().replace(R.id.main_navi, new ProfileFragment()).commit();
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_map) {
+            // Will handle the map action
+            //need to reference the container for our fragments which is in content_main_hub
+            fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_chat) {
+
+        } else if (id == R.id.nav_friends) {
+
+        } else if (id == R.id.nav_signout) {
+            mAuth.signOut();
+            Intent intent = new Intent(MainHub.this, MainActivity.class);
+            startActivity(intent);
+            //will sign the user out
 
         } else if (id == R.id.nav_share) {
 

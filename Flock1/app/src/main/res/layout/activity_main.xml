@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,32 +10,32 @@
 
 
     <EditText
-    android:id="@+id/loginEmailEt"
-    android:layout_width="305dp"
-    android:layout_height="45dp"
-    android:ems="10"
-    android:inputType="textEmailAddress"
-    android:textColor="@color/Text_1"
-    tools:hint="Username"
-    android:layout_above="@+id/loginPasswordEt"
-    android:layout_centerHorizontal="true"
-    android:layout_marginBottom="13sp"
-    android:textColorHint="@color/Text_1"/>
+        android:id="@+id/loginEmailEt"
+        android:layout_width="305dp"
+        android:layout_height="45dp"
+        android:layout_above="@+id/loginPasswordEt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11sp"
+        android:ems="10"
+        android:textColor="@color/Text_1"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email"
+        android:textColorHint="@color/Text_1"/>
 
 
     <EditText
-    android:id="@+id/loginPasswordEt"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_above="@+id/loginButtonEt"
-    android:layout_alignEnd="@+id/loginEmailEt"
-    android:layout_alignStart="@+id/loginEmailEt"
-    android:layout_marginBottom="11sp"
-    android:ems="10"
-    android:textColor="@color/Text_1"
-    android:inputType="textPassword"
-    android:hint="@string/password"
-    android:textColorHint="@color/Text_1"/>
+        android:id="@+id/loginPasswordEt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/loginButtonEt"
+        android:layout_alignEnd="@+id/loginEmailEt"
+        android:layout_alignStart="@+id/loginEmailEt"
+        android:layout_marginBottom="11sp"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textColor="@color/Text_1"
+        android:textColorHint="@color/Text_1" />
 
 
     <Button
@@ -49,6 +50,19 @@
     android:layout_alignStart="@+id/loginPasswordEt"
     android:layout_alignEnd="@+id/loginPasswordEt"
     android:textColor="@color/Text_2"/>
+
+    <!--place holder to access profile page for now-->
+    <!--<Button
+        android:id="@+id/profileButtonEt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="review profile"
+        android:textSize="20sp"
+        android:background="@drawable/button_style"
+        android:textColor="@color/Text_2"
+        android:layout_marginTop="47dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/loginEmailEt" />-->
 
 
     <TextView
@@ -74,6 +88,19 @@
     android:textColor="@color/Text_1"
     android:layout_alignParentBottom="true"
     android:layout_alignStart="@+id/loginButtonEt" />
+
+    <ImageView
+        android:id="@+id/loginImageViewEt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="121dp"
+        android:adjustViewBounds="true"
+        android:background="@color/ButtonGreen"
+        android:contentDescription="@string/loginLogo"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/flocklogo"
+        android:layout_above="@+id/loginEmailEt"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
