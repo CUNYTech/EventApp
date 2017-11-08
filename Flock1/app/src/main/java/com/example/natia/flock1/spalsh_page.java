@@ -27,7 +27,7 @@ public class spalsh_page extends AppCompatActivity {
         //if not, the user will have to login
         if(mUser!= null) {
             super.onCreate(savedInstanceState);
-            Intent intent = new Intent(this, MainHub.class);
+            Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
             finish();
         } else {

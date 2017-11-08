@@ -19,7 +19,7 @@
         android:textSize="30sp">
     </TextView>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/profilePicAct"
         android:layout_width="128dp"
         android:layout_height="117dp"

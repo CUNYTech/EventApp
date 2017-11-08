@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -33,6 +35,8 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private String userID;
+    private ImageView imageView;
+    //private StorageReference storageRef = storage.getReference();
 
     private ListView mListView;
 
@@ -42,6 +46,11 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         mListView = (ListView) findViewById(R.id.userProfilelistview);
+        imageView = (ImageView)findViewById(R.id.profilePicAct);
+
+        //url holder for testing until database fix so i can get correct download url for the login user
+        String url = "https://firebasestorage.googleapis.com/v0/b/flock-a5c97.appspot.com/o/MFlock_Profile_Pics%2FMFlock_Profile_Pics%2Fcropped8295209993791726610.jpg?alt=media&token=0d68fb79-9931-4240-bbb1-4250cec05483";
+       // Glide.with(this )
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -87,6 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
         uInfo.setFirstName(dataSnapshot.getValue(UserInformation.class).getFirstName());
         uInfo.setLastName(dataSnapshot.getValue(UserInformation.class).getLastName());
         uInfo.setGender(dataSnapshot.getValue(UserInformation.class).getGender());
+        uInfo.setImage(dataSnapshot.getValue(UserInformation.class).getImage());
 
         //display all the information
         Log.d(TAG, "showData: firstname: " + uInfo.getFirstName());
@@ -94,11 +104,13 @@ public class ProfileActivity extends AppCompatActivity {
         Log.d(TAG, "showData: lastname: " + uInfo.getLastName());
         Log.d(TAG, "showData: age: " + uInfo.getAge());
         Log.d(TAG, "showData: gender: " + uInfo.getGender());
+        //Log.d(TAG, "showData: image: " + uInfo.getImage());
         ArrayList<String> array = new ArrayList<>();
-        array.add(uInfo.getFirstName());
-        array.add(uInfo.getLastName());
-        array.add(uInfo.getAge());
-        array.add(uInfo.getGender());
+        array.add("First Name: "+uInfo.getFirstName());
+        array.add("Last Name:"+uInfo.getLastName());
+        array.add("Age: "+uInfo.getAge());
+        array.add("Gender: "+uInfo.getGender());
+        array.add(uInfo.getImage());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, array);
         mListView.setAdapter(adapter);
 
