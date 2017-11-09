@@ -56,13 +56,27 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+
+
         <activity android:name=".ProfileActivity"></activity>
+        <activity
+            android:name=".PlaceActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".FromTo" />
         <activity
             android:name=".CreateAccountActivity"
             android:exported="false">
 
 
         </activity>
+        <activity
+            android:name=".destination"
+            android:label="@string/title_activity_destination"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".start"
+            android:label="@string/title_activity_start"
+            android:theme="@style/AppTheme"></activity>
 
     </application>
 

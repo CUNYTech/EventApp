@@ -45,5 +45,13 @@
         <item>Other</item>
         <item>I Care Not to Answer</item>
     </string-array>
-
+    <string name="title_activity_start">start</string>
+    <string name="title_activity_destination">destination</string>
+    <string name="confirm_destination">Confirm Destination</string>
+    <string name="confirm_start">Confirm Start</string>
+    <string name="borough">Borough</string>
+    <string name="destination_train_station">Destination Train Station</string>
+    <string name="train_station_name">Train Station Name</string>
+    <string name="train_line">Train-line</string>
+    <string name="title_activity_fromto">Fromto</string>
 </resources>

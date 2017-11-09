@@ -125,11 +125,19 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).
                                 show();
 
-                        startActivity(new Intent(MainActivity.this, MainHub.class));
-                    } else {
-                        Toast.makeText(MainActivity.this, "Failed to Signed In",
-                                Toast.LENGTH_LONG).show();
-                    }
+//<<<<<<< HEAD
+                                startActivity(new Intent(MainActivity.this, FromTo.class));
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to Signed In",
+                                        Toast.LENGTH_LONG).show();
+                            }
+//=======
+//                        startActivity(new Intent(MainActivity.this, MainHub.class));
+//                    } else {
+//                        Toast.makeText(MainActivity.this, "Failed to Signed In",
+//                                Toast.LENGTH_LONG).show();
+//                    }
+//>>>>>>> 1ed57c0d256b183f2a28506e572bb8ce4f74920e
 
                 }
                 });

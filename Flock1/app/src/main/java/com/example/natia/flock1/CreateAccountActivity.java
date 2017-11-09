@@ -28,7 +28,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import static com.example.natia.flock1.R.id.genderSpinnerAct;
 
-public class CreateAccountActivity extends AppCompatActivity {
+public class  CreateAccountActivity extends AppCompatActivity {
     private EditText email;
     private EditText firstName;
     private EditText lastName;
