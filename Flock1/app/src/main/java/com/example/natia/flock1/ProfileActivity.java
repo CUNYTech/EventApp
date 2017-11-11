@@ -120,10 +120,13 @@ public class ProfileActivity extends AppCompatActivity {
         uInfo.setLastName(dataSnapshot.getValue(UserInformation.class).getLastName());
         uInfo.setGender(dataSnapshot.getValue(UserInformation.class).getGender());
 
+        //get image name from database
         uInfo.setImage(dataSnapshot.getValue(UserInformation.class).getImage());
 
         //holder until database is fix
-        String picname ="cropped8295209993791726610.jpg";
+        //String picname ="cropped8295209993791726610.jpg";
+
+        String picname = uInfo.getImage().substring(uInfo.getImage().lastIndexOf("/")+1);
         //String picname =uInfo.getImage(); //after change the database to only storage picture's name
 
         storageRef.child("MFlock_Profile_Pics/MFlock_Profile_Pics/"+picname).getDownloadUrl()

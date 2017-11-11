@@ -147,7 +147,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
                             //Send users to Map
-                            Intent intent = new Intent(CreateAccountActivity.this, MainHub.class);
+                            Intent intent = new Intent(CreateAccountActivity.this, ProfileActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //brings this activity to the top
 
                             startActivity(intent);
