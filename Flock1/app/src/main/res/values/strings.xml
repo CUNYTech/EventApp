@@ -53,5 +53,17 @@
     <string name="destination_train_station">Destination Train Station</string>
     <string name="train_station_name">Train Station Name</string>
     <string name="train_line">Train-line</string>
+    <string name="destination">destination</string>
+    <string name="pick_a_borough">Pick a Borough</string>
+    <string name="pick_a_train_line">Pick a Train line</string>
+    <string name="starting_train_station">Starting Train Station</string>
 
+
+    <string-array name="borough_options">
+        <item>Manhattan</item>
+        <item>Queens</item>
+        <item>Brooklyn</item>
+        <item>Bronx</item>
+        <item>Staten Island</item>
+    </string-array>
 </resources>
