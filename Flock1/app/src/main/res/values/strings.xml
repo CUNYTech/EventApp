@@ -33,17 +33,25 @@
     <string name="create__account">Create Account</string>
     <string name="enter_your_email">Enter your email</string>
     <string name="repeat_your_email">Repeat your email</string>
+    <string name="title_activity_fromto">Fromto</string>
     <string name="user_profile">User Profile</string>
     <string name="loginLogo">Flock</string>
     <string name="firstFrag">Main Fragment</string>
     <string name="profileFrag">Profile Placeholder</string>
-    <string name="currentUserMainHub">Current User</string>
-    <string name="currentUserEmailMainHub">john.doe@gmail.com</string>
+
     <string-array name="gender_options">
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
         <item>I Care Not to Answer</item>
     </string-array>
+    <string name="title_activity_start">start</string>
+    <string name="title_activity_destination">destination</string>
+    <string name="confirm_destination">Confirm Destination</string>
+    <string name="confirm_start">Confirm Start</string>
+    <string name="borough">Borough</string>
+    <string name="destination_train_station">Destination Train Station</string>
+    <string name="train_station_name">Train Station Name</string>
+    <string name="train_line">Train-line</string>
 
 </resources>
