@@ -11,12 +11,10 @@
         android:id="@+id/emailAct"
         android:layout_width="350dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="162dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:labelFor="@+id/emailAct"
@@ -28,18 +26,16 @@
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/profilePicAct" />
 
     <EditText
         android:id="@+id/firstNameAct"
         android:layout_width="350dp"
         android:layout_height="44dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="11dp"
         android:ems="10"
         android:hint="@string/firstName"
         android:inputType="textPersonName"
@@ -48,7 +44,7 @@
         android:textColorHint="@color/Text_1"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/lastNameAct"
-        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailAct"
@@ -58,12 +54,10 @@
         android:id="@+id/lastNameAct"
         android:layout_width="347dp"
         android:layout_height="46dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="@string/last_name"
         android:inputType="textPersonName"
@@ -83,12 +77,10 @@
         android:id="@+id/passwordAct"
         android:layout_width="347dp"
         android:layout_height="41dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
@@ -107,12 +99,10 @@
         android:id="@+id/createAccountAct"
         android:layout_width="342dp"
         android:layout_height="52dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="26dp"
         android:background="@drawable/button_style"
         android:labelFor="@+id/createAccountAct"
         android:textColor="@color/Green"
@@ -124,19 +114,19 @@
         app:layout_constraintTop_toBottomOf="@+id/ageAct"
         app:layout_constraintVertical_bias="0.0"
         android:text="@string/create__account"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_bias="0.49"
+        android:layout_marginTop="33dp" />
 
 
     <EditText
         android:id="@+id/ageAct"
         android:layout_width="351dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="14dp"
         android:ems="10"
         android:hint="@string/age"
         android:inputType="date"
@@ -148,48 +138,24 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/genderSpinnerAct" />
-<!--
-    <EditText
-        android:id="@+id/genderAct"
-        android:layout_width="351dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="13dp"
-        android:ems="10"
-        android:hint="@string/gender"
-        android:inputType="text"
-        android:labelFor="@+id/genderAct"
-        android:textColor="@color/Text_1"
-        android:textColorHint="@color/Text_1"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/ageAct"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordAct" />
--->
+
     <Spinner
         android:id="@+id/genderSpinnerAct"
         android:layout_width="351dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="13dp"
         android:ems="10"
         android:labelFor="@+id/genderAct"
         android:textColor="@color/Text_1"
         android:textColorHint="@color/Text_1"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/ageAct"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordAct">
+        app:layout_constraintTop_toBottomOf="@+id/passwordAct"
+        app:layout_constraintBottom_toTopOf="@+id/ageAct">
 
     </Spinner>
 
@@ -197,10 +163,8 @@
         android:id="@+id/profilePicAct"
         android:layout_width="128dp"
         android:layout_height="117dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:background="@color/Text_1"
         android:contentDescription="@string/profile_pic"
         android:cropToPadding="true"
@@ -214,8 +178,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/neutral1"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintVertical_bias="0.891" />
+        android:layout_marginEnd="8dp" />
+
 
 
 </android.support.constraint.ConstraintLayout>

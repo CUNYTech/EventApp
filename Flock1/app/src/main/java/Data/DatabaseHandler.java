@@ -57,9 +57,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues value = new ContentValues();
-        value.put(Util.KEY_EMAIL_ADDRESS, customer.getEmail_address());
-        value.put(Util.KEY_FIRST_NAME, customer.getFirst_name());
-        value.put(Util.KEY_LAST_NAME, customer.getLast_name());
+        value.put(Util.KEY_EMAIL_ADDRESS, customer.getemail());
+        value.put(Util.KEY_FIRST_NAME, customer.getfirstName());
+        value.put(Util.KEY_LAST_NAME, customer.getlastName());
         value.put(Util.KEY_PASSWORD, customer.getPassword());
         value.put(Util.KEY_GENDER, customer.getGender());
         value.put(Util.KEY_AGE, customer.getAge());
@@ -106,9 +106,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             do{
                 Customer customer = new Customer();
                 customer.setId(Integer.parseInt(cursor.getString(0)));
-                customer.setEmail_address(cursor.getString(1));
-                customer.setFirst_name(cursor.getString(2));
-                customer.setLast_name(cursor.getString(3));
+                customer.setemail(cursor.getString(1));
+                customer.setfirstName(cursor.getString(2));
+                customer.setlastName(cursor.getString(3));
                 customer.setPassword(cursor.getString(4));
                 customer.setGender(cursor.getString(5));
                 customer.setAge(Integer.parseInt(cursor.getString(6)));
@@ -127,9 +127,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(Util.KEY_EMAIL_ADDRESS, customer.getEmail_address());
-        values.put(Util.KEY_FIRST_NAME, customer.getFirst_name());
-        values.put(Util.KEY_LAST_NAME, customer.getLast_name());
+        values.put(Util.KEY_EMAIL_ADDRESS, customer.getemail());
+        values.put(Util.KEY_FIRST_NAME, customer.getfirstName());
+        values.put(Util.KEY_LAST_NAME, customer.getlastName());
         values.put(Util.KEY_PASSWORD, customer.getPassword());
         values.put(Util.KEY_GENDER, customer.getGender());
         values.put(Util.KEY_AGE, customer.getAge());

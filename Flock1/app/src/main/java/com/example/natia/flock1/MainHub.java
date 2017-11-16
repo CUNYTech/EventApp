@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,17 +19,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import Fragments.MapsFragment;
-import Fragments.ProfileFragment;
 import Model.Customer;
 
 public class MainHub extends AppCompatActivity
@@ -40,39 +44,51 @@ public class MainHub extends AppCompatActivity
     private String email;
     private String fullName;
     private String userid;
-    private Uri resultUri = null;
+    private Uri image;
+    private String imagePath;
+    private StorageReference mFirebaseStorage;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstank09ceState);
+        super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         //Creates a new database which will hold our users
         mDatabaseReference = mDatabase.getReference().child("MUsers");
         setContentView(R.layout.activity_main_hub);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mFirebaseStorage = FirebaseStorage.getInstance().getReference().child("MFlock_Profile_Pics");
 
         userid = mAuth.getCurrentUser().getUid();
+
+
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Customer currentUser = new Customer();
 
-                currentUser.setFirst_name(dataSnapshot.child(userid).child("firstName").getValue(String.class));
-                currentUser.setLast_name(dataSnapshot.child(userid).child("lastName").getValue(String.class));
-                currentUser.setEmail_address(mAuth.getCurrentUser().getEmail());
-                //currentUser.setI(dataSnapshot.child(userid).child("lastName").getValue(String.class));
-                fullName = currentUser.getFirst_name() + " " + currentUser.getLast_name();
-                email = currentUser.getEmail_address();
-                Log.d("CurrentUser",fullName + " " + email);
+                currentUser.setfirstName(dataSnapshot.child(userid).child("firstName").getValue(String.class));
+                currentUser.setlastName(dataSnapshot.child(userid).child("lastName").getValue(String.class));
+                currentUser.setemail(mAuth.getCurrentUser().getEmail());
+                currentUser.setImage(dataSnapshot.child(userid).child("image").getValue(String.class));
+
+                fullName = currentUser.getfirstName() + " " + currentUser.getlastName();
+                email = currentUser.getemail();
+                //image = currentUser.getImage();
+                imagePath = currentUser.getImage();
+
+                Log.d("CurrentUser2",fullName + " " + email + " " + imagePath);
 
                 SharedPreferences shared = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = shared.edit();
                 editor.putString("firstName", dataSnapshot.child(userid).child("firstName").getValue(String.class));
                 editor.putString("lastName", dataSnapshot.child(userid).child("lastName").getValue(String.class));
                 editor.putString("fullName", fullName);
+                editor.putString("image", imagePath);
+
                 editor.putString("email", email);
                 editor.apply();
             }
@@ -87,7 +103,7 @@ public class MainHub extends AppCompatActivity
         });
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,26 +112,33 @@ public class MainHub extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         SharedPreferences shared = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 
         fullName = shared.getString("fullName","");
         email = shared.getString("email","");
+        imagePath = shared.getString("image","");
         View header = navigationView.getHeaderView(0);
         TextView nav_user = header.findViewById(R.id.userNavMainHub);
         TextView nav_userEmail = header.findViewById(R.id.userEmailNavMainHub);
-        Log.d("CurrentUser1",fullName + " " + email);
+        ImageView nav_imgView = header.findViewById(R.id.imgViewMainHub);
+        Log.d("CurrentUser1",fullName + " " + email + imagePath);
         nav_user.setText(fullName);
+        nav_imgView.setImageURI(image);
+        Glide.with(this).load(imagePath).into(nav_imgView);
+
         nav_userEmail.setText(email);
-//
+
+
+
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
     }
@@ -124,7 +147,7 @@ public class MainHub extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -168,6 +191,7 @@ public class MainHub extends AppCompatActivity
 
         //need to import the fragment manager to handle our different fragments
         FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -175,7 +199,10 @@ public class MainHub extends AppCompatActivity
         if (id == R.id.nav_profile) {
             // Will handle the profile action
             //need to reference the container for our fragments which is in content_main_hub
-            fm.beginTransaction().replace(R.id.main_navi, new ProfileFragment()).commit();
+            //fm.beginTransaction().replace(R.id.main_navi, new ProfileFragment()).commit();
+            //fm.beginTransaction().replace(R.id.main_navi, new ProfileFragment()).commit();
+            Intent intent = new Intent(MainHub.this, ProfileActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_map) {
             // Will handle the map action
@@ -183,6 +210,10 @@ public class MainHub extends AppCompatActivity
             fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
 
         } else if (id == R.id.nav_chat) {
+            // Will handle the map action
+            //need to reference the container for our fragments which is in content_main_hub
+            Intent intent = new Intent(MainHub.this, ChatActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_friends) {
 
@@ -199,7 +230,7 @@ public class MainHub extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

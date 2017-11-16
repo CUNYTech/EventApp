@@ -1,16 +1,21 @@
 package com.example.natia.flock1;
 
+import android.app.FragmentManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.net.Uri;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,14 +30,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-
 import java.util.ArrayList;
+
+import Fragments.MapsFragment;
+import Model.UserInformation;
 
 /**
  * Created by junhaochen on 10/16/17.
  */
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends FragmentActivity {
     private static final String TAG = "ProfileView";
 
     //add Firebase Database stuff
@@ -53,8 +60,8 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        mListView = (ListView) findViewById(R.id.userProfilelistview);
-        imageView = (ImageView)findViewById(R.id.profilePicAct);
+        mListView = findViewById(R.id.userProfilelistview);
+        imageView = findViewById(R.id.profilePicAct);
 
         fstorage = FirebaseStorage.getInstance();
         storageRef = fstorage.getReference();
@@ -167,6 +174,27 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if(id== R.id.action_signout) {
+            mAuth.signOut();
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
@@ -188,5 +216,54 @@ public class ProfileActivity extends AppCompatActivity {
      */
     private void toastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    //this corresponds to all the things in the sliding menu
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        //need to import the fragment manager to handle our different fragments
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_profile) {
+            // Will handle the profile action
+            //need to reference the container for our fragments which is in content_main_hub
+            //fm.beginTransaction().replace(R.id.main_navi, new ProfileFragment()).commit();
+            //fm.beginTransaction().replace(R.id.main_navi, new ProfileFragment()).commit();
+            Intent intent = new Intent(ProfileActivity.this, ProfileActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_map) {
+            // Will handle the map action
+            //need to reference the container for our fragments which is in content_main_hub
+            fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
+
+        } else if (id == R.id.nav_chat) {
+            // Will handle the map action
+            //need to reference the container for our fragments which is in content_main_hub
+            Intent intent = new Intent(ProfileActivity.this, ChatActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_friends) {
+
+        } else if (id == R.id.nav_signout) {
+            //will sign the user out
+            mAuth.signOut();
+            Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+            startActivity(intent);
+
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

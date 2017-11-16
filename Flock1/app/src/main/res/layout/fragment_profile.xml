@@ -2,11 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/profileFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/profileFrag"
-        android:textAlignment="center"
-        android:textSize="30sp" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 </FrameLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.natia.flock1.splash_page"
+    android:background="@color/Green">
+
+
+
+    <ImageView
+        android:layout_width="379dp"
+        android:layout_height="323dp"
+        android:src="@drawable/flocklogo"
+        tools:layout_editor_absoluteY="87dp"
+        tools:layout_editor_absoluteX="6dp"
+        android:layout_marginTop="140dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:contentDescription="@string/crop_image_menu_crop" />
+
+</RelativeLayout>

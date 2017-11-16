@@ -6,64 +6,73 @@ package Model;
 
 public class Customer {
     private int id;
-    private String email_address;
-    private String first_name;
-    private String last_name;
+    private String email;
+    private String firstName;
+    private String lastName;
     private String password;
     private String gender;
     private int age;
+    private String image;
 
 
     public Customer() {
     }
-
-    public Customer(int id, String email_address, String first_name, String last_name,
+    public Customer(int id, String email, String firstName, String lastName,
                     String password, String gender, int age) {
+
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.gender = gender;
+        this.age = age;
         this.id = id;
-        this.email_address = email_address;
-        this.first_name = first_name;
-        this.last_name = last_name;
+    }
+
+    public Customer(String image, String email, String firstName, String lastName,
+                    String password, String gender, int age) {
+        this.image = image;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
         this.gender = gender;
         this.age = age;
     }
 
-    public Customer(String email_address, String first_name, String last_name,
+
+    public Customer(String email, String firstName, String lastName,
                     String password, String gender, int age) {
 
-        this.email_address = email_address;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
         this.gender = gender;
         this.age = age;
     }
 
-    public Customer(String email_address, String first_name, String last_name,
+
+
+    public Customer(String email, String firstName, String lastName,
                     String password, String gender) {
 
-        this.email_address = email_address;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
         this.gender = gender;
     }
 
-    public Customer(String email_address, String first_name, String last_name,
+    public Customer(String email, String firstName, String lastName,
                     String password) {
 
-        this.email_address = email_address;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
     }
 
-    public Customer(String email_address, String first_name, String last_name) {
-
-        this.email_address = email_address;
-        this.first_name = first_name;
-        this.last_name = last_name;
-    }
 
     public int getId() {
         return id;
@@ -73,28 +82,28 @@ public class Customer {
         this.id = id;
     }
 
-    public String getEmail_address() {
-        return email_address;
+    public String getemail() {
+        return email;
     }
 
-    public void setEmail_address(String email_address) {
-        this.email_address = email_address;
+    public void setemail(String email) {
+        this.email = email;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getfirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setfirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getlastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setlastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {
@@ -120,4 +129,13 @@ public class Customer {
     public void setAge(int age) {
         this.age = age;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 }
