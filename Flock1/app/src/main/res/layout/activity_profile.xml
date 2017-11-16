@@ -63,7 +63,4 @@
         android:layout_above="@+id/ratingBar" />
 
 
-
-
-
 </RelativeLayout>

@@ -82,7 +82,6 @@
         <activity
             android:name=".PlaceActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".FromTo" />
         <activity android:name=".ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

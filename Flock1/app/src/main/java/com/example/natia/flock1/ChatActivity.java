@@ -200,4 +200,10 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ChatActivity.this, MainHub.class);
+        startActivity(intent);
+    }
+
 }

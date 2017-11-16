@@ -1,15 +1,11 @@
 package com.example.natia.flock1;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -32,7 +28,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-import Fragments.MapsFragment;
 import Model.UserInformation;
 
 /**
@@ -116,6 +111,8 @@ public class ProfileActivity extends FragmentActivity {
 
             }
         });
+
+
 
     }
 
@@ -218,52 +215,9 @@ public class ProfileActivity extends FragmentActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    //this corresponds to all the things in the sliding menu
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        //need to import the fragment manager to handle our different fragments
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_profile) {
-            // Will handle the profile action
-            //need to reference the container for our fragments which is in content_main_hub
-            //fm.beginTransaction().replace(R.id.main_navi, new ProfileFragment()).commit();
-            //fm.beginTransaction().replace(R.id.main_navi, new ProfileFragment()).commit();
-            Intent intent = new Intent(ProfileActivity.this, ProfileActivity.class);
-            startActivity(intent);
-
-        } else if (id == R.id.nav_map) {
-            // Will handle the map action
-            //need to reference the container for our fragments which is in content_main_hub
-            fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
-
-        } else if (id == R.id.nav_chat) {
-            // Will handle the map action
-            //need to reference the container for our fragments which is in content_main_hub
-            Intent intent = new Intent(ProfileActivity.this, ChatActivity.class);
-            startActivity(intent);
-
-        } else if (id == R.id.nav_friends) {
-
-        } else if (id == R.id.nav_signout) {
-            //will sign the user out
-            mAuth.signOut();
-            Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-            startActivity(intent);
-
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ProfileActivity.this, MainHub.class);
+        startActivity(intent);
     }
 }

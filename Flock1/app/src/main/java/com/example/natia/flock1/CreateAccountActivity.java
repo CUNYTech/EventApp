@@ -244,4 +244,10 @@ public class  CreateAccountActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 }
