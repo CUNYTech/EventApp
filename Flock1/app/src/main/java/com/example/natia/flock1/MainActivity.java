@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
         //setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        mAuth = FirebaseAuth.getInstance();
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         loginButton = (Button) findViewById(R.id.loginButtonEt);
         forgotPwdButton = (TextView) findViewById(R.id.passwordRecover);
         createActButton = (TextView) findViewById(R.id.signUp);
@@ -103,37 +103,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    //need some change to push
+        //need some change to push
     }
 
     //email and password are passed to the method
     private void login(String email, String pwd) {
         if(!email.equals("") && !pwd.equals("")) {
             mAuth.signInWithEmailAndPassword(email, pwd).
-                addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+                    addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if (task.isSuccessful()) {
-                        Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).
-                                show();
+                            if (task.isSuccessful()) {
+                                Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).
+                                        show();
 
-//<<<<<<< HEAD
-                                startActivity(new Intent(MainActivity.this, FromTo.class));
+                                startActivity(new Intent(MainActivity.this, MainHub.class));
                             } else {
                                 Toast.makeText(MainActivity.this, "Failed to Signed In",
                                         Toast.LENGTH_LONG).show();
                             }
-//=======
-//                        startActivity(new Intent(MainActivity.this, MainHub.class));
-//                    } else {
-//                        Toast.makeText(MainActivity.this, "Failed to Signed In",
-//                                Toast.LENGTH_LONG).show();
-//                    }
-//>>>>>>> 1ed57c0d256b183f2a28506e572bb8ce4f74920e
 
-                }
-                });
+                        }
+                    });
 
         }
     }
@@ -170,4 +162,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+
+
 

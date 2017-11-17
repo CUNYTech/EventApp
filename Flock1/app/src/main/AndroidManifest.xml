@@ -59,15 +59,10 @@
         <activity
             android:name=".PlaceActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".FromTo" />
         <activity android:name=".ProfileActivity" />
         <activity
             android:name=".CreateAccountActivity"
             android:exported="false" />
-        <activity
-            android:name=".destination"
-            android:label="@string/title_activity_destination"
-            android:theme="@style/AppTheme" />
         <activity
             android:name=".start"
             android:label="@string/title_activity_start"

@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -44,7 +43,7 @@ public class MainHub extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstank09ceState);
+        super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         //Creates a new database which will hold our users
@@ -86,16 +85,6 @@ public class MainHub extends AppCompatActivity
 
         });
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -118,6 +107,15 @@ public class MainHub extends AppCompatActivity
 //
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainHub.this, start.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -183,20 +181,14 @@ public class MainHub extends AppCompatActivity
             fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
 
         } else if (id == R.id.nav_chat) {
-
         } else if (id == R.id.nav_friends) {
-
         } else if (id == R.id.nav_signout) {
             //will sign the user out
             mAuth.signOut();
             Intent intent = new Intent(MainHub.this, MainActivity.class);
             startActivity(intent);
-
-
         } else if (id == R.id.nav_share) {
-
         } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
