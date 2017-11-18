@@ -33,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import Fragments.MapsFragment;
+import Fragments.ProfileFragment;
 import Model.Customer;
 
 public class MainHub extends AppCompatActivity
@@ -62,8 +63,6 @@ public class MainHub extends AppCompatActivity
         mFirebaseStorage = FirebaseStorage.getInstance().getReference().child("MFlock_Profile_Pics");
 
         userid = mAuth.getCurrentUser().getUid();
-
-
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -136,11 +135,18 @@ public class MainHub extends AppCompatActivity
         Glide.with(this).load(imagePath).into(nav_imgView);
 
         nav_userEmail.setText(email);
-
-
-
+//
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainHub.this, start.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -191,7 +197,7 @@ public class MainHub extends AppCompatActivity
 
         //need to import the fragment manager to handle our different fragments
         FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -216,7 +222,6 @@ public class MainHub extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_friends) {
-
         } else if (id == R.id.nav_signout) {
             //will sign the user out
             mAuth.signOut();

@@ -193,8 +193,7 @@ public class ChatActivity extends AppCompatActivity {
                             //.bitmapTransform(new CircleTransform(itemView.getContext()))
                             //.diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(person_image);
-                }
-
+                
             }
 
 

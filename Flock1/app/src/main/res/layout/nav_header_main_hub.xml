@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/currentUserMainHub"
+        android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/cardview_light_background" />
 
@@ -35,7 +35,7 @@
         android:id="@+id/userEmailNavMainHub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/currentUserEmailMainHub"
+        android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/cardview_light_background"/>
 

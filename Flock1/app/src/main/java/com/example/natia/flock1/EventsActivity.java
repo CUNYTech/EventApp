@@ -40,7 +40,6 @@ public class EventsActivity extends AppCompatActivity {
     ArrayList<Search> events = new ArrayList<Search>();
     ArrayList<String> ids = new ArrayList<String>();
 
-
     LinearLayout ll = (LinearLayout) this.findViewById(R.id.eventList);
 
     //whatever page this activity needs to interact with before creation needs to pass info to it
