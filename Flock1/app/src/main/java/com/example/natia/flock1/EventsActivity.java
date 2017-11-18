@@ -1,9 +1,9 @@
 package com.example.natia.flock1;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 import Model.Search;
@@ -49,13 +50,14 @@ public class EventsActivity extends AppCompatActivity {
         //collect our intent
         Intent intent = getIntent();
         final Search search = intent.getParcelableExtra("key");
+        Log.d("startstation",search.getStart());
 
         String startStation = search.getStart();
         //String destStation = search.getDestination();
         //ArrayList<String> lines = search.getLines();
         //String date = search.getDate();
         //String time = search.getTime();
-
+        Log.d("startstation",startStation);
         resultsValues(stationRef, "Stop Name", startStation, "Station ID");
         startStationID = storageArr.get(0);
 
@@ -74,7 +76,7 @@ public class EventsActivity extends AppCompatActivity {
             ll.addView(text);
         }
 
-        final Button addEvent = (Button) findViewById(R.id.addEvent);
+        final Button addEvent = findViewById(R.id.addEvent);
         addEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent();

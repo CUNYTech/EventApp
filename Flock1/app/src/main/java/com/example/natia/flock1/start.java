@@ -5,17 +5,13 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.ListAdapter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,12 +49,12 @@ public class start extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-        final AutoCompleteTextView station1 = (AutoCompleteTextView) findViewById(R.id.station1);
-        final AutoCompleteTextView station2 = (AutoCompleteTextView) findViewById(R.id.station2);
-        final AutoCompleteTextView line1 = (AutoCompleteTextView) findViewById(R.id.line1);
-        final AutoCompleteTextView line2 = (AutoCompleteTextView) findViewById(R.id.line2);
-        Button search = (Button) findViewById(R.id.search);
+        //fab.setOnClickListener(new View.OnClickListener() {
+        final AutoCompleteTextView station1 = findViewById(R.id.station1);
+        final AutoCompleteTextView station2 = findViewById(R.id.station2);
+        final AutoCompleteTextView line1 =  findViewById(R.id.line1);
+        final AutoCompleteTextView line2 = findViewById(R.id.line2);
+        Button search = findViewById(R.id.search);
 
         AssetManager assetManager = getAssets();
 
