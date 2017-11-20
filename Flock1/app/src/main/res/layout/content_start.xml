@@ -43,7 +43,7 @@
         android:layout_height="54dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="252dp"
+        android:layout_marginTop="56dp"
         android:ems="10"
         android:hint="Train Station"
         android:inputType="textPostalAddress"
@@ -62,7 +62,7 @@
         android:layout_height="54dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="252dp"
         android:ems="10"
         android:hint="Train Station"
         android:inputType="textPostalAddress"
@@ -75,8 +75,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <AutoCompleteTextView
-        android:id="@+id/line1"
+    <Spinner
+        android:id="@+id/line2"
         android:visibility="gone"
         android:layout_width="351dp"
         android:layout_height="54dp"
@@ -85,7 +85,6 @@
         android:layout_marginTop="316dp"
         android:ems="10"
         android:hint="Line"
-        android:inputType="textPostalAddress"
         android:labelFor="@+id/toid"
         android:textColor="@color/Text_1"
         android:textColorHint="@color/Text_1"
@@ -95,8 +94,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <AutoCompleteTextView
-        android:id="@+id/line2"
+    <Spinner
+        android:id="@+id/line1"
         android:visibility="gone"
         android:layout_width="351dp"
         android:layout_height="54dp"

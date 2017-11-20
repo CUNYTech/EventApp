@@ -36,11 +36,9 @@ public class EventsActivity extends AppCompatActivity {
     Search search = new Search();
     String startStationID = "";
     String storage = "";
-    ArrayList<String> storageArr = new ArrayList<String>();
+    public ArrayList<String> storageArr = new ArrayList<String>();
     ArrayList<Search> events = new ArrayList<Search>();
     ArrayList<String> ids = new ArrayList<String>();
-
-    LinearLayout ll = (LinearLayout) this.findViewById(R.id.eventList);
 
     //whatever page this activity needs to interact with before creation needs to pass info to it
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,23 +49,27 @@ public class EventsActivity extends AppCompatActivity {
         final Search search = intent.getParcelableExtra("key");
 
         String startStation = search.getStart();
-        //String destStation = search.getDestination();
-        //ArrayList<String> lines = search.getLines();
+        String destStation = search.getDestination();
+        ArrayList<String> lines = search.getLines();
         //String date = search.getDate();
         //String time = search.getTime();
 
-        resultsValues(stationRef, "Stop Name", startStation, "Station ID");
-        startStationID = storageArr.get(0);
-
         setContentView(R.layout.activity_event_list);
 
-        resultsValues(eventRef, "startStationID", startStationID, "hostID");
+        LinearLayout ll = (LinearLayout) this.findViewById(R.id.eventList);
+
+        resultsValues(eventRef, "startStationName", startStation, "hostID");
         ids = storageArr;
 
+        Log.i("c", "Here?");
+        Log.i("c", Integer.toString(storageArr.size()));
+        Log.i("c", Integer.toString(ids.size()));
 
         //TODO: Make it so you can apply to events, make it so you can't apply to own event, better filtering options
         for (int i = 0; i < ids.size(); i++) {
             resultsValues(userRef, "firstName", ids.get(i), "firstName");//do I have to new userRef, order once, can't order again?
+            Log.i("c", "Here?");
+            Log.i("c", storageArr.get(0));
             TextView text = new TextView(this);
             text.setTextColor(Color.parseColor("FF8492A6"));
             text.setText(storageArr.get(0));
@@ -93,7 +95,9 @@ public class EventsActivity extends AppCompatActivity {
                 .equalTo(where)
                 .addChildEventListener(new ChildEventListener() {
                     public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                        Log.i("b", snapshot.child(key).getValue().toString());
                         storageArr.add(snapshot.child(key).getValue().toString());
+                        Log.i("b", storageArr.get(0));
                     }
 
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
