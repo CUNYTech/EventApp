@@ -21,16 +21,17 @@ import Model.Search;
 public class AddEventActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference eventRef = database.getReference().child("Events");
+    final EditText start = findViewById(R.id.startStation);
+    final EditText end = findViewById(R.id.endStation);
+    TimePicker time = findViewById(R.id.timepicker);
+    DatePicker date = findViewById(R.id.datepicker);
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         final Search search = intent.getParcelableExtra("key");
 
-        final EditText start = (EditText) findViewById(R.id.startStation);
-        final EditText end = (EditText) findViewById(R.id.endStation);
-        TimePicker time = (TimePicker) findViewById(R.id.timepicker);
-        DatePicker date = (DatePicker) findViewById(R.id.datepicker);
+
 
         setContentView(R.layout.activity_add_event);
 
@@ -49,7 +50,7 @@ public class AddEventActivity extends AppCompatActivity {
         }
 
 
-        final Button create = (Button) findViewById(R.id.addEvent);
+        final Button create = findViewById(R.id.addEvent);
         create.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 search.setStart(start.getText().toString());
@@ -60,7 +61,7 @@ public class AddEventActivity extends AppCompatActivity {
             }
         });
 
-        final Button cancel = (Button) findViewById(R.id.addEvent);
+        final Button cancel = findViewById(R.id.addEvent);
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent();

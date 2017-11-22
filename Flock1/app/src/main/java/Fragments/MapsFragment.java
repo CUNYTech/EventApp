@@ -1,8 +1,10 @@
 package Fragments;
 
 import android.app.Fragment;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.JsonReader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+
 /**
  * Created by napti on 11/5/2017.
  */
@@ -22,11 +27,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private InputStream inputStream;
+    private JsonReader json;
+    private AssetManager assetManager;
+    private BufferedReader in;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        //inputStream = assetManager.open("stations.json");
 
 
         // Add a marker in Sydney and move the camera

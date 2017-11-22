@@ -37,16 +37,15 @@ dependencies {
     })
 
     //Android Support
-    
 
     //For Firebase
-    
+
     //For Image Viewing
-    
+
     //Notification Manage
     // Required for OneSignal, even if you have added FCM.
     // Required for geotagging
-    
+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:cardview-v7:26.+'
     compile 'com.android.support:design:26.+'

@@ -62,6 +62,10 @@ public class MainHub extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() == null){
+            login();
+        }
+
         mDatabase = FirebaseDatabase.getInstance();
         //Creates a new database which will hold our users
         mDatabaseReference = mDatabase.getReference().child("MUsers");
@@ -139,16 +143,19 @@ public class MainHub extends AppCompatActivity
 
         SharedPreferences shared = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 
-        fullName = shared.getString("fullName","");
-        email = shared.getString("email","");
+        //fullName = shared.getString("fullName","");
+        fullName = mAuth.getCurrentUser().getDisplayName();
+        //email = shared.getString("email","");
+        email = mAuth.getCurrentUser().getEmail();
         imagePath = shared.getString("image","");
+        //imagePath = mAuth.getCurrentUser().getPhotoUrl().toString();
         View header = navigationView.getHeaderView(0);
         TextView nav_user = header.findViewById(R.id.userNavMainHub);
         TextView nav_userEmail = header.findViewById(R.id.userEmailNavMainHub);
         ImageView nav_imgView = header.findViewById(R.id.imgViewMainHub);
         //Log.d("CurrentUser1",fullName + " " + email + imagePath);
         nav_user.setText(fullName);
-        nav_imgView.setImageURI(image);
+        //nav_imgView.setImageURI(mAuth.getCurrentUser().getPhotoUrl());
         Glide.with(this).load(imagePath).into(nav_imgView);
 
         nav_userEmail.setText(email);
@@ -160,12 +167,16 @@ public class MainHub extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainHub.this, start.class);
+                Intent intent = new Intent(MainHub.this, ExampleActivity.class);
                 startActivity(intent);
             }
         });
     }
 
+    private void login() {
+        Intent intent = new Intent(MainHub.this, MainActivity.class);
+        startActivity(intent);
+    }
 
 
     @Override
