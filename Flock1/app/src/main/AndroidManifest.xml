@@ -92,11 +92,16 @@
             android:name=".CreateAccountActivity"
             android:exported="false"></activity>
         <activity android:name=".ChatActivity" />
-        <activity android:name=".EventsActivity" />
         <activity
             android:name=".start"
             android:label="@string/title_activity_start"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".EventsActivity"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".AddEventActivity"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

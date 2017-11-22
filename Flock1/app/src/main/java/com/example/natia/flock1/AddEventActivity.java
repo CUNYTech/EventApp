@@ -22,15 +22,17 @@ public class AddEventActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference eventRef = database.getReference().child("Events");
 
-    EditText start = (EditText) findViewById(R.id.startStation);
-    EditText end = (EditText) findViewById(R.id.endStation);
-    TimePicker time = (TimePicker) findViewById(R.id.timepicker);
-    DatePicker date = (DatePicker) findViewById(R.id.datepicker);
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         final Search search = intent.getParcelableExtra("key");
+
+        final EditText start = (EditText) findViewById(R.id.startStation);
+        final EditText end = (EditText) findViewById(R.id.endStation);
+        TimePicker time = (TimePicker) findViewById(R.id.timepicker);
+        DatePicker date = (DatePicker) findViewById(R.id.datepicker);
+
+        setContentView(R.layout.activity_add_event);
 
         start.setText(search.getStart());
 

@@ -52,7 +52,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
 
 
     private class ArrayFilter extends Filter {
-        private Object lock;
+        private Object lock = new Object();
 
         @Override
         protected FilterResults performFiltering(CharSequence prefix) {

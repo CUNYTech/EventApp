@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,6 +35,9 @@ public class start extends AppCompatActivity {
     String station;
     String line;
 
+    Boolean changedS1 = true;
+    Boolean changedS2 = true;
+
     StringTokenizer st;
     BufferedReader in;
     InputStream inputStream;
@@ -44,20 +50,18 @@ public class start extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        setContentView(R.layout.content_start);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        //fab.setOnClickListener(new View.OnClickListener() {
-        final AutoCompleteTextView station1 = findViewById(R.id.station1);
-        final AutoCompleteTextView station2 = findViewById(R.id.station2);
-        final AutoCompleteTextView line1 =  findViewById(R.id.line1);
-        final AutoCompleteTextView line2 = findViewById(R.id.line2);
-        Button search = findViewById(R.id.search);
+        final AutoCompleteTextView station1 = (AutoCompleteTextView) findViewById(R.id.station1);
+        final AutoCompleteTextView station2 = (AutoCompleteTextView) findViewById(R.id.station2);
+        final Spinner line1 = (Spinner) findViewById(R.id.line1);
+        final Spinner line2 = (Spinner) findViewById(R.id.line2);
+        Button search = (Button) findViewById(R.id.search);
 
         AssetManager assetManager = getAssets();
-
+        //reconsider stations.txt, each combination is explicit for separate listing, aggregate now
         try {
             inputStream = assetManager.open("stations.txt");
             in = new BufferedReader(new InputStreamReader(inputStream));
@@ -75,14 +79,12 @@ public class start extends AppCompatActivity {
                     stations.add(station);
                 }
 
-                if (!hash.containsKey(s)) {
+                if (!hash.containsKey(station)) {
                     ArrayList<String> al = new ArrayList<String>();
                     hash.put(station, al);
                 }
 
-                else {
-                    hash.get(station).add(line);
-                }
+                hash.get(station).add(line);
             }
 
             my_adapter = new AutoCompleteAdapter(c, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, stations);
@@ -90,25 +92,40 @@ public class start extends AppCompatActivity {
 
         catch (IOException e) {}
 
+
         station1.setThreshold(1);
         station1.setAdapter(my_adapter);
 
         station1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                changedS1 = false;
                 String temp = my_adapter.getItem(position);
                 station1.setText(temp);
-                AutoCompleteAdapter ad = new AutoCompleteAdapter(c, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, hash.get(temp));
-                line1.setAdapter(ad);
                 line1.setVisibility(View.VISIBLE);
+
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, hash.get(temp));
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                line1.setAdapter(dataAdapter);
             }
         });
 
-        line1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        station1.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if(hasFocus){
-                    line1.showDropDown();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (stations.contains(station1.getText().toString())) {
+                    changedS1 = false;
+                    line1.setVisibility(View.VISIBLE);
+                }
+
+                else {
+                    changedS1 = true;
+                    line1.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -119,38 +136,55 @@ public class start extends AppCompatActivity {
         station2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                changedS2 = false;
                 String temp = my_adapter.getItem(position);
                 station2.setText(temp);
-                AutoCompleteAdapter ad = new AutoCompleteAdapter(c, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, hash.get(temp));
-                line2.setAdapter(ad);
                 line2.setVisibility(View.VISIBLE);
+
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, hash.get(temp));
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                line2.setAdapter(dataAdapter);
             }
         });
 
-        line2.setOnClickListener(new View.OnClickListener() {
+        station2.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                line2.showDropDown();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (stations.contains(station2.getText().toString())) {
+                    changedS2 = false;
+                    line2.setVisibility(View.VISIBLE);
+                }
+
+                else {
+                    changedS2 = true;
+                    line2.setVisibility(View.INVISIBLE);
+                }
             }
         });
+
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (station1.getText().toString() != "" ||
-                        station2.getText().toString() != "" ||
-                        line1.getText().toString() != "" ||
-                        line2.getText().toString() != "") {
+                if (changedS1 == true || changedS2 == true
+                        || line1.getSelectedItem() == null
+                        || line2.getSelectedItem() == null) {}
 
+                else {
                     Search mySearch = new Search();
                     mySearch.setStart(station1.getText().toString());
                     mySearch.setDestination(station2.getText().toString());
 
                     ArrayList<String> ls = new ArrayList<String>();
-                    ls.add(line1.getText().toString());
+                    ls.add(line1.getSelectedItem().toString());
 
-                    if (!ls.contains(line2.getText().toString())) {
-                        ls.add(line2.getText().toString());
+                    if (!ls.contains(line2.getSelectedItem().toString())) {
+                        ls.add(line2.getSelectedItem().toString());
                     }
 
                     mySearch.setlines(ls);
