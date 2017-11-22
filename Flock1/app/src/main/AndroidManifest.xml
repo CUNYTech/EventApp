@@ -68,7 +68,8 @@
             android:name=".start"
             android:label="@string/title_activity_start"
             android:theme="@style/AppTheme" />
-        <activity android:name=".DestinationActivity"></activity>
+        <activity android:name=".DestinationActivity" />
+        <activity android:name=".ListofEventsActivity"></activity>
     </application>
 
 </manifest>
