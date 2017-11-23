@@ -102,6 +102,8 @@
         <activity
             android:name=".AddEventActivity"
             android:theme="@style/AppTheme"></activity>
+        <activity android:name=".DestinationActivity" />
+        <activity android:name=".ListofEventsActivity" />
     </application>
 
 </manifest>
