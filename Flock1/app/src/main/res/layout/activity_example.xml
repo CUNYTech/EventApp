@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="138dp"
+        android:layout_marginTop="104dp"
         android:text="Submit" />
 
     <EditText
