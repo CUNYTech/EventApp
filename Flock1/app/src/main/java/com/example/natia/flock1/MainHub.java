@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,6 +41,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import Fragments.MapsFragment;
 import Model.Customer;
 
@@ -57,6 +63,9 @@ public class MainHub extends AppCompatActivity
     private StorageReference mFirebaseStorage;
     private Context context;
     private GoogleMap mMap;
+    private InputStream inputStream;
+    private String s;
+    private BufferedReader in;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +84,14 @@ public class MainHub extends AppCompatActivity
         mFirebaseStorage = FirebaseStorage.getInstance().getReference().child("MFlock_Profile_Pics");
 
         userid = mAuth.getCurrentUser().getUid();
+
+        try{
+            AssetManager assetManager = getAssets();
+            inputStream = assetManager.open("stations.json");
+            in = new BufferedReader(new InputStreamReader(inputStream));
+
+        } catch (IOException e) {}
+
 
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {

@@ -104,6 +104,8 @@
             android:theme="@style/AppTheme"></activity>
         <activity android:name=".DestinationActivity" />
         <activity android:name=".ListofEventsActivity" />
+        <activity android:name=".ExampleActivity" />
+        <activity android:name=".OtherProfile" />
     </application>
 
 </manifest>

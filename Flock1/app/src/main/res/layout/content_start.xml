@@ -84,7 +84,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="316dp"
         android:ems="10"
-        android:hint="Line"
+
         android:labelFor="@+id/toid"
         android:textColor="@color/Text_1"
         android:textColorHint="@color/Text_1"

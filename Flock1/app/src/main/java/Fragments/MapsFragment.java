@@ -31,12 +31,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private JsonReader json;
     private AssetManager assetManager;
     private BufferedReader in;
+    //private AssetManager assetManager = getResources();
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        //inputStream = assetManager.open("stations.json");
+
 
 
         // Add a marker in Sydney and move the camera
@@ -48,6 +49,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstaceState) {
         View rootView = inflater.inflate(R.layout.fragment_maps, container, false);
+
+        //mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
         return rootView;
     }

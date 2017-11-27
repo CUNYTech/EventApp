@@ -39,6 +39,7 @@ public class start extends AppCompatActivity {
     Boolean changedS2 = true;
 
     StringTokenizer st;
+
     BufferedReader in;
     InputStream inputStream;
     AutoCompleteAdapter my_adapter;
@@ -51,14 +52,14 @@ public class start extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_start);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final AutoCompleteTextView station1 = (AutoCompleteTextView) findViewById(R.id.station1);
-        final AutoCompleteTextView station2 = (AutoCompleteTextView) findViewById(R.id.station2);
-        final Spinner line1 = (Spinner) findViewById(R.id.line1);
-        final Spinner line2 = (Spinner) findViewById(R.id.line2);
-        Button search = (Button) findViewById(R.id.search);
+        final AutoCompleteTextView station1 = findViewById(R.id.station1);
+        final AutoCompleteTextView station2 = findViewById(R.id.station2);
+        final Spinner line1 = findViewById(R.id.line1);
+        final Spinner line2 = findViewById(R.id.line2);
+        Button search = findViewById(R.id.search);
 
         AssetManager assetManager = getAssets();
         //reconsider stations.txt, each combination is explicit for separate listing, aggregate now
@@ -104,7 +105,8 @@ public class start extends AppCompatActivity {
                 station1.setText(temp);
                 line1.setVisibility(View.VISIBLE);
 
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, hash.get(temp));
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, R.layout.spinner_item, hash.get(temp));
+                //dataAdapter = ArrayAdapter.createFromResource(this,R.array.gender_options,R.layout.spinner_item);
                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 line1.setAdapter(dataAdapter);
             }
@@ -141,7 +143,7 @@ public class start extends AppCompatActivity {
                 station2.setText(temp);
                 line2.setVisibility(View.VISIBLE);
 
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, hash.get(temp));
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, R.layout.spinner_item, hash.get(temp));
                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 line2.setAdapter(dataAdapter);
             }
