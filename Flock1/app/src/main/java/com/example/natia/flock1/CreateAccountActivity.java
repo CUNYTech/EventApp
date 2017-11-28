@@ -47,12 +47,13 @@ public class  CreateAccountActivity extends AppCompatActivity {
     private Spinner spinner;
     private ArrayAdapter<CharSequence> adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-        spinner = (Spinner) findViewById(genderSpinnerAct);
+        spinner = findViewById(genderSpinnerAct);
         adapter = ArrayAdapter.createFromResource(this,R.array.gender_options,R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -76,14 +77,14 @@ public class  CreateAccountActivity extends AppCompatActivity {
         mFirebaseStorage = FirebaseStorage.getInstance().getReference().child("MFlock_Profile_Pics");
         mProgressDialog = new ProgressDialog(this);
 
-        email = (EditText) findViewById(R.id.emailAct);
-        firstName = (EditText) findViewById(R.id.firstNameAct);
-        lastName = (EditText) findViewById(R.id.lastNameAct);
-        password = (EditText) findViewById(R.id.passwordAct);
+        email = findViewById(R.id.emailAct);
+        firstName = findViewById(R.id.firstNameAct);
+        lastName = findViewById(R.id.lastNameAct);
+        password = findViewById(R.id.passwordAct);
         gender = spinner.getSelectedItem().toString();
-        age = (EditText) findViewById(R.id.ageAct);
-        createAccountBtn = (Button) findViewById(R.id.createAccountAct);
-        profilePic = (ImageButton)  findViewById(R.id.profilePicAct);
+        age = findViewById(R.id.ageAct);
+        createAccountBtn = findViewById(R.id.createAccountAct);
+        profilePic = findViewById(R.id.profilePicAct);
 
         //button create account
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +148,7 @@ public class  CreateAccountActivity extends AppCompatActivity {
 
 
                             //Send users to Map
-                            Intent intent = new Intent(CreateAccountActivity.this, MainHub.class);
+                            Intent intent = new Intent(CreateAccountActivity.this, ProfileActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //brings this activity to the top
 
                             startActivity(intent);
@@ -242,5 +243,11 @@ public class  CreateAccountActivity extends AppCompatActivity {
                 Exception error = result.getError();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 }

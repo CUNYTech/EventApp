@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.natia.flock1">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera2" />
+    <uses-feature android:name="android.hardware.camera" />
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -12,45 +27,53 @@
         android:roundIcon="@mipmap/flock_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme">
-
-            <!--
+        <!--
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-            -->
-        </activity>
+        -->
+    </activity>
+    <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+        android:theme="@style/Base.Theme.AppCompat"/>
         <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
-        <activity
-            android:name=".spalsh_page"
+            android:name=".splash_page"
             android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
-        <activity
-            android:name=".MainHub"
-            android:label="@string/title_activity_main_hub"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <!--
+    <activity
+        android:name=".MainHub"
+        android:label="@string/title_activity_main_hub"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <!--
          The API key for Google Maps-based APIs is defined as a string resource.
          (See the file "res/values/google_maps_api.xml").
          Note that the API key is linked to the encryption key used to sign the APK.
          You need a different API key for each encryption key, including the release key that is used to
          sign the APK for publishing.
          You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
+    -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBvavxFOdqgMzka9vf4vRo_I5KljdvTbTg" />
+            android:value="@string/google_maps_key" />
+
 
         <activity
             android:name=".MapsActivity"
@@ -59,17 +82,20 @@
         <activity
             android:name=".PlaceActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".FromTo" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CreateAccountActivity"
-            android:exported="false" />
+            android:exported="false">
+
+
+        </activity>
+
+        <activity android:name=".ChatActivity" />
         <activity
             android:name=".start"
             android:label="@string/title_activity_start"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".DestinationActivity" />
-        <activity android:name=".ListofEventsActivity"></activity>
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,21 +35,29 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordField;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    static String LoggedIn_User_Email;
+    public static int Device_Width;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+
+        if(splash_page.database == null) {
+            splash_page.database = FirebaseDatabase.getInstance();
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
+
         setContentView(R.layout.activity_main);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         mAuth = FirebaseAuth.getInstance();
 
-        loginButton = (Button) findViewById(R.id.loginButtonEt);
-        forgotPwdButton = (TextView) findViewById(R.id.passwordRecover);
-        createActButton = (TextView) findViewById(R.id.signUp);
-        emailField = (EditText) findViewById(R.id.loginEmailEt);
-        passwordField = (EditText) findViewById(R.id.loginPasswordEt);
+        loginButton = findViewById(R.id.loginButtonEt);
+        forgotPwdButton = findViewById(R.id.passwordRecover);
+        createActButton = findViewById(R.id.signUp);
+        emailField = findViewById(R.id.loginEmailEt);
+        passwordField = findViewById(R.id.loginPasswordEt);
         //databaseReference = database.getReference("message");
         createActButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 //take the current user and let the user know if they are signed in
                 if (mUser != null) {
                     Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).show();
+                    LoggedIn_User_Email = mUser.getEmail();
+                    DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
+                    Device_Width = metrics.widthPixels;
                 } else {
                     Toast.makeText(MainActivity.this, "Not Signed In", Toast.LENGTH_LONG).show();
                 }
@@ -83,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
                     String email = emailField.getText().toString();
                     String pwd = passwordField.getText().toString();
+
 
                     //pass the email and password to the login method
                     login(email, pwd);
@@ -118,19 +131,19 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).
                                 show();
 
-//<<<<<<< HEAD
+/**
                                 startActivity(new Intent(MainActivity.this, FromTo.class));
                             } else {
                                 Toast.makeText(MainActivity.this, "Failed to Signed In",
                                         Toast.LENGTH_LONG).show();
                             }
-//=======
-//                        startActivity(new Intent(MainActivity.this, MainHub.class));
-//                    } else {
-//                        Toast.makeText(MainActivity.this, "Failed to Signed In",
-//                                Toast.LENGTH_LONG).show();
-//                    }
-//>>>>>>> 1ed57c0d256b183f2a28506e572bb8ce4f74920e
+*/
+                        startActivity(new Intent(MainActivity.this, MainHub.class));
+                    } else {
+                        Toast.makeText(MainActivity.this, "Failed to Signed In",
+                                Toast.LENGTH_LONG).show();
+                    }
+
 
                 }
                 });
