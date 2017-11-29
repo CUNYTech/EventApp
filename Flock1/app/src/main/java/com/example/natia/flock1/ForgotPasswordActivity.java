@@ -2,7 +2,6 @@ package com.example.natia.flock1;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -33,10 +32,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        submitButton = (Button) findViewById(R.id.submitPwd);
-        emailField = (EditText) findViewById(R.id.emailForgotPwd);
+        submitButton = findViewById(R.id.submitPwd);
+        emailField = findViewById(R.id.emailForgotPwd);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBarForgotPwd);
+        //progressBar = (ProgressBar) findViewById(R.id.progressBarForgotPwd);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +44,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 mAuth.sendPasswordResetEmail(email)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void onComplete(@NonNull Task<Void> task) {
+                            public void onComplete(@Nonnull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(ForgotPasswordActivity.this, "We have sent you " +
                                                     "instructions to reset your password!",
@@ -68,5 +67,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
 
 
+
+
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ForgotPasswordActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 }

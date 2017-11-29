@@ -1,4 +1,4 @@
-package com.example.natia.flock1;
+package Model;
 
 /**
  * Created by junhaochen on 10/31/17.
@@ -11,7 +11,15 @@ public class UserInformation {
     private String lastName;
     private String gender;
     private String image;
+    private int rating;
 
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
     public UserInformation() {}
 

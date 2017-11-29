@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/GeryGreen"
+        android:background="@color/md_green_600"
         android:progressTint="@color/StarYellow"/>
 
     <ListView
@@ -61,9 +61,6 @@
         android:layout_marginTop="18dp"
         android:layout_marginBottom="5dp"
         android:layout_above="@+id/ratingBar" />
-
-
-
 
 
 </RelativeLayout>

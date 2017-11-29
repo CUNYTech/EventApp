@@ -1,16 +1,17 @@
 package com.example.natia.flock1;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.net.Uri;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,14 +26,15 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-
 import java.util.ArrayList;
+
+import Model.UserInformation;
 
 /**
  * Created by junhaochen on 10/16/17.
  */
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends FragmentActivity {
     private static final String TAG = "ProfileView";
 
     //add Firebase Database stuff
@@ -53,8 +55,8 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        mListView = (ListView) findViewById(R.id.userProfilelistview);
-        imageView = (ImageView)findViewById(R.id.profilePicAct);
+        mListView = findViewById(R.id.userProfilelistview);
+        imageView = findViewById(R.id.profilePicAct);
 
         fstorage = FirebaseStorage.getInstance();
         storageRef = fstorage.getReference();
@@ -65,21 +67,8 @@ public class ProfileActivity extends AppCompatActivity {
         emailAdd = user.getEmail();
         myRef = mFirebaseDatabase.getReference()
                 .child("MUsers").child(userID);
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    toastMessage("Successfully signed in with: " + user.getEmail());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                    toastMessage("Successfully signed out.");
-                }
-            }
-        };
+
+
 
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -93,6 +82,8 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
+
 
     }
 
@@ -148,6 +139,27 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if(id== R.id.action_signout) {
+            mAuth.signOut();
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
@@ -169,5 +181,11 @@ public class ProfileActivity extends AppCompatActivity {
      */
     private void toastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ProfileActivity.this, MainHub.class);
+        startActivity(intent);
     }
 }

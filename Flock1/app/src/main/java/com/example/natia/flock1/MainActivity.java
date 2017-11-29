@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordField;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-    static boolean calledAlready = false;
+    static String LoggedIn_User_Email;
+    public static int Device_Width;
 
 
     @Override
@@ -42,20 +44,20 @@ public class MainActivity extends AppCompatActivity {
         //setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
-        if(!calledAlready) {
+        if(splash_page.database == null) {
+            splash_page.database = FirebaseDatabase.getInstance();
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            calledAlready = true;
         }
 
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
 
-        loginButton = (Button) findViewById(R.id.loginButtonEt);
-        forgotPwdButton = (TextView) findViewById(R.id.passwordRecover);
-        createActButton = (TextView) findViewById(R.id.signUp);
-        emailField = (EditText) findViewById(R.id.loginEmailEt);
-        passwordField = (EditText) findViewById(R.id.loginPasswordEt);
+        loginButton = findViewById(R.id.loginButtonEt);
+        forgotPwdButton = findViewById(R.id.passwordRecover);
+        createActButton = findViewById(R.id.signUp);
+        emailField = findViewById(R.id.loginEmailEt);
+        passwordField = findViewById(R.id.loginPasswordEt);
         //databaseReference = database.getReference("message");
         createActButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 //take the current user and let the user know if they are signed in
                 if (mUser != null) {
                     Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).show();
+                    LoggedIn_User_Email = mUser.getEmail();
+                    DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
+                    Device_Width = metrics.widthPixels;
                 } else {
                     Toast.makeText(MainActivity.this, "Not Signed In", Toast.LENGTH_LONG).show();
                 }
@@ -117,19 +122,28 @@ public class MainActivity extends AppCompatActivity {
     private void login(String email, String pwd) {
         if(!email.equals("") && !pwd.equals("")) {
             mAuth.signInWithEmailAndPassword(email, pwd).
-                addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+                    addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (task.isSuccessful()) {
                         Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).
                                 show();
 
+/**
+                                startActivity(new Intent(MainActivity.this, FromTo.class));
+                                startActivity(new Intent(MainActivity.this, MainHub.class));
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to Signed In",
+                                        Toast.LENGTH_LONG).show();
+                            }
+*/
                         startActivity(new Intent(MainActivity.this, MainHub.class));
                     } else {
                         Toast.makeText(MainActivity.this, "Failed to Signed In",
                                 Toast.LENGTH_LONG).show();
                     }
+
 
                 }
                 });

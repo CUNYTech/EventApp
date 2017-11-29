@@ -13,11 +13,13 @@ public class Util {
 
     //Customer table columns names
     public static final String KEY_ID = "id";
-    public static final String KEY_EMAIL_ADDRESS = "email_address";
-    public static final String KEY_FIRST_NAME = "first_name";
-    public static final String KEY_LAST_NAME = "last_name";
+    public static final String KEY_EMAIL_ADDRESS = "email";
+    public static final String KEY_FIRST_NAME = "firstName";
+    public static final String KEY_LAST_NAME = "lastName";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_GENDER = "gender";
     public static final String KEY_AGE = "age";
 
 }
+
+

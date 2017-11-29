@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.natia.flock1.start"
+    tools:showIn="@layout/activity_start"
+    android:background= "#132226"
+    tools:ignore="ExtraText">
+
+    <TextView
+        android:id="@+id/Header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="30"
+        android:textColor="@color/Text_1"
+        android:textSize="32sp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="  Starting Train Station" />
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="196dp"
+        android:ems="30"
+        android:textColor="@color/Text_1"
+        android:textSize="32sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="  Ending Train Station" />
+
+    <AutoCompleteTextView
+        android:id="@+id/station1"
+        android:layout_width="351dp"
+        android:layout_height="54dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="56dp"
+        android:ems="10"
+        android:hint="Train Station"
+        android:inputType="textPostalAddress"
+        android:labelFor="@+id/toid"
+        android:textColor="@color/Text_1"
+        android:textColorHint="@color/Text_1"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <AutoCompleteTextView
+        android:id="@+id/station2"
+        android:layout_width="351dp"
+        android:layout_height="54dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="252dp"
+        android:ems="10"
+        android:hint="Train Station"
+        android:inputType="textPostalAddress"
+        android:labelFor="@+id/toid"
+        android:textColor="@color/Text_1"
+        android:textColorHint="@color/Text_1"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/line2"
+        android:visibility="visible"
+        android:layout_width="351dp"
+        android:layout_height="54dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="316dp"
+        android:ems="10"
+
+        android:labelFor="@+id/toid"
+        android:textColor="@color/Text_1"
+        android:textColorHint="@color/Text_1"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/line1"
+        android:visibility="gone"
+        android:layout_width="351dp"
+        android:layout_height="54dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="120dp"
+        android:ems="10"
+        android:hint="Line"
+        android:inputType="textPostalAddress"
+        android:labelFor="@+id/toid"
+        android:textColor="@color/Text_1"
+        android:textColorHint="@color/Text_1"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="404dp"
+        android:text="Search"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" /><![CDATA[
+
+    />
+
+
+]]>
+</android.support.constraint.ConstraintLayout>
