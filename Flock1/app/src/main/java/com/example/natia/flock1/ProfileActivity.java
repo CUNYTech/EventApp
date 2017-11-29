@@ -58,22 +58,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         fstorage = FirebaseStorage.getInstance();
         storageRef = fstorage.getReference();
-
-        /*storageRef.child("MFlock_Profile_Pics/MFlock_Profile_Pics/cropped8295209993791726610.jpg").getDownloadUrl()
-                .addOnSuccessListener(new OnSuccessListener<Uri>(){
-                    @Override
-                    public void onSuccess(Uri uri) {
-
-                    }
-                });
-
-        //url holder for testing until database fix so i can get correct download url for the login user
-        String url = "https://firebasestorage.googleapis.com/v0/b/flock-a5c97.appspot.com/o/MFlock_Profile_Pics%2FMFlock_Profile_Pics%2Fcropped8295209993791726610.jpg?alt=media&token=0d68fb79-9931-4240-bbb1-4250cec05483";
-
-        Glide.with(getApplicationContext()).load(url).into(imageView);*/
-
-
-
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -123,11 +107,8 @@ public class ProfileActivity extends AppCompatActivity {
         //get image name from database
         uInfo.setImage(dataSnapshot.getValue(UserInformation.class).getImage());
 
-        //holder until database is fix
-        //String picname ="cropped8295209993791726610.jpg";
-
+        //convert string to picture name
         String picname = uInfo.getImage().substring(uInfo.getImage().lastIndexOf("/")+1);
-        //String picname =uInfo.getImage(); //after change the database to only storage picture's name
 
         storageRef.child("MFlock_Profile_Pics/MFlock_Profile_Pics/"+picname).getDownloadUrl()
                 .addOnSuccessListener(new OnSuccessListener<Uri>(){
