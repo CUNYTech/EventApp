@@ -95,6 +95,11 @@ public class ExampleActivity extends Activity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ExampleActivity.this, MainHub.class);
+        startActivity(intent);
+    }
 
     }
 

@@ -3,6 +3,7 @@ package com.example.natia.flock1;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +15,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,6 +37,9 @@ import Model.Search;
 
 public class start extends AppCompatActivity {
     Context c = this;
+    private EditText time;
+    private EditText date;
+    private String name;
 
     String s;
     String station;
@@ -39,13 +49,17 @@ public class start extends AppCompatActivity {
     Boolean changedS2 = true;
 
     StringTokenizer st;
-
     BufferedReader in;
     InputStream inputStream;
     AutoCompleteAdapter my_adapter;
 
     ArrayList<String> stations = new ArrayList<String>();
     Hashtable<String, ArrayList<String>> hash = new Hashtable<String, ArrayList<String>>();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private DatabaseReference mDatabaseReference;
+    private FirebaseDatabase mDatabase;
+    private FirebaseUser mUser = mAuth.getCurrentUser();
+    private Uri image = mAuth.getCurrentUser().getPhotoUrl();
 
 
     @Override
@@ -55,10 +69,17 @@ public class start extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mDatabase.getReference().child("Events");
+
         final AutoCompleteTextView station1 = findViewById(R.id.station1);
         final AutoCompleteTextView station2 = findViewById(R.id.station2);
         final Spinner line1 = findViewById(R.id.line1);
         final Spinner line2 = findViewById(R.id.line2);
+        time = findViewById(R.id.editTextTimeStartAct);
+        date = findViewById(R.id.editTextDateStartAct);
+        name = mAuth.getCurrentUser().getDisplayName().toString();
+        image = mAuth.getCurrentUser().getPhotoUrl();
         Button search = findViewById(R.id.search);
 
         AssetManager assetManager = getAssets();
@@ -105,8 +126,7 @@ public class start extends AppCompatActivity {
                 station1.setText(temp);
                 line1.setVisibility(View.VISIBLE);
 
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, R.layout.spinner_item, hash.get(temp));
-                //dataAdapter = ArrayAdapter.createFromResource(this,R.array.gender_options,R.layout.spinner_item);
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, hash.get(temp));
                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 line1.setAdapter(dataAdapter);
             }
@@ -143,7 +163,7 @@ public class start extends AppCompatActivity {
                 station2.setText(temp);
                 line2.setVisibility(View.VISIBLE);
 
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, R.layout.spinner_item, hash.get(temp));
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, hash.get(temp));
                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 line2.setAdapter(dataAdapter);
             }
@@ -181,6 +201,10 @@ public class start extends AppCompatActivity {
                     Search mySearch = new Search();
                     mySearch.setStart(station1.getText().toString());
                     mySearch.setDestination(station2.getText().toString());
+                    mySearch.setDate(date.getText().toString());
+                    mySearch.setTime(time.getText().toString());
+                    mySearch.setName(name);
+                    mySearch.setImage(image);
 
                     ArrayList<String> ls = new ArrayList<String>();
                     ls.add(line1.getSelectedItem().toString());
@@ -194,6 +218,10 @@ public class start extends AppCompatActivity {
                     Log.i("a", mySearch.getStart());
                     Log.i("a", mySearch.getDestination());
                     Log.i("a", mySearch.getLines().get(0));
+
+                    mDatabaseReference
+                            .push()
+                            .setValue(mySearch);
 
 
                     Intent intent = new Intent(start.this, EventsActivity.class);

@@ -269,7 +269,11 @@ public class MainHub extends AppCompatActivity
 
             startActivity(intent);
 
-        } else if (id == R.id.nav_friends) {
+        } else if (id == R.id.nav_events) {
+
+            Intent intent = new Intent(MainHub.this, EventsActivity.class);
+
+            startActivity(intent);
         } else if (id == R.id.nav_signout) {
             //will sign the user out
             mAuth.signOut();
