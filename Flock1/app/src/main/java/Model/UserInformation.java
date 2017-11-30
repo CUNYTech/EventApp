@@ -11,17 +11,18 @@ public class UserInformation {
     private String lastName;
     private String gender;
     private String image;
-    private int rating;
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
+    private float totalRating;
+    private int ratedCounter;
 
     public UserInformation() {}
+
+    public float getTotalRating() { return totalRating;}
+
+    public void setTotalRating(float totalRating) {this.totalRating = totalRating;}
+
+    public int getRatedCounter() {return ratedCounter;}
+
+    public void setRatedCounter(int ratedCounter) {this.ratedCounter = ratedCounter;}
 
     public String getAge() {
         return age;

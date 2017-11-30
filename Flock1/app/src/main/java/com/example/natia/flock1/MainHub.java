@@ -250,8 +250,8 @@ public class MainHub extends AppCompatActivity
         if (id == R.id.nav_profile) {
             // Will handle the profile action
             //need to reference the container for our fragments which is in content_main_hub
-            Intent intent = new Intent(MainHub.this, ProfileActivity.class);
-            startActivity(intent);
+            Intent pintent = new Intent(this, ProfileActivity.class);
+            startActivity(pintent);
 
         } else if (id == R.id.nav_map) {
             // Will handle the map action

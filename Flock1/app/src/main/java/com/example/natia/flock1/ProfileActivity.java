@@ -2,13 +2,18 @@ package com.example.natia.flock1;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -34,7 +39,7 @@ import Model.UserInformation;
  * Created by junhaochen on 10/16/17.
  */
 
-public class ProfileActivity extends FragmentActivity {
+public class ProfileActivity extends  AppCompatActivity {
     private static final String TAG = "ProfileView";
 
     //add Firebase Database stuff
@@ -49,6 +54,7 @@ public class ProfileActivity extends FragmentActivity {
     private String emailAdd;
 
     private ListView mListView;
+    private Button rateButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +63,17 @@ public class ProfileActivity extends FragmentActivity {
 
         mListView = findViewById(R.id.userProfilelistview);
         imageView = findViewById(R.id.profilePicAct);
+
+        rateButton = findViewById(R.id.button4);
+
+        rateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pintent = new Intent(ProfileActivity.this, RatingActivity.class);
+                startActivity(pintent);
+                //rateButton.setText("changed");
+            }
+        });
 
         fstorage = FirebaseStorage.getInstance();
         storageRef = fstorage.getReference();
@@ -67,8 +84,21 @@ public class ProfileActivity extends FragmentActivity {
         emailAdd = user.getEmail();
         myRef = mFirebaseDatabase.getReference()
                 .child("MUsers").child(userID);
-
-
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    toastMessage("Successfully signed in with: " + user.getEmail());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    toastMessage("Successfully signed out.");
+                }
+            }
+        };//missing
 
 
         myRef.addValueEventListener(new ValueEventListener() {

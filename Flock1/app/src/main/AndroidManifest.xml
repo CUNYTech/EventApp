@@ -88,6 +88,10 @@
         <activity
             android:name=".ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".RatingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CreateAccountActivity"
             android:exported="false" />

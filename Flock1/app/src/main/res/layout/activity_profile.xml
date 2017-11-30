@@ -62,5 +62,15 @@
         android:layout_marginBottom="5dp"
         android:layout_above="@+id/ratingBar" />
 
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/userProfilelistview"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="12dp"
+        android:onClick="onClick"
+        android:text="Rate" />
+
 
 </RelativeLayout>
