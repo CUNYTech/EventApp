@@ -16,15 +16,23 @@ public class Search implements Parcelable {
     private ArrayList<String> lines;
     private String date;
     private String time;
+    private String name;
+    private String image;
+    private String id;
 
     public Search() {}
 
-    public Search(String s, String d, ArrayList<String> ls, String da, String t) {
+    public Search(String s, String d, ArrayList<String> ls, String da, String t, String name,
+                  String image, String id) {
         start = s;
         destination = d;
         lines = ls;
         date = d;
         time = t;
+        this.name = name;
+        this.image = image;
+        this.id = id;
+
     }
 
     //write object values to parcel for storage
@@ -78,4 +86,28 @@ public class Search implements Parcelable {
 
     public String getTime() {return time;}
     public void setTime(String t) {time = t;}
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
