@@ -139,6 +139,7 @@
         android:inputType="time"
         android:textColor="@color/Text_1"
         android:visibility="visible"
+
         app:layout_constraintBottom_toTopOf="@+id/search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

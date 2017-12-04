@@ -2,45 +2,40 @@ package com.example.natia.flock1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import Model.Search;
+import java.util.ArrayList;
+
+import Model.Events;
 
 /**
  * Created by pprickle on 10/22/17.
  */
 
 public class EventsActivity extends AppCompatActivity {
-    Context c = this;
+    private Context c;
     private ListView mListView;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference mDatabaseReference;
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser = mAuth.getCurrentUser();
-    private FirebaseListAdapter mAdapter;
-    private ArrayAdapter adapter;
+    //private EventAdapter mAdapter;
+    private FirebaseListAdapter<Events> mAdapter;
+    private ArrayList<Events> eventList;
 
-    //DatabaseReference stationRef = database.getReference().child("Stations");
-    //DatabaseReference eventRef = database.getReference().child("Events");
-    //DatabaseReference userRef = database.getReference().child("MUsers");
 
-    //String startStation;
-    //String destStation;
-    //ArrayList<String> lines;
-    //String date;
-    //String time;
 
     //whatever page this activity needs to interact with before creation needs to pass info to it
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +44,60 @@ public class EventsActivity extends AppCompatActivity {
 
         mListView = findViewById(R.id.events_list_view);
 
-        mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mDatabase.getReference().child("Events");
+        //INITIALIZE FIREBASE DB
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events2");
+
+        mAdapter = new FirebaseListAdapter<Events>(this, Events.class, R.layout.list_items_events,
+                mDatabaseReference) {
+            @Override
+            protected void populateView(View v, final Events model, int position) {
+                // Get start element
+                ((TextView) v.findViewById(R.id.event_start)).setText(model.getStart());
+                ((TextView) v.findViewById(R.id.event_end)).setText(model.getDestination());
+                ((TextView) v.findViewById(R.id.event_lines)).setText(model.getLines().toString());
+                ((TextView) v.findViewById(R.id.event_name)).setText(model.getName());
+                ((TextView) v.findViewById(R.id.event_time)).setText(model.getTime());
+                ((TextView) v.findViewById(R.id.event_date)).setText(model.getDate());
+                ((ImageView) v.findViewById(R.id.eventUserImage)).setImageURI(Uri.parse(model.getImage()));
+
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Toast.makeText(EventsActivity.this, "You fool", Toast.LENGTH_LONG).show();
+                        Intent profileIntent = new Intent(EventsActivity.this,OtherProfile.class);
+                        profileIntent.putExtra("user", model.getId());
+                        profileIntent.putExtra("image", model.getImage());
+                        startActivity(profileIntent);
+                    }
+                });
+            }
+        };
+
+        mListView.setAdapter(mAdapter);
 
 
 
+
+        /**
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Search event = new Search();
+                //ArrayList<String> ids = new ArrayList<>();
+                eventList.clear();
 
-                dataSnapshot.getChildren();
-                //currentUser.setlastName(dataSnapshot.child(userid).child("lastName").getValue(String.class));
-                //currentUser.setemail(mAuth.getCurrentUser().getEmail());
-                //currentUser.setImage(dataSnapshot.child(userid).child("image").getValue(String.class));
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    Search mySearch = childSnapshot.getValue(Search.class);
+                    eventList.add(mySearch);
+
+                    //Log.e("mysearch", mySearch.getName());
+                    //Log.d("mysearch2", mySearch2.toString());
+
+                    //eventList.add(mySearch);
+                    //This creates and sets a simple adapter for the ListView. The ArrayAdapter takes in the
+                    // current context, a layout file specifying what each row in the list should look like,
+                    // and the data that will populate the list as arguments
+
+                }
             }
 
             @Override
@@ -70,6 +105,66 @@ public class EventsActivity extends AppCompatActivity {
 
             }
         });
+
+
+        mDatabaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String value = dataSnapshot.getKey();
+
+                Search mySearch = new Search();
+                mySearch.setName(dataSnapshot.child(value).child("name").getValue(String.class));
+                mySearch.setTime(dataSnapshot.child(value).child("time").getValue(String.class));
+                mySearch.setDate(dataSnapshot.child(value).child("date").getValue(String.class));
+                mySearch.setDestination(dataSnapshot.child(value).child("destination").getValue(String.class));
+                mySearch.setId(dataSnapshot.child(value).getValue(String.class));
+                mySearch.setlines(dataSnapshot.child(value).child("lines").getValue(ArrayList.class));
+                mySearch.setStart(dataSnapshot.child(value).child("start").getValue(String.class));
+                mySearch.setImage(dataSnapshot.child(value).child("image").getValue(String.class));
+
+
+
+                Log.d("mysearch", mySearch.toString());
+
+                Search mySearch2 = new Search();
+                mySearch2.getStart();
+                mySearch2.getDestination();
+                mySearch2.getDate();
+                mySearch2.getId();
+                mySearch2.getImage();
+                mySearch2.getLines();
+                mySearch2.getName();
+                mySearch2.getTime();
+
+                eventList.add(mySearch);
+
+                //This creates and sets a simple adapter for the ListView. The ArrayAdapter takes in the
+                // current context, a layout file specifying what each row in the list should look like,
+                // and the data that will populate the list as arguments
+                mAdapter = new EventAdapter(EventsActivity.this, eventList);
+                mListView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*/
 
         //final ArrayList<Recipe> recipeList = Recipe.getRecipesFromFile(, this);
 
@@ -141,8 +236,51 @@ public class EventsActivity extends AppCompatActivity {
                 });
 
 
+    }
+    }
+
+    private void displayInputDialog() {
+        Dialog d = new Dialog(this);
+        d.setTitle("Save To Firebase");
+        d.setContentView(R.layout.activity_start);
+
+        nameEditTxt = (EditText) d.findViewById(R.id.nameEditText);
+        propTxt = (EditText) d.findViewById(R.id.propellantEditText);
+        descTxt = (EditText) d.findViewById(R.id.descEditText);
+        Button saveBtn = (Button) d.findViewById(R.id.saveBtn);
+        //SAVE
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //GET DATA
+                String name = nameEditTxt.getText().toString();
+                String propellant = propTxt.getText().toString();
+                String desc = descTxt.getText().toString();
+                //SET DATA
+                Spacecraft s = new Spacecraft();
+                s.setName(name);
+                s.setPropellant(propellant);
+                s.setDescription(desc);
+                //SIMPLE VALIDATION
+                if (name != null && name.length() > 0) {
+                    //THEN SAVE
+                    if (helper.save(s)) {
+                        //IF SAVED CLEAR EDITXT
+                        nameEditTxt.setText("");
+                        propTxt.setText("");
+                        descTxt.setText("");
+                        adapter = new CustomAdapter(MainActivity.this, helper.retrieve());
+                        lv.setAdapter(adapter);
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        d.show();
     }*/
     }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(EventsActivity.this, MainHub.class);

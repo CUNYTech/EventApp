@@ -1,6 +1,5 @@
 package Model;
 
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -18,12 +17,13 @@ public class Search implements Parcelable {
     private String date;
     private String time;
     private String name;
-    private Uri image;
+    private String image;
+    private String id;
 
     public Search() {}
 
     public Search(String s, String d, ArrayList<String> ls, String da, String t, String name,
-                  Uri image) {
+                  String image, String id) {
         start = s;
         destination = d;
         lines = ls;
@@ -31,6 +31,7 @@ public class Search implements Parcelable {
         time = t;
         this.name = name;
         this.image = image;
+        this.id = id;
 
     }
 
@@ -94,11 +95,19 @@ public class Search implements Parcelable {
         this.name = name;
     }
 
-    public Uri getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Uri image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -9,7 +9,6 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -23,7 +22,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -32,6 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,25 +51,23 @@ import Model.Customer;
 public class MainHub extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference mDatabaseReference;
     private FirebaseDatabase mDatabase;
     private String email;
     private String fullName;
     private String userid;
-    private Uri image;
     private String imagePath;
     private StorageReference mFirebaseStorage;
     private Context context;
     private GoogleMap mMap;
     private InputStream inputStream;
-    private String s;
     private BufferedReader in;
+    private FirebaseUser mUser = mAuth.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() == null){
             login();
         }
@@ -112,7 +109,7 @@ public class MainHub extends AppCompatActivity
 
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                         .setDisplayName(fullName)
-                        //.setPhotoUri(dataSnapshot.child(userid).child("image").getValue(Uri.class))
+                        .setPhotoUri(Uri.parse(dataSnapshot.child(userid).child("image").getValue(String.class)))
                         .build();
 
                 mAuth.getCurrentUser().updateProfile(profileUpdates)
@@ -173,21 +170,22 @@ public class MainHub extends AppCompatActivity
         //Log.d("CurrentUser1",fullName + " " + email + imagePath);
         nav_user.setText(fullName);
         //nav_imgView.setImageURI(mAuth.getCurrentUser().getPhotoUrl());
-        Glide.with(this).load(imagePath).into(nav_imgView);
+        //Glide.with(this).load(imagePath).into(nav_imgView);
+        nav_imgView.setImageURI(mUser.getPhotoUrl());
 
         nav_userEmail.setText(email);
 //
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainHub.this, ExampleActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     private void login() {
