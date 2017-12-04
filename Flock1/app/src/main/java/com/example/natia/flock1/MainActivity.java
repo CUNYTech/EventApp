@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                     String email = emailField.getText().toString();
                     String pwd = passwordField.getText().toString();
 
-
                     //pass the email and password to the login method
                     login(email, pwd);
 
@@ -123,9 +122,9 @@ public class MainActivity extends AppCompatActivity {
     private void login(String email, String pwd) {
         if(!email.equals("") && !pwd.equals("")) {
             mAuth.signInWithEmailAndPassword(email, pwd).
-                addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+                    addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (task.isSuccessful()) {
                         Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).
@@ -133,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
 /**
                                 startActivity(new Intent(MainActivity.this, FromTo.class));
+                                startActivity(new Intent(MainActivity.this, MainHub.class));
                             } else {
                                 Toast.makeText(MainActivity.this, "Failed to Signed In",
                                         Toast.LENGTH_LONG).show();
