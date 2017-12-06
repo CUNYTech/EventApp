@@ -5,18 +5,21 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 
 import Model.Events;
 
@@ -27,13 +30,15 @@ import Model.Events;
 public class EventsActivity extends AppCompatActivity {
     private Context c;
     private ListView mListView;
+    private RecyclerView mRecyclerView;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference mDatabaseReference;
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser = mAuth.getCurrentUser();
-    //private EventAdapter mAdapter;
+    private FirebaseRecyclerAdapter mRAdapter;
     private FirebaseListAdapter<Events> mAdapter;
-    private ArrayList<Events> eventList;
+    private LinearLayoutManager linearLayoutManager;
+    private String[] menu;
 
 
 
@@ -43,6 +48,7 @@ public class EventsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_list2);
 
         mListView = findViewById(R.id.events_list_view);
+        menu = getResources().getStringArray(R.array.event_menu);
 
         //INITIALIZE FIREBASE DB
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events2");
@@ -59,6 +65,12 @@ public class EventsActivity extends AppCompatActivity {
                 ((TextView) v.findViewById(R.id.event_time)).setText(model.getTime());
                 ((TextView) v.findViewById(R.id.event_date)).setText(model.getDate());
                 ((ImageView) v.findViewById(R.id.eventUserImage)).setImageURI(Uri.parse(model.getImage()));
+                ((TextView) v.findViewById(R.id.event_start_title)).setText("Start:");
+                ((TextView) v.findViewById(R.id.event_end_title)).setText("End:");
+                ((TextView) v.findViewById(R.id.event_time_title)).setText("Time:");
+                ((TextView) v.findViewById(R.id.event_date_title)).setText("Date:");
+                ((TextView) v.findViewById(R.id.event_lines_title)).setText("Lines:");
+                ((TextView) v.findViewById(R.id.event_name_title)).setText("Created by:");
 
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -70,11 +82,18 @@ public class EventsActivity extends AppCompatActivity {
                         startActivity(profileIntent);
                     }
                 });
+
+                v.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        return false;
+                    }
+                });
             }
         };
 
         mListView.setAdapter(mAdapter);
-
+        registerForContextMenu(mListView);
 
 
 
@@ -285,5 +304,13 @@ public class EventsActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(EventsActivity.this, MainHub.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.event_long_press_menu, menu);
     }
 }
