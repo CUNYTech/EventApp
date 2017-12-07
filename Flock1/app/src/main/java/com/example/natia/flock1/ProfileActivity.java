@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -55,6 +56,7 @@ public class ProfileActivity extends  AppCompatActivity {
 
     private ListView mListView;
     private Button rateButton;
+    private RatingBar rateBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class ProfileActivity extends  AppCompatActivity {
 
         mListView = findViewById(R.id.userProfilelistview);
         imageView = findViewById(R.id.profilePicAct);
+        rateBar = findViewById(R.id.ratingBar);
 
         rateButton = findViewById(R.id.button4);
 
@@ -124,6 +127,8 @@ public class ProfileActivity extends  AppCompatActivity {
         uInfo.setFirstName(dataSnapshot.getValue(UserInformation.class).getFirstName());
         uInfo.setLastName(dataSnapshot.getValue(UserInformation.class).getLastName());
         uInfo.setGender(dataSnapshot.getValue(UserInformation.class).getGender());
+        uInfo.setTotalRating(dataSnapshot.getValue(UserInformation.class).getTotalRating());
+        uInfo.setRatedCounter(dataSnapshot.getValue(UserInformation.class).getRatedCounter());
 
         //get image name from database
         uInfo.setImage(dataSnapshot.getValue(UserInformation.class).getImage());
@@ -144,11 +149,9 @@ public class ProfileActivity extends  AppCompatActivity {
             }
         });
 
-        //url holder for testing until database fix so i can get correct download url for the login user
-        //String url = "https://firebasestorage.googleapis.com/v0/b/flock-a5c97.appspot.com/o/MFlock_Profile_Pics%2FMFlock_Profile_Pics%2Fcropped8295209993791726610.jpg?alt=media&token=0d68fb79-9931-4240-bbb1-4250cec05483";
-
-        //Glide.with(getApplicationContext()).load(url).into(imageView);
-
+        //display rating round to the nearest tenth
+        double roundedRating = Math.round((uInfo.getTotalRating()/uInfo.getRatedCounter()*100.0)/100.0);
+        rateBar.setRating(Math.round((uInfo.getTotalRating()/uInfo.getRatedCounter()*100.0)/100.0));
         //display all the information
         Log.d(TAG, "showData: firstname: " + uInfo.getFirstName());
         Log.d(TAG, "showData: email: " + uInfo.getEmail());
@@ -156,12 +159,17 @@ public class ProfileActivity extends  AppCompatActivity {
         Log.d(TAG, "showData: age: " + uInfo.getAge());
         Log.d(TAG, "showData: gender: " + uInfo.getGender());
         Log.d(TAG, "showData: email: " + uInfo.getEmail());
+        Log.d(TAG, "showData: totalRating: " + uInfo.getTotalRating());
+        Log.d(TAG, "showData: ratedCounter: " + uInfo.getRatedCounter());
+        //double ratedScore = uInfo.getRatedCounter()
         ArrayList<String> array = new ArrayList<>();
         array.add("First Name: "+uInfo.getFirstName());
         array.add("Last Name:"+uInfo.getLastName());
         array.add("Age: "+uInfo.getAge());
         array.add("Gender: "+uInfo.getGender());
         array.add("Email: "+emailAdd);
+        array.add("Rated score: "+uInfo.getTotalRating()/uInfo.getRatedCounter());
+        array.add("test: "+roundedRating);
         //array.add(uInfo.getImage());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, array);
         mListView.setAdapter(adapter);
