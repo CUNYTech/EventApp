@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Map" />
         <item
-            android:id="@+id/nav_friends"
+            android:id="@+id/nav_events"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Friends" />
+            android:title="Events" />
         <item
             android:id="@+id/nav_chat"
             android:icon="@drawable/ic_menu_slideshow"

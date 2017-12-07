@@ -49,14 +49,16 @@ public class OtherProfile extends AppCompatActivity {
         mListView = findViewById(R.id.otherProfileListview);
         imageView = findViewById(R.id.otherProfilePicAct);
         Intent intent = getIntent();
-        email = intent.getStringExtra("Other Email");
-        user = intent.getStringExtra("Current User");
-        url = intent.getStringExtra("FIREBASE_URL");
+        user = intent.getStringExtra("user");
+        //url = intent.getStringExtra("FIREBASE_URL");
         image = intent.getStringExtra("image");
 
+        Log.d("userinfo",user);
+        Log.d("imageinfo", image);
 
         fstorage = FirebaseStorage.getInstance();
         storageRef = fstorage.getReference();
+
 
         //mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -64,8 +66,7 @@ public class OtherProfile extends AppCompatActivity {
         myRef = mFirebaseDatabase.getReference()
                 .child("MUsers").child(user);
 
-        Log.d("userinfo",user);
-        Log.d("userref",myRef.toString());
+
 
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -142,7 +143,7 @@ public class OtherProfile extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(OtherProfile.this, ExampleActivity.class);
+        Intent intent = new Intent(OtherProfile.this, EventsActivity.class);
         startActivity(intent);
     }
 

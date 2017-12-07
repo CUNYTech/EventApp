@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:title="User's Profile"
+            android:id="@+id/event_menu_profile" />
+        <item
+            android:title="Chat with User"
+            android:id="@+id/event_menu_chat" />
+        <item
+            android:title="Delete Event"
+            android:id="@+id/event_menu_delete" />
+    </group>
+
+</menu>
