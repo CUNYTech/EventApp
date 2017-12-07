@@ -93,11 +93,13 @@ public class RatingActivity extends AppCompatActivity {
                             uInfo.setRatedCounter(dataSnapshot.getValue(UserInformation.class).getRatedCounter());
                             myRef.child("totalRating").setValue(uInfo.getTotalRating()+rating);
                             myRef.child("ratedCounter").setValue(uInfo.getRatedCounter()+1);
+                            rb.setIsIndicator(true);
 
                         }else
                         {
                             myRef.child("totalRating").setValue(rating);
-                            myRef.child("ratedCounter").setValue(2);
+                            myRef.child("ratedCounter").setValue(1);
+                            rb.setIsIndicator(true);
 
                         }
                     }

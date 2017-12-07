@@ -32,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import Model.UserInformation;
@@ -150,8 +152,10 @@ public class ProfileActivity extends  AppCompatActivity {
         });
 
         //display rating round to the nearest tenth
-        double roundedRating = Math.round((uInfo.getTotalRating()/uInfo.getRatedCounter()*100.0)/100.0);
-        rateBar.setRating(Math.round((uInfo.getTotalRating()/uInfo.getRatedCounter()*100.0)/100.0));
+        BigDecimal rating = new BigDecimal(uInfo.getTotalRating()/uInfo.getRatedCounter());
+        BigDecimal roundedRating = rating.setScale(2, RoundingMode.DOWN);
+        rateBar.setRating(Float.parseFloat(roundedRating.toString()));
+        rateBar.setIsIndicator(true);
         //display all the information
         Log.d(TAG, "showData: firstname: " + uInfo.getFirstName());
         Log.d(TAG, "showData: email: " + uInfo.getEmail());
