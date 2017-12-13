@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -107,6 +108,8 @@ public class MainHub extends AppCompatActivity
                 imagePath = currentUser.getImage();
 
 
+
+
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                         .setDisplayName(fullName)
                         .setPhotoUri(Uri.parse(dataSnapshot.child(userid).child("image").getValue(String.class)))
@@ -163,6 +166,8 @@ public class MainHub extends AppCompatActivity
         email = mAuth.getCurrentUser().getEmail();
         imagePath = shared.getString("image","");
         //imagePath = mAuth.getCurrentUser().getPhotoUrl().toString();
+
+        Customer customer = new Customer();
         View header = navigationView.getHeaderView(0);
         TextView nav_user = header.findViewById(R.id.userNavMainHub);
         TextView nav_userEmail = header.findViewById(R.id.userEmailNavMainHub);
@@ -170,8 +175,8 @@ public class MainHub extends AppCompatActivity
         //Log.d("CurrentUser1",fullName + " " + email + imagePath);
         nav_user.setText(fullName);
         //nav_imgView.setImageURI(mAuth.getCurrentUser().getPhotoUrl());
-        //Glide.with(this).load(imagePath).into(nav_imgView);
-        nav_imgView.setImageURI(mUser.getPhotoUrl());
+        Glide.with(this).load(imagePath).into(nav_imgView);
+        //nav_imgView.setImageURI(Uri.parse(imagePath));
 
         nav_userEmail.setText(email);
 //

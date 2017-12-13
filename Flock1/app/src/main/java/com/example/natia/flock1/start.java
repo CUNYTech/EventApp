@@ -1,6 +1,7 @@
 package com.example.natia.flock1;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -69,6 +70,7 @@ public class start extends AppCompatActivity{
     private DateFormat formatter = new SimpleDateFormat("mm/dd/yy");
     private Date dateObject;
     private DatePickerDialog.OnDateSetListener mDateListener;
+    private TimePickerDialog.OnTimeSetListener mTimeListener;
 
 
     @Override
@@ -105,6 +107,23 @@ public class start extends AppCompatActivity{
             }
         });
 
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+
+                TimePickerDialog dialog = new TimePickerDialog(
+                        start.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mTimeListener, hour, minute, false);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                time.setText(hour + ":" + minute);
+
+                dialog.show();
+            }
+        });
+
         mDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -113,6 +132,7 @@ public class start extends AppCompatActivity{
                 date.setText(dateSel);
             }
         };
+
 
 
         name = mAuth.getCurrentUser().getDisplayName().toString();
