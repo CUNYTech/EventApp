@@ -1,39 +1,45 @@
 package com.example.natia.flock1;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-
-import Model.Events;
-
 /**
  * Created by napti on 12/4/2017.
  */
 
-public class EventFirebaseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class EventFirebaseHolder extends RecyclerView.ViewHolder {
 
-    View mView;
+    public View mView;
     Context mContext;
+    public ImageView userImage;
+    public TextView startTitle, start, endTitle, end, timeTitle, time, dateTitle, date, linesTitle,
+            lines, nameTitle, name;
 
     public EventFirebaseHolder(View itemView) {
         super(itemView);
-        mView = itemView;
-        mContext = itemView.getContext();
-        itemView.setOnClickListener(this);
+        //mView = itemView;
+        //mContext = itemView.getContext();
+        userImage = itemView.findViewById(R.id.eventUserImage);
+        startTitle = itemView.findViewById(R.id.event_start_title);
+        start = itemView.findViewById(R.id.event_start);
+        endTitle = itemView.findViewById(R.id.event_end_title);
+        end = itemView.findViewById(R.id.event_end);
+        timeTitle = itemView.findViewById(R.id.event_time_title);
+        time = itemView.findViewById(R.id.event_time);
+        dateTitle = itemView.findViewById(R.id.event_date_title);
+        date = itemView.findViewById(R.id.event_date);
+        linesTitle = itemView.findViewById(R.id.event_lines_title);
+        lines = itemView.findViewById(R.id.event_lines);
+        nameTitle = itemView.findViewById(R.id.event_name_title);
+        name = itemView.findViewById(R.id.event_name);
+        //itemView.setOnClickListener(this);
     }
 
+}
+/*
     public void bindEvents(Events events) {
         ImageView userImage = mView.findViewById(R.id.eventUserImage);
         TextView startTitle = mView.findViewById(R.id.event_start_title);
@@ -92,4 +98,4 @@ public class EventFirebaseHolder extends RecyclerView.ViewHolder implements View
             }
         });
     }
-}
+}*/

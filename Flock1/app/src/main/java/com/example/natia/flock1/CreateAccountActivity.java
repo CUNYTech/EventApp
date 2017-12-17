@@ -121,7 +121,7 @@ public class  CreateAccountActivity extends AppCompatActivity {
         final String pwd = password.getText().toString().trim();
         final String gen = gender.toString();
         final String ag = age.getText().toString().trim();
-        //final String pic = resultUri.toString().trim();
+        final String pic = resultUri.toString().trim();
 
 
         if (resultUri == null){

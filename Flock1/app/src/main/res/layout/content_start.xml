@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,12 +12,14 @@
     tools:ignore="ExtraText">
 
     <TextView
-        android:id="@+id/Header"
+        android:id="@+id/StartingStation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:ems="30"
         android:textColor="@color/Text_1"
         android:textSize="32sp"
+        android:visibility="visible"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -24,17 +27,18 @@
         tools:text="  Starting Train Station" />
 
     <TextView
-        android:id="@+id/header"
+        android:id="@+id/EndingStation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="52dp"
         android:ems="30"
         android:textColor="@color/Text_1"
         android:textSize="32sp"
+        android:visibility="visible"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/station1"
         tools:text="  Ending Train Station" />
 
     <AutoCompleteTextView
@@ -126,7 +130,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.88" />
 
-    <EditText
+    <TextView
         android:id="@+id/editTextTimeStartAct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -137,16 +141,17 @@
         android:ems="10"
         android:hint="Time"
         android:inputType="time"
+        android:text="Time"
         android:textColor="@color/Text_1"
-        android:visibility="visible"
 
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintTop_toBottomOf="@+id/EndingStation"
         app:layout_constraintVertical_bias="0.711" />
 
-    <EditText
+    <TextView
         android:id="@+id/editTextDateStartAct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -156,6 +161,7 @@
         android:ems="10"
         android:hint="Date"
         android:inputType="date"
+        android:text="Date"
         android:textColor="@color/Text_1"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -169,4 +175,4 @@
 
 
 ]]>
-</android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout >

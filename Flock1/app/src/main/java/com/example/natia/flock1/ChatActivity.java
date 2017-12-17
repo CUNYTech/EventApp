@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -102,10 +101,17 @@ public class ChatActivity extends AppCompatActivity {
                 TextView messageUser = v.findViewById(R.id.message_user);
                 TextView messageTime = v.findViewById(R.id.message_time);
 
+                // Get references to the views of message.xml
+                //TextView messageText = v.findViewById(R.id.chat_person_text);
+                //TextView messageUser = v.findViewById(R.id.chat_person_name);
+                //TextView messageTime = v.findViewById(R.id.chat_person_time);
+                //ImageView messageImage = v.findViewById(R.id.chat_person_image);
+
                 // Set their text
                 messageText.setText(model.getMessage());
                 messageUser.setText(model.getSender());
-                Log.d("messageUser",messageUser.toString());
+               // messageImage.setImageURI(Uri.parse(model.getUserImage()));
+                //Log.d("messageUser",messageUser.toString());
 
                 // Format the date before showing it
                 messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
@@ -113,6 +119,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         };
 
+        //listOfMessages.smoothScrollToPosition();
         listOfMessages.setAdapter(adapter);
     }
 

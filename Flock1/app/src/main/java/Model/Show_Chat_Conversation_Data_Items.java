@@ -2,14 +2,13 @@ package Model;
 
 import java.util.Date;
 
-/**
- * Created by napti on 11/13/2017.
- */
+
 
 public class Show_Chat_Conversation_Data_Items {
     private String message;
     private String sender;
     private long messageTime;
+    private String userImage;
 
     public Show_Chat_Conversation_Data_Items()
     {
@@ -44,5 +43,13 @@ public class Show_Chat_Conversation_Data_Items {
 
     public void setMessageTime(long messageTime) {
         this.messageTime = messageTime;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 }

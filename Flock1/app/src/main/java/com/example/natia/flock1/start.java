@@ -18,8 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,9 +44,11 @@ import Model.Events;
 
 public class start extends AppCompatActivity{
     Context c = this;
-    private EditText time;
-    private EditText date;
+    private TextView time;
+    private TextView date;
     private String name;
+    private TextView startingHeader;
+    private TextView endingHeader;
 
     String s;
     String station;
@@ -83,6 +85,8 @@ public class start extends AppCompatActivity{
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mDatabase.getReference().child("Events2");
 
+        startingHeader = findViewById(R.id.StartingStation);
+        endingHeader = findViewById(R.id.EndingStation);
         final AutoCompleteTextView station1 = findViewById(R.id.station1);
         final AutoCompleteTextView station2 = findViewById(R.id.station2);
         final Spinner line1 = findViewById(R.id.line1);
@@ -183,7 +187,7 @@ public class start extends AppCompatActivity{
                 station1.setText(temp);
                 line1.setVisibility(View.VISIBLE);
 
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, hash.get(temp));
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, R.layout.spinner_item, hash.get(temp));
                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 line1.setAdapter(dataAdapter);
             }
@@ -220,7 +224,7 @@ public class start extends AppCompatActivity{
                 station2.setText(temp);
                 line2.setVisibility(View.VISIBLE);
 
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, hash.get(temp));
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(c, R.layout.spinner_item, hash.get(temp));
                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 line2.setAdapter(dataAdapter);
             }

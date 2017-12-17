@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relLayoutLEvents"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/md_grey_50">
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@color/md_blue_500">
 
     <ImageView
         android:id="@+id/eventUserImage"
@@ -17,7 +18,8 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="6dp"
         android:contentDescription="@string/eventUserImage"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
+        android:visibility="visible"
         tools:src="@mipmap/ic_launcher" />
 
     <RelativeLayout
@@ -39,7 +41,7 @@
             android:textSize="18sp"
             android:layout_marginTop="3dp"
             android:ellipsize="end"
-            android:maxLines="3"
+            android:maxLines="1"
             tools:text="Start"
             tools:textStyle="bold"/>
 
@@ -52,6 +54,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="3dp"
             android:textSize="18sp"
+            android:maxLines="1"
             tools:text="End"
             tools:textStyle="bold"/>
 
@@ -111,7 +114,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:orientation="vertical"
-            android:layout_toRightOf="@+id/event_list_text_titles">
+            android:layout_toRightOf="@+id/event_list_text_titles"
+            android:maxLines="1">
 
 
             <TextView
@@ -121,7 +125,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:textSize="18sp"
-                tools:text="Start" />
+                tools:text="Start"
+                android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/event_end"
@@ -132,9 +137,9 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="3dp"
                 android:ellipsize="end"
-                android:maxLines="3"
                 android:textSize="18sp"
-                tools:text="End" />
+                tools:text="End"
+                android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/event_lines"
@@ -145,7 +150,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="3dp"
                 android:ellipsize="end"
-                android:maxLines="3"
+                android:maxLines="1"
                 android:textSize="18sp"
                 tools:text="Lines" />
 
@@ -195,3 +200,4 @@
     </RelativeLayout>
 
 </RelativeLayout>
+

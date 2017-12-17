@@ -16,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,11 +29,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +60,7 @@ public class MainHub extends AppCompatActivity
     private String userid;
     private String imagePath;
     private StorageReference mFirebaseStorage;
+    private StorageReference mFirebaseStorage2;
     private Context context;
     private GoogleMap mMap;
     private InputStream inputStream;
@@ -74,14 +75,15 @@ public class MainHub extends AppCompatActivity
         }
 
         mDatabase = FirebaseDatabase.getInstance();
-        //Creates a new database which will hold our users
-        mDatabaseReference = mDatabase.getReference().child("MUsers");
+
+
         setContentView(R.layout.activity_main_hub);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mFirebaseStorage = FirebaseStorage.getInstance().getReference().child("MFlock_Profile_Pics");
-
+        mFirebaseStorage2 = FirebaseStorage.getInstance().getReference();
         userid = mAuth.getCurrentUser().getUid();
+        mDatabaseReference = mDatabase.getReference().child("MUsers").child(userid);
 
         try{
             AssetManager assetManager = getAssets();
@@ -97,22 +99,24 @@ public class MainHub extends AppCompatActivity
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Customer currentUser = new Customer();
 
-                currentUser.setfirstName(dataSnapshot.child(userid).child("firstName").getValue(String.class));
-                currentUser.setlastName(dataSnapshot.child(userid).child("lastName").getValue(String.class));
+                currentUser.setfirstName(dataSnapshot.child("firstName").getValue(String.class));
+                currentUser.setlastName(dataSnapshot.child("lastName").getValue(String.class));
                 currentUser.setemail(mAuth.getCurrentUser().getEmail());
-                currentUser.setImage(dataSnapshot.child(userid).child("image").getValue(String.class));
+                currentUser.setImage(dataSnapshot.child("image").getValue(String.class));
+                //uInfo.setImage(dataSnapshot.getValue(UserInformation.class).getImage());
 
                 fullName = currentUser.getfirstName() + " " + currentUser.getlastName();
                 email = currentUser.getemail();
                 //image = currentUser.getImage();
                 imagePath = currentUser.getImage();
+                Log.d("imageref", imagePath);
 
 
 
 
-                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                /**UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                         .setDisplayName(fullName)
-                        .setPhotoUri(Uri.parse(dataSnapshot.child(userid).child("image").getValue(String.class)))
+                        .setPhotoUri(Uri.parse(imagePath))
                         .build();
 
                 mAuth.getCurrentUser().updateProfile(profileUpdates)
@@ -123,7 +127,7 @@ public class MainHub extends AppCompatActivity
                                     //Log.d(TAG, "User profile updated.");
                                 }
                             }
-                        });
+                        });*/
 
                 //Log.d("CurrentUser2",fullName + " " + email + " " + imagePath);
 
@@ -136,6 +140,8 @@ public class MainHub extends AppCompatActivity
 
                 editor.putString("email", email);
                 editor.apply();
+
+
             }
 
 
@@ -166,17 +172,34 @@ public class MainHub extends AppCompatActivity
         email = mAuth.getCurrentUser().getEmail();
         imagePath = shared.getString("image","");
         //imagePath = mAuth.getCurrentUser().getPhotoUrl().toString();
+        Log.d("imageref2", imagePath);
 
         Customer customer = new Customer();
+        customer.setImage(imagePath);
         View header = navigationView.getHeaderView(0);
         TextView nav_user = header.findViewById(R.id.userNavMainHub);
         TextView nav_userEmail = header.findViewById(R.id.userEmailNavMainHub);
-        ImageView nav_imgView = header.findViewById(R.id.imgViewMainHub);
+        final ImageView nav_imgView = header.findViewById(R.id.imgViewMainHub);
         //Log.d("CurrentUser1",fullName + " " + email + imagePath);
         nav_user.setText(fullName);
         //nav_imgView.setImageURI(mAuth.getCurrentUser().getPhotoUrl());
-        Glide.with(this).load(imagePath).into(nav_imgView);
         //nav_imgView.setImageURI(Uri.parse(imagePath));
+        Glide.with(getApplicationContext()).load(Uri.parse(imagePath)).into(nav_imgView);
+        //convert string to picture name
+        String picname = customer.getImage().substring(customer.getImage().lastIndexOf("/")+1);
+
+        mFirebaseStorage2.child("MFlock_Profile_Pics/MFlock_Profile_Pics/"+picname).getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>(){
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(getApplicationContext()).load(uri).into(nav_imgView);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                //Log.d(TAG, "fail to retrive imageDL url");
+            }
+        });
 
         nav_userEmail.setText(email);
 //

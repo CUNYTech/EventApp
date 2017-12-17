@@ -53,8 +53,8 @@ public class OtherProfile extends AppCompatActivity {
         //url = intent.getStringExtra("FIREBASE_URL");
         image = intent.getStringExtra("image");
 
-        Log.d("userinfo",user);
-        Log.d("imageinfo", image);
+        //Log.d("userinfo",user);
+        //Log.d("imageinfo", image);
 
         fstorage = FirebaseStorage.getInstance();
         storageRef = fstorage.getReference();

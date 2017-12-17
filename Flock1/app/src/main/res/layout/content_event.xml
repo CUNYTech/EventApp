@@ -1,10 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
+    <!--
+        <ListView
+            android:id="@+id/events_list_view"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
 
-    <ListView
-        android:id="@+id/events_list_view"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent" />
+        <TextView
+            android:id="@+id/event_list_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/event_list_recyclerview"
+            android:fontFamily="serif-monospace"
+            android:text="@string/eventTitle"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/event_list_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout"
+        android:clipChildren="false"
+        android:clipToPadding="false" />
 
 </RelativeLayout>
