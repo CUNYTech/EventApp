@@ -8,9 +8,9 @@
 
     <item>
         <bitmap
-            android:gravity="fill"
+            android:gravity="center"
             android:src="@drawable/flocklogo"
-            android:scaleType="matrix"/>
+            android:scaleType="fitStart"/>
     </item>
 
 </layer-list>

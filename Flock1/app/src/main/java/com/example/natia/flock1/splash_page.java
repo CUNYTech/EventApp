@@ -13,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class splash_page extends AppCompatActivity {
 
-    private static final int SPLASH_TIME_MS = 2000;
+    private static final int SPLASH_TIME_OUT = 2000;
     private Handler mHandler;
     private Runnable mRunnable;
     private FirebaseAuth mAuth;
@@ -25,6 +25,7 @@ public class splash_page extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -36,54 +37,34 @@ public class splash_page extends AppCompatActivity {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         }
 
-        /**setContentView(R.layout.activity_splash_page);
-
-        mHandler = new Handler();
-        mRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (mUser!= null){
-                    Intent intent = new Intent(this, MainHub.class);
-                    startActivity(intent);
-                    //UserListingActivity.startActivity(splash_page.this);
-                } else {
-                    MainActivity.startIntent(splash_page.this);
-                }
-                finish();
-            }
-        }
-
-        //gets the instance of the current user and sets it to mUser
-        */
+        setContentView(R.layout.activity_splash_page);
 
         //if the user is already logged in, it will push them past the login screen to the Maps page
         //if not, the user will have to login
-        if(mUser!= null) {
-            LoggedIn_User_Email = mUser.getEmail();
-            Intent intent = new Intent(this, MainHub.class);
-            startActivity(intent);
-            finish();
-        } else {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
 
 
 
 
-/**
+
+
 
 
         new Handler().postDelayed (new Runnable(){
             @Override
             public void run(){
-                Intent HomeIntent=new Intent(splash_page.this,  MainActivity.class);
-                startActivity(HomeIntent);
-                finish();
+                if(mUser!= null) {
+                    LoggedIn_User_Email = mUser.getEmail();
+                    Intent intent = new Intent(splash_page.this, MainHub.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(splash_page.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
 
-        },SPLASH_TIME_OUT);*/
+        },SPLASH_TIME_OUT);
 
 
 
