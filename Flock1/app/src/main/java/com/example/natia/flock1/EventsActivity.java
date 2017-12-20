@@ -2,7 +2,9 @@ package com.example.natia.flock1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +18,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import Model.Events;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
@@ -44,6 +50,7 @@ public class EventsActivity extends AppCompatActivity {
     private RecyclerView eventRecyclerview;
     private EventsAdapter mEventsAdapter;
     private String[] menu;
+    private static StorageReference mFirebaseStorage2 = FirebaseStorage.getInstance().getReference();
 
 
 
@@ -135,10 +142,25 @@ public class EventsActivity extends AppCompatActivity {
             });
         }
 
-        public void setImage(String image) {
-            Picasso.with(mView.getContext())
-                    .load(image)
-                    .into(userImage);
+        public void setImage(final String image) {
+            //Picasso.with(mView.getContext()).load(image).into(userImage);
+            //Customer customer = new Customer();
+            String picname = image.substring(image.lastIndexOf("/")+1);
+
+            mFirebaseStorage2 = FirebaseStorage.getInstance().getReference();
+            mFirebaseStorage2.child("MFlock_Profile_Pics/MFlock_Profile_Pics/"+picname).getDownloadUrl()
+                    .addOnSuccessListener(new OnSuccessListener<Uri>(){
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Glide.with(mView.getContext()).load(uri).into(userImage);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    //Log.d(TAG, "fail to retrive imageDL url");
+                }
+            });
+
         }
     }
 
