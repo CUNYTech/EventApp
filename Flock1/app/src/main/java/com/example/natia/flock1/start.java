@@ -144,7 +144,7 @@ public class start extends AppCompatActivity{
         Button search = findViewById(R.id.search);
 
         AssetManager assetManager = getAssets();
-        //reconsider stations.txt, each combination is explicit for separate listing, aggregate now
+        //reconsider stations.json.txt, each combination is explicit for separate listing, aggregate now
         try {
             inputStream = assetManager.open("stations.txt");
             in = new BufferedReader(new InputStreamReader(inputStream));

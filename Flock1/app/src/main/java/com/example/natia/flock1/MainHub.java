@@ -86,7 +86,7 @@ public class MainHub extends AppCompatActivity
 
         try{
             AssetManager assetManager = getAssets();
-            inputStream = assetManager.open("stations.json");
+            inputStream = assetManager.open("stations.json.json");
             in = new BufferedReader(new InputStreamReader(inputStream));
 
         } catch (IOException e) {}
@@ -190,6 +190,7 @@ public class MainHub extends AppCompatActivity
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
         //onMapReady(mMap);
+
 
     }
 
@@ -302,7 +303,7 @@ public class MainHub extends AppCompatActivity
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Ocean"));
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Markers in Ocean"));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }

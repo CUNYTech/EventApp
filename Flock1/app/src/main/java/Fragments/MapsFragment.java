@@ -3,42 +3,68 @@ package Fragments;
 import android.Manifest;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.JsonReader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
 import com.example.natia.flock1.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+import Model.Markers;
 
 
-public class MapsFragment extends Fragment implements OnMapReadyCallback {
+public class MapsFragment extends Fragment implements OnMapReadyCallback,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
     private GoogleMap mMap;
-    private InputStream inputStream;
-    private JsonReader json;
-    private AssetManager assetManager;
     private BufferedReader in;
     private MapView mapView;
+    private Double myLongitude = 0.00;
+    private Double myLattitude = 0.00;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
+    private Markers markers = new Markers();
+    private RequestQueue queue;
+    private BufferedReader bufferedReader = null;
     private final static int MY_PERMISSINON_FINE_LOCATION = 101;
+    protected final static String TAG = "MapsFragment";
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstaceState) {
         View rootView = inflater.inflate(R.layout.map, container, false);
+
 
         //initialize map
         mapView = rootView.findViewById(R.id.mapView);
@@ -68,19 +94,103 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 }
 
 
-                // Add a marker in Sydney and move the camera
-                LatLng sydney = new LatLng(-34, 151);
-                mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in USA"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+                //Add a markers for current location and move the camera
+                //LatLng myLocation = new LatLng(myLattitude, myLongitude);
+                //mMap.addMarker(new MarkerOptions().position(myLocation).title("My Location"));
+                //mMap.moveCamera(CameraUpdateFactory.);
+                getTrainStations();
+
             }
         });
 
+
+
+        //Build GoogleAPIClient, tells it that we are going to user location services
+        googleApiClient = new GoogleApiClient.Builder(getContext())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+        locationRequest = new LocationRequest();
+        locationRequest.setInterval(15 * 1000);
+        locationRequest.setFastestInterval(5 * 1000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        //queue = Volley.newRequestQueue(getContext());
+        //ArrayList<String> stations = getTrainStations();
+
+        //Log.d("arraydata2", String.valueOf(stations.subList(1,1)));
         return rootView;
     }
 
+    private void getTrainStations() {
+        JSONArray jsonArray = null;
+        ArrayList<String> cList = new ArrayList<String>();
+
+        try {
+            InputStream is = getResources().getAssets().open("stations.json");
+            bufferedReader = new BufferedReader(new InputStreamReader(is));
+
+            StringBuffer stringBuffer = new StringBuffer();
+            String line = "";
+
+            while((line = bufferedReader.readLine()) != null) {
+                stringBuffer.append(line);
+            }
+
+            String finalJson = stringBuffer.toString();
+
+            JSONObject jsonObject = new JSONObject(finalJson);
+
+            int size = jsonObject.length();
+            JSONArray keys = jsonObject.names();
+
+
+            for (int i = 0; i < keys.length(); i++){
+                String key = keys.getString(i);
+                String value = jsonObject.getJSONObject(key).getString("POSITION");
+                String array1[]= value.split(" ");
+                myLattitude = Double.parseDouble(array1[0]);
+                myLongitude = Double.parseDouble(array1[1]);
+
+                //Set the markers values
+                markers.setName(key);
+                markers.setLongitude(myLongitude);
+                markers.setLattitude(myLattitude);
+                markers.setLines(jsonObject.getJSONObject(key).getString("LINE"));
+                Log.d("Longitude", myLongitude.toString());
+                Log.d("Lattitude", myLattitude.toString());
+
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                markerOptions.title(markers.getName())
+                        .position(new LatLng(myLongitude,myLattitude));
+
+                Marker marker = mMap.addMarker(markerOptions);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLongitude,myLattitude), 1));
+            }
+
+
+
+
+        } catch (IOException|JSONException ex){
+            ex.printStackTrace();
+        }
+
+        //JSONObject jsonObject = new JSONObject()
+    }
+
     @Override
+    //Called after onStart
     public void onResume() {
         mapView.onResume();
+
+        if(googleApiClient.isConnected()){
+            requestLocationUpdates();
+        }
+
         super.onResume();
     }
 
@@ -110,11 +220,62 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     }
 
                 } else {
-                    Toast.makeText(getContext(),"This app requires location permission to be granted",
+                    Toast.makeText(getContext(), "This app requires location permission to be granted",
                             Toast.LENGTH_LONG).show();
 
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        requestLocationUpdates();
+    }
+
+    private void requestLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest,
+                    this);
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "Connection Suspended");
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.i(TAG, "Connection Failed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
+    }
+
+    @Override
+    //for when we get get location updates when the location changes. here we will get longitude
+    //and lattitude
+    public void onLocationChanged(Location location) {
+        myLattitude = location.getLatitude();
+        myLongitude = location.getLongitude();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        googleApiClient.connect();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED)
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 }
