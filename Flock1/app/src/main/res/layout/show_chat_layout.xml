@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="16dp"
@@ -14,119 +14,45 @@
     cardview:contentPadding="4dp"
     android:clickable="true">
 
-
-
-
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/md_green_400"
-        android:orientation="vertical"
-        android:padding="16dp"
-        >
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:adjustViewBounds="true"
-            android:id="@+id/testImageView"
-            android:contentDescription="@string/eventUserImage"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/ic_launcher"
-            android:layout_toLeftOf="@+id/layout1"/>
-
-        <LinearLayout
-            android:id="@+id/layout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/layout2"
-            android:layout_toRightOf="@+id/testImageView"
-            android:orientation="vertical">
+            android:id="@+id/chat_image"
+            android:src="@mipmap/flock_icon"
+            android:scaleType="fitXY"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Start" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="End" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Lines" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Time" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Date" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Name" />
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/layout2"
-            android:layout_toRightOf="@+id/layout1">
+            android:id="@+id/chat_user"
+            android:text="User"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/chat_image"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chat_date"
+            android:text="Date"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/chat_user"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chat_message"
+            android:layout_toRightOf="@id/chat_image"
+            android:layout_below="@id/chat_user"
+            android:text="Message"
+            android:textSize="15sp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
-
-
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

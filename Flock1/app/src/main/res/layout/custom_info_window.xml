@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iconInfo"
+                android:src="@mipmap/mta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/winTitle"
+                android:textStyle="bold"
+                android:text="Hello"
+                android:textSize="16sp"
+                android:layout_toRightOf="@id/iconInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/winLines"
+                android:layout_toRightOf="@id/iconInfo"
+                android:layout_below="@id/winTitle"
+                android:text="Lines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/winButton"
+                android:layout_toRightOf="@id/winLines"
+                android:layout_marginLeft="6dp"
+                android:layout_alignBottom="@id/iconInfo"
+                android:text="More Info"
+                android:textColor="@color/md_red_500"
+                android:background="@android:color/transparent"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

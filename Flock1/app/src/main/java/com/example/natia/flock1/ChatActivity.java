@@ -1,22 +1,35 @@
 package com.example.natia.flock1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import Model.Customer;
 import Model.Show_Chat_Conversation_Data_Items;
 
 /**
@@ -29,7 +42,14 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseListAdapter<Show_Chat_Conversation_Data_Items> adapter;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mUserReference;
     private FirebaseUser mUser;
+    private Customer customer = new Customer();
+    private StorageReference mFirebaseStorage = FirebaseStorage.getInstance().getReference();
+    private ImageView messageImage;
+    private TextView messageText;
+    private TextView messageTime;
+    private TextView messageUser;
 
 
     @Override
@@ -40,9 +60,7 @@ public class ChatActivity extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
         //Creates a new database which will hold our users
         mDatabaseReference = mDatabase.getReference().child("Chat");
-
-
-        setContentView(R.layout.activity_chat_main);
+        mUserReference = mDatabase.getReference().child("MUsers");
 
         if(mUser == null) {
             // Start sign in/sign up activity
@@ -51,15 +69,29 @@ public class ChatActivity extends AppCompatActivity {
         } else {
             // User is already signed in. Therefore, display
             // a welcome Toast
-            Toast.makeText(this,
-                    "Welcome " + mUser
-                            .getDisplayName(),
-                    Toast.LENGTH_LONG)
-                    .show();
+            mUserReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-            // Load chat room contents
-            displayChatMessages();
+
+                    // Load chat room contents
+                    displayChatMessages(dataSnapshot);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+
         }
+
+
+        setContentView(R.layout.activity_chat_main);
+
+
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -87,19 +119,25 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    private void displayChatMessages() {
+    private void displayChatMessages(DataSnapshot dataSnapshot) {
         ListView listOfMessages = findViewById(R.id.list_of_messages);
+        listOfMessages.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+        listOfMessages.setStackFromBottom(true);
 
         adapter = new FirebaseListAdapter<Show_Chat_Conversation_Data_Items>(this,
                 Show_Chat_Conversation_Data_Items.class,
-                R.layout.message, mDatabaseReference) {
+                R.layout.show_chat_layout, mDatabaseReference) {
             @Override
             protected void populateView(View v, Show_Chat_Conversation_Data_Items model,
                                         int position) {
                 // Get references to the views of message.xml
-                TextView messageText = v.findViewById(R.id.message_text);
-                TextView messageUser = v.findViewById(R.id.message_user);
-                TextView messageTime = v.findViewById(R.id.message_time);
+                messageText = v.findViewById(R.id.chat_message);
+                messageUser = v.findViewById(R.id.chat_user);
+                messageTime = v.findViewById(R.id.chat_date);
+                messageImage = v.findViewById(R.id.chat_image);
+                SharedPreferences shared = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                String image = shared.getString("image","");
+                Log.d("imageTo",image);
 
                 // Get references to the views of message.xml
                 //TextView messageText = v.findViewById(R.id.chat_person_text);
@@ -110,7 +148,26 @@ public class ChatActivity extends AppCompatActivity {
                 // Set their text
                 messageText.setText(model.getMessage());
                 messageUser.setText(model.getSender());
-               // messageImage.setImageURI(Uri.parse(model.getUserImage()));
+                //messageImage.setImageURI(Uri.parse(model.getUserImage()));
+
+                mFirebaseStorage.child("MFlock_Profile_Pics/MFlock_Profile_Pics/"+image).getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>(){
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                GlideApp.
+                                        with(getApplicationContext()).
+                                        load(uri).
+                                        error(R.mipmap.flock_icon).
+                                        into(messageImage);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        //Log.d(TAG, "fail to retrive imageDL url");
+                    }
+                });
+
+
                 //Log.d("messageUser",messageUser.toString());
 
                 // Format the date before showing it

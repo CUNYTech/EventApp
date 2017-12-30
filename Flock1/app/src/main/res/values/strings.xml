@@ -95,4 +95,8 @@
         <item>Chat with User</item>
         <item>Delete Event</item>
     </string-array>
+
+    <string name="sign_out">Sign Out</string>
+    <string name="friends_list">Friends</string>
+    <string name="find_friends">Find Friends</string>
 </resources>

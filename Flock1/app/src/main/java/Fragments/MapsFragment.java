@@ -2,6 +2,7 @@ package Fragments;
 
 import android.Manifest;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -42,11 +43,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import Model.Markers;
+import UI.CustomInfoWindow;
+import Util.Trains;
 
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private BufferedReader in;
@@ -56,7 +59,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private Markers markers = new Markers();
+    private Trains trains = new Trains();
     private RequestQueue queue;
+    private Context c;
     private BufferedReader bufferedReader = null;
     private final static int MY_PERMISSINON_FINE_LOCATION = 101;
     protected final static String TAG = "MapsFragment";
@@ -73,6 +78,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
+                mMap.setInfoWindowAdapter(new CustomInfoWindow(getContext()));
+                mMap.setOnMarkerClickListener(MapsFragment.this);
+                mMap.setOnInfoWindowClickListener(MapsFragment.this);
+
 
                 if (ActivityCompat.checkSelfPermission(getContext(),
                         android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
@@ -160,6 +169,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
                 markers.setLongitude(myLongitude);
                 markers.setLattitude(myLattitude);
                 markers.setLines(jsonObject.getJSONObject(key).getString("LINE"));
+                //int train = tra
+                //markers.setLinesPic(train);
                 Log.d("Longitude", myLongitude.toString());
                 Log.d("Lattitude", myLattitude.toString());
 
@@ -167,9 +178,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
                 markerOptions.title(markers.getName())
                         .position(new LatLng(myLongitude,myLattitude));
+                markerOptions.snippet("Lines: " + markers.getLines());
 
                 Marker marker = mMap.addMarker(markerOptions);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLongitude,myLattitude), 1));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLongitude,myLattitude), 15));
             }
 
 
@@ -277,5 +289,16 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Log.d(TAG, "We made it here");
+        Toast.makeText(getContext(),marker.getSnippet().toString(),Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
     }
 }

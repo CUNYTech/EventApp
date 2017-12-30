@@ -9,6 +9,7 @@ public class Show_Chat_Conversation_Data_Items {
     private String sender;
     private long messageTime;
     private String userImage;
+    private String email;
 
     public Show_Chat_Conversation_Data_Items()
     {
@@ -51,5 +52,13 @@ public class Show_Chat_Conversation_Data_Items {
 
     public void setUserImage(String userImage) {
         this.userImage = userImage;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

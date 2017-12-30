@@ -10,6 +10,7 @@ public class Markers {
     private double longitude;
     private double lattitude;
     private String lines;
+    private int linesPic;
 
     public Markers() {
     }
@@ -51,5 +52,13 @@ public class Markers {
 
     public void setLines(String lines) {
         this.lines = lines;
+    }
+
+    public int getLinesPic() {
+        return linesPic;
+    }
+
+    public void setLinesPic(int linesPic) {
+        this.linesPic = linesPic;
     }
 }

@@ -4,7 +4,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,11 +37,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import Fragments.MapsFragment;
 import Model.Customer;
 
@@ -61,8 +55,7 @@ public class MainHub extends AppCompatActivity
     private StorageReference mFirebaseStorage2;
     private Context context;
     private GoogleMap mMap;
-    private InputStream inputStream;
-    private BufferedReader in;
+    private ImageView nav_imgView;
 
 
     @Override
@@ -84,12 +77,6 @@ public class MainHub extends AppCompatActivity
         mDatabaseReference = mDatabase.getReference().child("MUsers").child(userid);
 
 
-        try{
-            AssetManager assetManager = getAssets();
-            inputStream = assetManager.open("stations.json.json");
-            in = new BufferedReader(new InputStreamReader(inputStream));
-
-        } catch (IOException e) {}
 
 
 
@@ -163,7 +150,7 @@ public class MainHub extends AppCompatActivity
         View header = navigationView.getHeaderView(0);
         TextView nav_user = header.findViewById(R.id.userNavMainHub);
         TextView nav_userEmail = header.findViewById(R.id.userEmailNavMainHub);
-        final ImageView nav_imgView = header.findViewById(R.id.imgViewMainHub);
+        nav_imgView = header.findViewById(R.id.imgViewMainHub);
         //Log.d("CurrentUser1",fullName + " " + email + imagePath);
         nav_user.setText(fullName);
         //nav_imgView.setImageURI(mAuth.getCurrentUser().getPhotoUrl());
