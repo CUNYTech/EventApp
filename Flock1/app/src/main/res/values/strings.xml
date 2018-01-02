@@ -77,6 +77,9 @@
     <string name="firebase_storage_url">gs://chat-sdk-v4.appspot.com</string>
     <string name="firebase_cloud_messaging_server_key">AAAA_WvJyeI:APA91bFIDYoxnbFTub61SKCh8-RZrElzdkZpzyV3paGFlRWonMzq33zQmQW3ub5hDXLuRaipwtoHSoDKXkZlN5DRb_EYdrxtaDptmvZKCYBPKI-4RqTK9wVLOJvgc5X3bVWLfpNSJO_tLK2pnmhfpHDw2Zs-5L2yug</string>
     <string name="eventUserImage">User Image</string>
+    <string name="line">Line</string>
+    <string name="page_info">Insert the train station that you will be taking for your commute</string>
+    <string name="search">Search</string>
     <string-array name="event_menu">
         <item>User's Profile</item>
         <item>Chat with User</item>
