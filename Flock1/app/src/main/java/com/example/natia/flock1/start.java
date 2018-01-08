@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -20,11 +19,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,9 +71,11 @@ public class start extends AppCompatActivity{
     private DatabaseReference mDatabaseReference;
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser = mAuth.getCurrentUser();
-    private String image = mAuth.getCurrentUser().getPhotoUrl().toString();
+    private String userId = mUser.getUid();
+    private DatabaseReference mUserReference = null;
     private DateFormat formatter = new SimpleDateFormat("mm/dd/yy");
     private Date dateObject;
+    private String image = null;
     private DatePickerDialog.OnDateSetListener mDateListener;
     private TimePickerDialog.OnTimeSetListener mTimeListener;
 
@@ -78,12 +83,12 @@ public class start extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_start);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.content_start2);
 
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mDatabase.getReference().child("Events2");
+        mUserReference =  mDatabase.getReference().child("MUsers").
+                child(userId).child("image");
 
         startingHeader = findViewById(R.id.StartingStation);
         endingHeader = findViewById(R.id.EndingStation);
@@ -134,6 +139,27 @@ public class start extends AppCompatActivity{
                 month = month +1;
                 String dateSel = month + "/" + dayOfMonth + "/" + year;
                 date.setText(dateSel);
+            }
+        };
+
+        mTimeListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                String AMPM = "SM";
+                if(hourOfDay > 11){
+                    AMPM = "PM";
+
+                    if (hourOfDay > 12){
+                        hourOfDay = hourOfDay - 12;
+                    }
+                } else {
+                    AMPM = "AM";
+                    if (hourOfDay == 0){
+                        hourOfDay = 12;
+                    }
+                }
+
+                time.setText(hourOfDay + ":" + minute + " " + AMPM);
             }
         };
 
@@ -259,45 +285,54 @@ public class start extends AppCompatActivity{
                         || line2.getSelectedItem() == null) {}
 
                 else {
-                   /* Search mySearch = new Search();
-                    mySearch.setStart(station1.getText().toString());
-                    mySearch.setDestination(station2.getText().toString());
-                    mySearch.setDate(date.getText().toString());
-                    mySearch.setTime(time.getText().toString());
-                    mySearch.setName(name);
-                    mySearch.setImage(image);*/
-
-                    Events events = new Events();
-                    events.setStart(station1.getText().toString());
-                    events.setDestination(station2.getText().toString());
-                    events.setDate(date.getText().toString());
-                    events.setTime(time.getText().toString());
-                    events.setName(name);
-                    events.setImage(image);
-                    events.setId(mUser.getUid());
-
-                    ArrayList<String> ls = new ArrayList<String>();
-                    ls.add(line1.getSelectedItem().toString());
-
-                    if (!ls.contains(line2.getSelectedItem().toString())) {
-                        ls.add(line2.getSelectedItem().toString());
-                    }
-
-                    //mySearch.setlines(ls);
-                    events.setLines(ls);
-
-                    //Log.i("a", mySearch.getStart());
-                    //Log.i("a", mySearch.getDestination());
-                    //Log.i("a", mySearch.getLines().get(0));
-
-                    mDatabaseReference
-                            .push()
-                            .setValue(events);
 
 
-                    Intent intent = new Intent(start.this, EventsActivity.class);
-                    //intent.putExtra("key", mySearch);
-                    startActivity(intent);
+
+                    mUserReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Events events = new Events();
+                            events.setStart(station1.getText().toString());
+                            events.setDestination(station2.getText().toString());
+                            events.setDate(date.getText().toString());
+                            events.setTime(time.getText().toString());
+                            events.setName(name);
+                            events.setImage(dataSnapshot.getValue(String.class));
+                            events.setId(mUser.getUid());
+
+                            ArrayList<String> ls = new ArrayList<String>();
+                            ls.add(line1.getSelectedItem().toString());
+
+                            if (!ls.contains(line2.getSelectedItem().toString())) {
+                                ls.add(line2.getSelectedItem().toString());
+                            }
+
+                            //mySearch.setlines(ls);
+                            events.setLines(ls);
+
+                            mDatabaseReference
+                                    .push()
+                                    .setValue(events);
+
+                            Intent intent = new Intent(start.this, EventsActivity.class);
+                            intent.putExtra("user", events.getId());
+                            intent.putExtra("image", events.getImage());
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+
+
+
+
+
                 }
             }
         });

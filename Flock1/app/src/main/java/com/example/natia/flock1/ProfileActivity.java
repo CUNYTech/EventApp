@@ -1,6 +1,5 @@
 package com.example.natia.flock1;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -198,7 +197,8 @@ public class ProfileActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(ProfileActivity.this, MainHub.class);
-        startActivity(intent);
+        super.onBackPressed();
+        //Intent intent = new Intent(ProfileActivity.this, MainHub.class);
+        //startActivity(intent);
     }
 }

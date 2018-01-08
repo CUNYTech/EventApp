@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.natia.flock1.start"
+    tools:showIn="@layout/activity_start"
+    android:background="#132226"
+    app:cardElevation="10dp"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/StartingStation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Starting Train Station"
+        android:textColor="@color/Text_1"
+
+        android:textSize="32sp" />
+
+
+    <AutoCompleteTextView
+        android:id="@+id/station1"
+        android:layout_width="351dp"
+        android:layout_height="54dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="56dp"
+        android:ems="10"
+        android:hint="Train Station"
+        android:inputType="textPostalAddress"
+        android:labelFor="@+id/toid"
+        android:textColor="@color/Text_1"
+        android:textColorHint="@color/Text_1"
+        android:textStyle="bold"/>
+
+
+    <TextView
+        android:id="@+id/EndingStation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/line1"
+        android:layout_marginTop="30dp"
+        android:ems="30"
+        android:text="Ending Train Station"
+        android:textColor="@color/Text_1"
+        android:textSize="32sp" />
+
+
+    <AutoCompleteTextView
+        android:id="@+id/station2"
+        android:layout_width="351dp"
+        android:layout_height="54dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_below="@id/EndingStation"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Train Station"
+        android:inputType="textPostalAddress"
+        android:labelFor="@+id/toid"
+        android:textColor="@color/Text_1"
+        android:textColorHint="@color/Text_1"
+        android:textStyle="bold" />
+
+
+    <Spinner
+        android:id="@+id/line1"
+        android:layout_width="351dp"
+        android:layout_height="54dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Line"
+        android:inputType="textPostalAddress"
+        android:labelFor="@+id/toid"
+        android:textColor="@color/Text_1"
+        android:textColorHint="@color/Text_1"
+        android:textStyle="bold"
+        android:layout_below="@id/station1"
+        android:layout_centerHorizontal="true"/>
+
+    <Spinner
+        android:id="@+id/line2"
+        android:layout_width="351dp"
+        android:layout_height="54dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/station2"
+        android:ems="10"
+        android:labelFor="@+id/toid"
+        android:textColor="@color/Text_1"
+        android:textColorHint="@color/Text_1"
+        android:textStyle="bold"
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/editTextDateStartAct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="Date"
+        android:inputType="date"
+        android:text="Date"
+        android:textColor="@color/Text_1"
+        android:visibility="visible"
+        android:layout_below="@id/line2"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/editTextTimeStartAct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextDateStartAct"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Time"
+        android:inputType="time"
+        android:text="Time"
+        android:textColor="@color/Text_1"
+        android:textSize="20sp"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="50dp"
+        android:text="Create Event"
+        android:layout_below="@id/editTextTimeStartAct"
+        android:layout_centerHorizontal="true"/>
+
+   </RelativeLayout>

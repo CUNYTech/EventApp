@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="245dp"    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/card4">
+
+        <ImageView
+            android:id="@+id/eventProfilePic"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="21dp"
+            android:contentDescription="@string/profile_pic"
+            android:scaleType="centerCrop"
+            app:srcCompat="@mipmap/round_profile" />
+
+
+        <TextView
+            android:id="@+id/eventDisplayName"
+            android:layout_width="200dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="26dp"
+            android:layout_marginTop="9dp"
+            android:text="@string/eventDisplayName"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/eventDate"
+            android:layout_width="150dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="165dp"
+            android:layout_marginTop="50dp"
+            android:text="DATE"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/eventStartLoc"
+            android:layout_width="100dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/eventProfilePic"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="11dp"
+            android:layout_toEndOf="@+id/eventProfilePic"
+            android:fontFamily="sans-serif-condensed"
+            android:minLines="2"
+            android:text="@string/starting_train_station"
+            android:textAlignment="textStart"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/eventEndLoc"
+            android:layout_width="100dp"
+            android:layout_height="55dp"
+            android:layout_alignBaseline="@+id/eventStartLoc"
+            android:layout_alignBottom="@+id/eventStartLoc"
+            android:fontFamily="sans-serif-condensed"
+            android:minLines="2"
+            android:layout_marginLeft="240dp"
+            android:text="@string/starting_train_station"
+            android:textAlignment="viewStart"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/eventStartTime"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:text="@string/startTime"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="190dp"/>
+
+
+        <TextView
+            android:id="@+id/eventLine1"
+            android:layout_width="100dp"
+            android:layout_height="32dp"
+            android:layout_below="@+id/eventStartLoc"
+            android:layout_marginLeft="75dp"
+            android:text="@string/train_line"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/eventLine2"
+            android:layout_width="100dp"
+            android:layout_height="32dp"
+            android:layout_alignStart="@+id/eventEndLoc"
+            android:layout_below="@+id/eventEndLoc"
+            android:text="@string/train_line"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:visibility="visible" />
+
+
+
+                    </RelativeLayout>
+
+
+                </android.support.v7.widget.CardView>

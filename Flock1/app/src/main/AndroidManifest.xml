@@ -64,7 +64,7 @@
         </activity>
         <activity
             android:name=".MainHub"
-            android:label="@string/title_activity_main_hub"
+            android:label="Map"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
          The API key for Google Maps-based APIs is defined as a string resource.
@@ -92,7 +92,9 @@
             android:name=".CreateAccountActivity"
             android:exported="false" />
         <activity android:name=".ChatActivity" />
-        <activity android:name=".EventsActivity" />
+        <activity android:name=".EventsActivity"
+            android:label="Current Events"
+            android:theme="@style/Theme.AppCompat"/>
         <activity
             android:name=".start"
             android:label="@string/title_activity_start"

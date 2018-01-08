@@ -1,32 +1,36 @@
 package com.example.natia.flock1;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
+import android.view.GestureDetector;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -38,22 +42,18 @@ import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
  */
 
 public class EventsActivity extends AppCompatActivity {
-    private Context c;
-    private ListView mListView;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mUserReference;
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser = mAuth.getCurrentUser();
     private FirebaseRecyclerAdapter mRAdapter;
     private FirebaseListAdapter<Events> mAdapter;
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
     private RecyclerView eventRecyclerview;
-    private EventsAdapter mEventsAdapter;
-    private String[] menu;
     private static StorageReference mFirebaseStorage2 = FirebaseStorage.getInstance().getReference();
-
-
-
+    private ClickListener clicklistener;
+    private GestureDetector gestureDetector;
 
     //whatever page this activity needs to interact with before creation needs to pass info to it
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +62,10 @@ public class EventsActivity extends AppCompatActivity {
 
 
         //mListView = findViewById(R.id.events_list_view);
-        menu = getResources().getStringArray(R.array.event_menu);
 
         //INITIALIZE FIREBASE DB
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events2");
-/**/
+
         eventRecyclerview = findViewById(R.id.event_list_recyclerview);
 
 
@@ -76,70 +75,171 @@ public class EventsActivity extends AppCompatActivity {
         eventRecyclerview.setLayoutManager(linearLayoutManager);
         eventRecyclerview.setItemAnimator(new SlideInDownAnimator());
         eventRecyclerview.addItemDecoration(new VerticalSpaceDecoration(50));
+//        eventRecyclerview.setOnClickListener((View.OnClickListener) this);
+
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                startActivity(new Intent(EventsActivity.this,start.class));
+            }
+        });
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(EventsActivity.this,"Click to create event",Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+        });
 
         mRAdapter = new FirebaseRecyclerAdapter<Events,EventsViewHolder>(
                 Events.class,
-                R.layout.list_items_events,
+                R.layout.display_event_card,
                 EventsViewHolder.class,
                 mDatabaseReference
         ) {
             @Override
+            protected Events parseSnapshot(DataSnapshot snapshot) {
+                Events events = super.parseSnapshot(snapshot);
+                if (events != null){
+                    events.setId(snapshot.getKey());
+                }
+                return events;
+            }
+
+
+            @Override
             protected void populateViewHolder(EventsViewHolder viewHolder, Events model, int position) {
-                viewHolder.startTitle.setText("Start:");
+                //viewHolder.startTitle.setText("Start:");
                 viewHolder.start.setText(model.getStart());
-                viewHolder.endTitle.setText("End:");
+                //viewHolder.endTitle.setText("End:");
                 viewHolder.end.setText(model.getDestination());
-                viewHolder.timeTitle.setText("Time:");
+                //viewHolder.timeTitle.setText("Time:");
                 viewHolder.time.setText(model.getTime());
-                viewHolder.dateTitle.setText("Date:");
+                //viewHolder.dateTitle.setText("Date:");
                 viewHolder. date.setText(model.getDate());
-                viewHolder.linesTitle.setText("Lines:");
-                viewHolder.lines.setText(model.getLines().toString());
-                viewHolder.nameTitle.setText("Created by:");
+                //viewHolder.linesTitle.setText("Lines:");
+                viewHolder.line1.setText(model.getLines().get(0));
+                viewHolder.line2.setText(model.getLines().get(1));
+                //viewHolder.nameTitle.setText("Created by:");
                 viewHolder.name.setText(model.getName());
                 viewHolder.setImage(model.getImage());
+
                 //viewHolder.userImage.setImageURI(Uri.parse(model.getImage()));
 
+
             }
+
+
         };
 
         eventRecyclerview.setAdapter(mRAdapter);
-        registerForContextMenu(eventRecyclerview);
+        mRAdapter.notifyDataSetChanged();
+
+        //registerForContextMenu(eventRecyclerview);
+        eventRecyclerview.setTag("Events");
+
+        eventRecyclerview.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                eventRecyclerview, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(EventsActivity.this, "Single Click on position        :" +
+                                mRAdapter.getRef(position).getKey(), Toast.LENGTH_LONG).show();
+                //mRAdapter.getRef(position).removeValue();
+                String key = mRAdapter.getRef(position).getKey();
+                mDatabaseReference.child(key).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String id = dataSnapshot.child("id").getValue(String.class);
+                        String image = dataSnapshot.child("image").getValue(String.class);
+                        Intent intent = new Intent(EventsActivity.this,OtherProfile.class);
+                        intent.putExtra("user",id);
+                        intent.putExtra("image",image);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onLongClick(View view, final int position) {
+                final String cUser = mAuth.getCurrentUser().getUid();
+                //Toast.makeText(EventsActivity.this, "Long press on position :"+view,
+                        //Toast.LENGTH_LONG).show();
+
+                String key = mRAdapter.getRef(position).getKey();
+                mDatabaseReference.child(key).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String id = dataSnapshot.child("id").getValue(String.class);
+                        //Toast.makeText(EventsActivity.this, cUser + " " + id,Toast.LENGTH_LONG).show();
+                        try {
+                            if((id.equals(cUser)) == false){
+                                Toast.makeText(EventsActivity.this, "You are not authorized to remove an " +
+                                                "event you didnt create",
+                                        Toast.LENGTH_LONG).show();
+
+                            } else if (id.equals(cUser)){
+                                mRAdapter.getRef(position).removeValue();
+                                return;
+                            }
+                        } catch (NullPointerException ex){
+                            ex.printStackTrace();
+                        }
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
 
+
+            }
+
+
+
+        }));
     }
 
-    public static class EventsViewHolder extends RecyclerView.ViewHolder {
-        public ImageView userImage;
-        public TextView startTitle, start, endTitle, end, timeTitle, time, dateTitle, date, linesTitle,
-                lines, nameTitle, name;
+    public static class EventsViewHolder extends RecyclerView.ViewHolder implements
+            View.OnClickListener, View.OnLongClickListener{
+        private ImageView userImage;
+        private TextView start, end, time, date, line1, line2, name;
         View mView;
 
-        public EventsViewHolder(View itemView) {
+        public EventsViewHolder(final View itemView) {
             super(itemView);
             mView = itemView;
-            userImage = itemView.findViewById(R.id.eventUserImage);
-            startTitle = itemView.findViewById(R.id.event_start_title);
-            start = itemView.findViewById(R.id.event_start);
-            endTitle = itemView.findViewById(R.id.event_end_title);
-            end = itemView.findViewById(R.id.event_end);
-            timeTitle = itemView.findViewById(R.id.event_time_title);
-            time = itemView.findViewById(R.id.event_time);
-            dateTitle = itemView.findViewById(R.id.event_date_title);
-            date = itemView.findViewById(R.id.event_date);
-            linesTitle = itemView.findViewById(R.id.event_lines_title);
-            lines = itemView.findViewById(R.id.event_lines);
-            nameTitle = itemView.findViewById(R.id.event_name_title);
-            name = itemView.findViewById(R.id.event_name);
+            userImage = itemView.findViewById(R.id.eventProfilePic);
+            //startTitle = itemView.findViewById(R.id.event_start_title);
+            start = itemView.findViewById(R.id.eventStartLoc);
+            //endTitle = itemView.findViewById(R.id.event_end_title);
+            end = itemView.findViewById(R.id.eventEndLoc);
+            //timeTitle = itemView.findViewById(R.id.event_time_title);
+            time = itemView.findViewById(R.id.eventStartTime);
+            //dateTitle = itemView.findViewById(R.id.event_date_title);
+            date = itemView.findViewById(R.id.eventDate);
+            //linesTitle = itemView.findViewById(R.id.event_lines_title);
+            //lines = itemView.findViewById(R.id.eventLines);
+            line1 = itemView.findViewById(R.id.eventLine1);
+            line2 = itemView.findViewById(R.id.eventLine2);
+            //nameTitle = itemView.findViewById(R.id.event_name_title);
+            name = itemView.findViewById(R.id.eventDisplayName);
+
+            itemView.setOnLongClickListener(this);
+            itemView.setOnClickListener(this);
 
 
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return false;
-                }
-            });
         }
 
         public void setImage(final String image) {
@@ -152,7 +252,11 @@ public class EventsActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Uri>(){
                         @Override
                         public void onSuccess(Uri uri) {
-                            Glide.with(mView.getContext()).load(uri).into(userImage);
+                            GlideApp.
+                                    with(mView.getContext()).
+                                    load(uri).
+                                    transform(new CircleCrop()).
+                                    into(userImage);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -161,6 +265,17 @@ public class EventsActivity extends AppCompatActivity {
                 }
             });
 
+        }
+
+
+        @Override
+        public void onClick(View v) {
+
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
         }
     }
 
@@ -173,30 +288,40 @@ public class EventsActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.event_long_press_menu, menu);
-
-        //menu.setHeaderTitle("My Context Menu");
-
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.event_long_press_menu,menu);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        // below variable info contains clicked item info and it can be null; scroll down to see a fix for it
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        //super.onContextItemSelected(item);
+
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Toast.makeText(this, "Soon to come from " + info , Toast.LENGTH_SHORT).show();
+
+
         if(item.getItemId() == R.id.event_menu_profile){
-            //startActivity(new Intent(EventsActivity.this, OtherProfile.class));
-            Toast.makeText(this, "Soon to come", Toast.LENGTH_SHORT).show();
+
+            //Toast.makeText(this, "Soon to come from " + user, Toast.LENGTH_SHORT).show();
+            //Log.d(" context menu", "index: " + index + " view: " + view);
+            //startActivity(new Intent(this,OtherProfile.class));
+            return true;
         } else if(item.getItemId() == R.id.event_menu_chat){
             startActivity(new Intent(EventsActivity.this, ChatActivity.class));
         } else if(item.getItemId() == R.id.event_menu_delete){
             Toast.makeText(this, "Soon to come", Toast.LENGTH_SHORT).show();
+            //mRAdapter.getRef((Integer) mRAdapter.getItem(info.position));
+            //root.removeValue((DatabaseReference.CompletionListener) mRAdapter.getItem(info.position));
         }
         else {return false;}
         //return true;
 
         return super.onContextItemSelected(item);
+    }
+
+    public interface ClickListener{
+        void onClick(View view, int position);
+        void onLongClick(View view,int position);
     }
 
 }

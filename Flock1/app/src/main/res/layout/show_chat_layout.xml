@@ -8,19 +8,18 @@
     android:layout_margin="16dp"
     android:background="#E5E5E5"
     android:elevation="6dp"
-    cardview:cardBackgroundColor="@color/md_blue_500"
-    cardview:cardCornerRadius="12dp"
     cardview:cardElevation="5dp"
     cardview:contentPadding="4dp"
-    android:clickable="true">
+    android:clickable="true"
+    cardview:cardCornerRadius="12dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:id="@+id/chat_image"
             android:src="@mipmap/flock_icon"
             android:scaleType="fitXY"/>
@@ -32,7 +31,8 @@
             android:text="User"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_toRightOf="@id/chat_image"/>
+            android:layout_toRightOf="@id/chat_image"
+            android:paddingLeft="5dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,16 +42,20 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/chat_user"/>
+            android:layout_alignTop="@id/chat_user"
+            android:layout_marginRight="10dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/chat_message"
-            android:layout_toRightOf="@id/chat_image"
-            android:layout_below="@id/chat_user"
-            android:text="Message"
-            android:textSize="15sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chat_message"
+                android:paddingLeft="5dp"
+                android:layout_toRightOf="@id/chat_image"
+                android:layout_below="@id/chat_user"
+                android:text="Message"
+                android:textSize="15sp"
+                />
+
 
     </RelativeLayout>
 

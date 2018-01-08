@@ -132,7 +132,7 @@ public class MainHub extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         SharedPreferences shared = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
@@ -145,37 +145,49 @@ public class MainHub extends AppCompatActivity
         //imagePath = mAuth.getCurrentUser().getPhotoUrl().toString();
         Log.d("imageref2", imagePath);
 
-        Customer customer = new Customer();
-        customer.setImage(imagePath);
-        View header = navigationView.getHeaderView(0);
-        TextView nav_user = header.findViewById(R.id.userNavMainHub);
-        TextView nav_userEmail = header.findViewById(R.id.userEmailNavMainHub);
-        nav_imgView = header.findViewById(R.id.imgViewMainHub);
-        //Log.d("CurrentUser1",fullName + " " + email + imagePath);
-        nav_user.setText(fullName);
-        //nav_imgView.setImageURI(mAuth.getCurrentUser().getPhotoUrl());
-        //nav_imgView.setImageURI(Uri.parse(imagePath));
-        Glide.with(getApplicationContext()).load(Uri.parse(imagePath)).into(nav_imgView);
-        //convert string to picture name
-        String picname = customer.getImage().substring(customer.getImage().lastIndexOf("/")+1);
-
-        mFirebaseStorage2.child("MFlock_Profile_Pics/MFlock_Profile_Pics/"+picname).getDownloadUrl()
-                .addOnSuccessListener(new OnSuccessListener<Uri>(){
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Glide.with(getApplicationContext()).load(uri).into(nav_imgView);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+        final Customer customer = new Customer();
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                //Log.d(TAG, "fail to retrive imageDL url");
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                customer.setImage(dataSnapshot.child("image").getValue(String.class));
+
+                View header = navigationView.getHeaderView(0);
+                TextView nav_user = header.findViewById(R.id.userNavMainHub);
+                TextView nav_userEmail = header.findViewById(R.id.userEmailNavMainHub);
+                nav_imgView = header.findViewById(R.id.imgViewMainHub);
+                //Log.d("CurrentUser1",fullName + " " + email + imagePath);
+                nav_user.setText(fullName);
+                //nav_imgView.setImageURI(mAuth.getCurrentUser().getPhotoUrl());
+                //nav_imgView.setImageURI(Uri.parse(imagePath));
+                //Glide.with(getApplicationContext()).load(Uri.parse(imagePath)).into(nav_imgView);
+                //convert string to picture name
+                String picname = customer.getImage().substring(customer.getImage().lastIndexOf("/")+1);
+
+                mFirebaseStorage2.child("MFlock_Profile_Pics/MFlock_Profile_Pics/"+picname).getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>(){
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(getApplicationContext()).load(uri).into(nav_imgView);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        //Log.d(TAG, "fail to retrive imageDL url");
+                    }
+                });
+
+                nav_userEmail.setText(email);
+//
+                FragmentManager fm = getFragmentManager();
+                fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
-        nav_userEmail.setText(email);
-//
-        FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().replace(R.id.main_navi, new MapsFragment()).commit();
         //onMapReady(mMap);
 
 

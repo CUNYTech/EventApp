@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:layout="http://schemas.android.com/apk/res-auto">
+    xmlns:layout="http://schemas.android.com/apk/res-auto"
+    android:background="@color/md_grey_600">
 
     <include layout="@layout/content_event" />
 
@@ -15,6 +16,8 @@
         android:layout_marginBottom="25dp"
         android:layout_marginEnd="24dp"
         android:clickable="true"
-        layout:srcCompat="@mipmap/flock_icon" />
+        android:src="@drawable/icon_add"
+
+        />
 
 </RelativeLayout>

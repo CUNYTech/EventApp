@@ -1,21 +1,20 @@
 package com.example.natia.flock1;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -50,6 +49,8 @@ public class ChatActivity extends AppCompatActivity {
     private TextView messageText;
     private TextView messageTime;
     private TextView messageUser;
+    private String userId;
+    private String picname;
 
 
     @Override
@@ -58,9 +59,10 @@ public class ChatActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         mUser = mAuth.getCurrentUser();
+        userId = mUser.getUid();
         //Creates a new database which will hold our users
         mDatabaseReference = mDatabase.getReference().child("Chat");
-        mUserReference = mDatabase.getReference().child("MUsers");
+        mUserReference = mDatabase.getReference().child("MUsers").child(userId).child("image");
 
         if(mUser == null) {
             // Start sign in/sign up activity
@@ -93,28 +95,39 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        mUserReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                EditText input = findViewById(R.id.chat_input);
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                FloatingActionButton fab = findViewById(R.id.fab);
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        EditText input = findViewById(R.id.chat_input);
 
-                // Read the input field and push a new instance
-                // of ChatMessage to the Firebase database
-                mDatabaseReference
-                        .push()
-                        .setValue(new Show_Chat_Conversation_Data_Items(input.getText().toString(),
-                                FirebaseAuth.getInstance()
-                                        .getCurrentUser()
-                                        .getDisplayName())
-                        );
+                        // Read the input field and push a new instance
+                        // of ChatMessage to the Firebase database
+                        mDatabaseReference
+                                .push()
+                                .setValue(new Show_Chat_Conversation_Data_Items(input.getText().toString(),
+                                        FirebaseAuth.getInstance()
+                                                .getCurrentUser()
+                                                .getDisplayName(), dataSnapshot.getValue(String.class)));
 
-                // Clear the input
-                input.setText("");
+
+                        // Clear the input
+                        input.setText("");
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
+
+
 
 
     }
@@ -122,7 +135,7 @@ public class ChatActivity extends AppCompatActivity {
     private void displayChatMessages(DataSnapshot dataSnapshot) {
         ListView listOfMessages = findViewById(R.id.list_of_messages);
         listOfMessages.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        listOfMessages.setStackFromBottom(true);
+        //listOfMessages.setStackFromBottom(true);
 
         adapter = new FirebaseListAdapter<Show_Chat_Conversation_Data_Items>(this,
                 Show_Chat_Conversation_Data_Items.class,
@@ -134,11 +147,9 @@ public class ChatActivity extends AppCompatActivity {
                 messageText = v.findViewById(R.id.chat_message);
                 messageUser = v.findViewById(R.id.chat_user);
                 messageTime = v.findViewById(R.id.chat_date);
-                messageImage = v.findViewById(R.id.chat_image);
-                SharedPreferences shared = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                String image = shared.getString("image","");
-                Log.d("imageTo",image);
 
+                messageImage = v.findViewById(R.id.chat_image);
+                
                 // Get references to the views of message.xml
                 //TextView messageText = v.findViewById(R.id.chat_person_text);
                 //TextView messageUser = v.findViewById(R.id.chat_person_name);
@@ -148,9 +159,10 @@ public class ChatActivity extends AppCompatActivity {
                 // Set their text
                 messageText.setText(model.getMessage());
                 messageUser.setText(model.getSender());
-                //messageImage.setImageURI(Uri.parse(model.getUserImage()));
+                picname = model.getSenderPic().substring(model.getSenderPic().lastIndexOf("/")+1);
+                //messageImage.setImageURI(Uri.parse(picname));
 
-                mFirebaseStorage.child("MFlock_Profile_Pics/MFlock_Profile_Pics/"+image).getDownloadUrl()
+                mFirebaseStorage.child("MFlock_Profile_Pics/MFlock_Profile_Pics/"+picname).getDownloadUrl()
                         .addOnSuccessListener(new OnSuccessListener<Uri>(){
                             @Override
                             public void onSuccess(Uri uri) {
@@ -158,22 +170,28 @@ public class ChatActivity extends AppCompatActivity {
                                         with(getApplicationContext()).
                                         load(uri).
                                         error(R.mipmap.flock_icon).
+                                        diskCacheStrategy(DiskCacheStrategy.NONE).
+                                        transforms(new CircleCrop()).
                                         into(messageImage);
+
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        //Log.d(TAG, "fail to retrive imageDL url");
-                    }
-                });
+                        }).addOnFailureListener(new OnFailureListener()
+
+                            {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    //Log.d(TAG, "fail to retrive imageDL url");
+                                }
+                            });
 
 
                 //Log.d("messageUser",messageUser.toString());
 
                 // Format the date before showing it
-                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
+                messageTime.setText(DateFormat.format("MM-dd-yyyy (HH:mm:ss)",
                         model.getMessageTime()));
             }
+
         };
 
         //listOfMessages.smoothScrollToPosition();

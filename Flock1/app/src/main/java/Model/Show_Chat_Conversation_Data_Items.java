@@ -8,16 +8,17 @@ public class Show_Chat_Conversation_Data_Items {
     private String message;
     private String sender;
     private long messageTime;
-    private String userImage;
     private String email;
+    private String senderPic;
 
     public Show_Chat_Conversation_Data_Items()
     {
     }
 
-    public Show_Chat_Conversation_Data_Items(String message, String sender) {
+    public Show_Chat_Conversation_Data_Items(String message, String sender, String senderPic) {
         this.message = message;
         this.sender = sender;
+        this.senderPic = senderPic;
         // Initialize to current time
         messageTime = new Date().getTime();
     }
@@ -46,12 +47,12 @@ public class Show_Chat_Conversation_Data_Items {
         this.messageTime = messageTime;
     }
 
-    public String getUserImage() {
-        return userImage;
+    public String getSenderPic() {
+        return senderPic;
     }
 
-    public void setUserImage(String userImage) {
-        this.userImage = userImage;
+    public void setSenderPic(String senderPic) {
+        this.senderPic = senderPic;
     }
 
     public String getEmail() {

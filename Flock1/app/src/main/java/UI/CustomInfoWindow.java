@@ -1,6 +1,7 @@
 package UI;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,9 +40,30 @@ public class CustomInfoWindow implements GoogleMap.InfoWindowAdapter {
 
         TextView lines = view.findViewById(R.id.winLines);
         lines.setText(marker.getSnippet());
-
+        Log.d("this is case 1", marker.getSnippet());
         ImageView mta = view.findViewById(R.id.iconInfo);
-        GlideApp.with(view).load(R.mipmap.train_1).into(mta);
+
+
+        switch (marker.getSnippet()){
+            case "1":
+                Log.d("this is case 1", marker.getSnippet());
+                GlideApp.
+                        with(view).
+                        load(R.mipmap.train_1).
+                        into(mta);
+                break;
+            default:
+                Log.d("this is default", marker.getSnippet());
+                GlideApp.
+                        with(view).
+                        load(R.mipmap.mta).
+                        into(mta);
+        }
+
+
+
+
+
 
         return view;
     }

@@ -1,14 +1,17 @@
 package com.example.natia.flock1;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,19 +56,18 @@ public class OtherProfile extends AppCompatActivity {
         //url = intent.getStringExtra("FIREBASE_URL");
         image = intent.getStringExtra("image");
 
-        //Log.d("userinfo",user);
+        Log.d("userinfo",user);
         //Log.d("imageinfo", image);
 
         fstorage = FirebaseStorage.getInstance();
         storageRef = fstorage.getReference();
 
 
-        //mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         myRef = mFirebaseDatabase.getReference()
                 .child("MUsers").child(user);
-
 
 
 
@@ -93,29 +95,33 @@ public class OtherProfile extends AppCompatActivity {
         uInfo.setFirstName(dataSnapshot.getValue(UserInformation.class).getFirstName());
         uInfo.setLastName(dataSnapshot.getValue(UserInformation.class).getLastName());
         uInfo.setGender(dataSnapshot.getValue(UserInformation.class).getGender());
+        //uInfo.setEmail(dataSnapshot);
         Log.d("gotthisfar", uInfo.getFirstName());
 
         //get image name from database
         uInfo.setImage(image);
-        Glide.with(this).load(image).into(imageView);
+        //Glide.with(this).load(image).into(imageView);
 
         //holder until database is fix
         //String picname ="cropped8295209993791726610.jpg";
 
-        //String picname = uInfo.getImage().substring(uInfo.getImage().lastIndexOf("/")+1);
+        String picname = uInfo.getImage().substring(uInfo.getImage().lastIndexOf("/")+1);
         //String picname =uInfo.getImage(); //after change the database to only storage picture's name
 
-        /*storageRef.child("MFlock_Profile_Pics/MFlock_Profile_Pics/").getDownloadUrl()
+        storageRef.child("MFlock_Profile_Pics/MFlock_Profile_Pics/"+picname).getDownloadUrl()
                 .addOnSuccessListener(new OnSuccessListener<Uri>(){
                     @Override
                     public void onSuccess(Uri uri) {
-                        Glide.with(getApplicationContext()).load(uri).into(imageView);
+                        GlideApp.
+                                with(getApplicationContext()).
+                                load(uri).
+                                into(imageView);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
             }
-        });*/
+        });
 
 
         //display all the information
@@ -125,7 +131,7 @@ public class OtherProfile extends AppCompatActivity {
         array.add("Last Name:"+uInfo.getLastName());
         array.add("Age: "+uInfo.getAge());
         array.add("Gender: "+uInfo.getGender());
-        array.add("Email: "+emailAdd);
+        //array.add("Email: "+emailAdd);
         //array.add(uInfo.getImage());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, array);
         mListView.setAdapter(adapter);
@@ -143,8 +149,9 @@ public class OtherProfile extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(OtherProfile.this, EventsActivity.class);
-        startActivity(intent);
+        super.onBackPressed();
+        //Intent intent = new Intent(OtherProfile.this, EventsActivity.class);
+        //startActivity(intent);
     }
 
 }

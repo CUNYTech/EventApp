@@ -63,6 +63,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
     private RequestQueue queue;
     private Context c;
     private BufferedReader bufferedReader = null;
+    private LocationListener locationListener;
     private final static int MY_PERMISSINON_FINE_LOCATION = 101;
     protected final static String TAG = "MapsFragment";
 
@@ -87,13 +88,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
                         android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(getContext(),
                                 android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
+
                     mMap.setMyLocationEnabled(true);
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -134,6 +129,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
         return rootView;
     }
 
+
+
     private void getTrainStations() {
         JSONArray jsonArray = null;
         ArrayList<String> cList = new ArrayList<String>();
@@ -171,8 +168,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
                 markers.setLines(jsonObject.getJSONObject(key).getString("LINE"));
                 //int train = tra
                 //markers.setLinesPic(train);
-                Log.d("Longitude", myLongitude.toString());
-                Log.d("Lattitude", myLattitude.toString());
 
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
@@ -181,6 +176,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
                 markerOptions.snippet("Lines: " + markers.getLines());
 
                 Marker marker = mMap.addMarker(markerOptions);
+
+
+
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLongitude,myLattitude), 15));
             }
 
@@ -264,13 +262,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
         Log.i(TAG, "Connection Failed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
     }
 
-    @Override
-    //for when we get get location updates when the location changes. here we will get longitude
-    //and lattitude
-    public void onLocationChanged(Location location) {
-        myLattitude = location.getLatitude();
-        myLongitude = location.getLongitude();
-    }
+    
 
     @Override
     public void onStart() {
@@ -300,5 +292,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public boolean onMarkerClick(Marker marker) {
         return false;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        
     }
 }
